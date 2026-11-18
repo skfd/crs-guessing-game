@@ -78,6 +78,11 @@ Made with the user on 2026-11-18. Change them on purpose, not by drift.
   the obvious shape, but nothing has been chosen.
 - **Name.** The folder name is a working title.
 
+## Conventions
+
+Text files are LF (`.gitattributes`). Scripts write with `newline="\n"`; compare text
+ignoring `\r`.
+
 ## Leads (unverified, evaluate before using)
 
 Found by web search in one session. Most were read from search results or a single page,
