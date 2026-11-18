@@ -1,0 +1,23 @@
+{
+  "source": "https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_en.json",
+  "round": 453,
+  "asOf": "2026-10-25",
+  "note": "CRS score distribution of candidates in the Express Entry pool, from round 453 (fields dd1-dd17; the sub-bands add up to their parents and everything adds up to dd18 = 228,724). Scored under the rules before 3 November 2026, so it is only an approximation of the pool under the new rules. The JSON carries no band labels; these are the ones IRCC prints on the rounds page, not re-read here because that page builds its table in script.",
+  "bands": [
+    { "lo": 601, "hi": 1270, "count": 787 },
+    { "lo": 501, "hi": 600, "count": 20535 },
+    { "lo": 491, "hi": 500, "count": 12162 },
+    { "lo": 481, "hi": 490, "count": 12342 },
+    { "lo": 471, "hi": 480, "count": 16330 },
+    { "lo": 461, "hi": 470, "count": 15803 },
+    { "lo": 451, "hi": 460, "count": 14475 },
+    { "lo": 441, "hi": 450, "count": 13159 },
+    { "lo": 431, "hi": 440, "count": 13155 },
+    { "lo": 421, "hi": 430, "count": 12768 },
+    { "lo": 411, "hi": 420, "count": 12543 },
+    { "lo": 401, "hi": 410, "count": 11880 },
+    { "lo": 351, "hi": 400, "count": 47911 },
+    { "lo": 301, "hi": 350, "count": 17247 },
+    { "lo": 0, "hi": 300, "count": 7627 }
+  ]
+}

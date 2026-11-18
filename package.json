@@ -1,0 +1,11 @@
+{
+  "name": "crs-guessing-game",
+  "version": "0.0.1-dev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "serve": "node tools/serve.mjs",
+    "answers": "node tools/make-answers.mjs"
+  }
+}
