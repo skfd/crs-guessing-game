@@ -1,6 +1,14 @@
 # crs-guessing-game
 
-**Status: empty, nothing built yet.** This README is the brief. There is no code to look for.
+**Status: first prototype is playable.** One mode ("find the hidden person"), a year of
+daily answers, no hosting yet. Nobody but its author has played it.
+
+```
+npm run serve     # http://localhost:5173  (ES modules do not load from file://)
+npm test
+```
+
+`?day=N` plays a given day, `?practice` a random person without saving.
 
 ## The goal
 
@@ -35,6 +43,48 @@ Made with the user on 2026-11-18. Change them on purpose, not by drift.
   and IRCC's own calculator. No "would this person be invited" line until a draw has
   happened under the new rules.
 
+## What the prototype does
+
+Choices made while building it, on 2026-11-18, without the user. All are provisional and
+each is one place in the code.
+
+- **Stack:** a static page, plain ES modules, no build step and no dependencies. Node is
+  only used for the tests and the tools.
+- **A guess has 13 attributes** (`src/attributes.js`): spouse, age, education, first
+  language, second language, stronger in English or French, Canadian work, high-wage tier
+  of that work, job offer, foreign work, study in Canada, sibling, nomination. That is more
+  than the eight first imagined; the Labour Market Integration factor alone needs three.
+- **Plateaus are one option.** Ages 20 to 29 score the same, so they are a single choice;
+  likewise CLB 4-5 for a first language, 5-6 / 7-8 / 9+ for a second, and 1-2 years of
+  foreign work. The player is never asked to tell apart things the tables do not.
+- **Language is one level across all four abilities**, by role (first and second official
+  language) rather than by English and French. "Stronger in" says which one is French,
+  which only matters for the French bonus.
+- **The spouse is a given, not a guess.** A guess says only whether there is an
+  accompanying spouse. The hidden spouse's points (0 to 40) are in the clue and are lent to
+  any guess that has a spouse. Guessing the spouse's education, language and work would
+  add three columns for at most 40 points.
+- **Left out:** the trade certificate of qualification (50 transferability points). A
+  hidden person never has one and a guess cannot claim one.
+- **What the score cannot see is lowered** (`canonical` in `src/profile.js`). A job offer
+  that loses to the work-experience path, a sibling under a nomination's 600-point cap,
+  foreign work with weak language and no Canadian work: each is read as the lowest option
+  that scores the same, and the cell is marked ∅. Answers are stored in this form, so every
+  attribute of an answer moves the score.
+- **Winning means every cell green.** A different person with identical points in all four
+  sections is not a win; the game says "same points, different person".
+- **Yellow bands:** two steps for age, one step for education, languages, Canadian work,
+  wage tier and job offer; none for the three-option attributes. Every wrong ordinal cell
+  carries an arrow, grey ones included.
+- **Day 1 is 18 November 2026**; the person changes at the player's local midnight.
+  Progress is kept in `localStorage`. `data/answers.json` holds 366 people and wraps.
+- **Sampling** (`tools/make-answers.mjs`): a score band is drawn by IRCC's weights
+  (`data/bands.json`, pool as of 25 October 2026), then people are generated as a life
+  lived forward (age, an education possible by that age, work years that fit after it)
+  until one lands in the band. Every weight for age, education, language and the rest is
+  an invented guess. The list is committed, so changing the sampler does not move answers
+  until the list is rebuilt on purpose.
+
 ## Design notes from the prior-art survey
 
 - The score is a free Tradle-style closeness signal: show each guess's CRS, the gap and the
@@ -42,9 +92,9 @@ Made with the user on 2026-11-18. Change them on purpose, not by drift.
 - With a total-only clue, "find the person" and "hit the exact score" are nearly the same
   game; they differ in whether per-attribute colours are shown and whether one profile or
   any matching profile wins. "Hit the score" may fall out as a hard mode with colours off.
-- The breakdown clue must stay at section level. A per-factor breakdown probably gives the
-  answer away, because age points map to an age nearly one-to-one. Not yet checked against
-  the new tables.
+- The breakdown clue must stay at section level. A per-factor breakdown gives the answer
+  away: outside the 20 to 29 plateau, age points map to at most two ages (18 and 31 share
+  a value, as do 19 and 30).
 - Line-up is a different game loop (Higher Lower, Housle) and the only mode that needs
   written bios.
 - Feedback encoding used by Poeltl and Spotle: green exact; yellow "close" with an up/down
@@ -57,26 +107,64 @@ Made with the user on 2026-11-18. Change them on purpose, not by drift.
   trivialising. Avoid timers; speed was what read as trivialising. Commit-then-reveal (NYT
   "You Draw It") carries commentary well.
 
+## Rules: what was checked
+
+- **canada.ca grid page** (dated 2026-11-03, read 2026-11-18): every table in
+  `src/tables.js` was copied from it. The two worries in the first brief are settled: the
+  "flat 100" for a job offer is the maximum of the 50 / 70 / 100 table, and the maximum
+  total is 1,270 (570 core without a spouse, 100 transferability, 600 additional). The
+  1,200 on third-party sites is the old maximum.
+- **IRCC's calculator** (page dated 2026-11-18) already asks the new high-wage questions.
+  Its scoring script was read in full and `src/score.js` follows it: the labour market
+  factor is `max(work length + high-wage bonus, job offer)`, transferability uses the
+  length of Canadian work whichever path won, the second language is capped at 22 only
+  with a spouse, additional points are capped at 600.
+- **Not done: a machine comparison with the calculator.** `tools/ircc-oracle.mjs` would run
+  the calculator's script on 600 random profiles and save the outputs as
+  `test/ircc-vectors.json`, which `npm test` then checks. It has never been run: executing
+  a downloaded script was blocked in the session that wrote it. Until someone runs it, the
+  evidence is a reading of the script plus hand-worked cases in `test/score.test.mjs`.
+- The reference repos under Leads were not used.
+
 ## Open questions
 
-- **Are the November 2026 tables what the survey says?** The grid page reportedly
-  contradicts itself on job-offer points (flat 100 vs a 50/70/100 table), and the maximum
-  total is unclear (sections sum to 1,270; third-party sites say 1,200). Read the page
-  first.
-- **Which attributes does a guess contain?** Roughly eight was the working number. The new
-  Labour Market Integration factor (Canadian experience plus a high-wage bonus, or a
-  high-wage job offer) may add inputs. More attributes means a wider share grid.
-- **How close is "close"?** A yellow band per attribute; age and language level have
-  different ranges, so a single flat band will not do.
-- **Is six guesses right** for that many attributes, given how much the score itself
-  reveals? Needs play-testing, possibly on paper first.
-- **How is a profile sampled** so that it is plausible as well as score-weighted? The score
-  bands constrain the total, not the mix of age, education and language.
-- **Is the answer unique enough?** Two profiles can share a total and a section breakdown.
-  Decide whether a different profile with identical points counts as a win.
-- **Stack and hosting.** Not decided. A static page with a client-side scoring function is
-  the obvious shape, but nothing has been chosen.
-- **Name.** The folder name is a working title.
+- **Six guesses is too many as built.** `node tools/simulate.mjs` plays all 366 answers
+  with a player that ignores the score and only halves each attribute by its own colour and
+  arrow: 90% found in three guesses, all in four. With arrows on yellow cells only
+  (`--close-only`) the same player needs five for most and fails some. A person reading the
+  section points will do better than either. Fewer guesses, arrows only on yellow, or a
+  total-only clue are the levers; play-test before choosing.
+- **Is 13 columns too wide?** It fits a desktop; on a phone the board scrolls sideways and
+  the share grid is 13 squares per row. Nomination and spouse are nearly free cells when
+  the breakdown is shown (a nomination is 600 points; spouse points above zero mean a
+  spouse).
+- **Is lowering understandable?** A guess of "3+ years abroad" can come back as a green
+  "1–2 years ∅" when both score the same. Correct, but it may read as the game changing
+  the player's answer.
+- **Are the sampled people plausible?** The weights are guesses; nobody has looked at a
+  month of answers in a row.
+- **Stale pool data.** The band weights are from before 3 November 2026. Replace
+  `data/bands.json` and rebuild once IRCC publishes a distribution under the new rules.
+- **Hosting.** Any static host works. Not chosen.
+- **Name.** "CRS guessing game" is a working title; it is one constant in `src/daily.js`
+  plus the page title.
+- The other modes on the two axes above are untouched.
+
+## Layout
+
+```
+index.html, style.css     the page
+src/tables.js             point tables, with source and date
+src/attributes.js         the attributes of a guess and their options
+src/score.js              profile -> section points
+src/profile.js            canonical form, feedback colours
+src/daily.js              day number, today's answer, share text
+src/game.js               the DOM
+data/bands.json           IRCC's pool distribution used as weights
+data/answers.json         the hidden people, built by tools/make-answers.mjs
+tools/                    make-answers, simulate, serve, ircc-oracle
+test/                     node --test
+```
 
 ## Conventions
 
@@ -92,11 +180,13 @@ Rules and data:
 
 - CRS tables: <https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/eligibility/criteria-comprehensive-ranking-system/grid.html>
 - Change notice: <https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/changes.html>
+- IRCC's calculator: <https://ircc.canada.ca/english/immigrate/skilled/crs-tool.asp>
 - High-wage occupation list: <https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/high-wage.html>
 - Rounds of invitations as JSON, with the pool by score band per round:
   <https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_en.json>
-- Draws were reported paused from 3 November 2026 while scores are recalculated; cut-offs
-  and distributions from before that date are not comparable to new-rules scores.
+- Draws are paused from 3 November 2026 while scores are recalculated (stated on the grid
+  page); cut-offs and distributions from before that date are not comparable to new-rules
+  scores. The last round in the JSON is #453 of 28 October 2026.
 - `~/Code/express_entry_score_stats` is the user's own repo on cut-off history. Not opened.
 
 Scoring code, all MIT per the GitHub API, none checked against IRCC's tool:
