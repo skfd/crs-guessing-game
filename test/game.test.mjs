@@ -58,9 +58,9 @@ test('canonical drops what the score cannot see', () => {
 test('feedback colours and arrows', () => {
   assert.deepEqual(compareAttribute('age', 5, 5), { state: 'hit', arrow: null });
   assert.deepEqual(compareAttribute('age', 5, 7), { state: 'close', arrow: 'up' });
-  assert.deepEqual(compareAttribute('age', 5, 8), { state: 'miss', arrow: 'up' });
+  assert.deepEqual(compareAttribute('age', 5, 8), { state: 'miss', arrow: null });
   assert.deepEqual(compareAttribute('edu', 6, 5), { state: 'close', arrow: 'down' });
-  assert.deepEqual(compareAttribute('foreign', 0, 1), { state: 'miss', arrow: 'up' });
+  assert.deepEqual(compareAttribute('foreign', 0, 1), { state: 'miss', arrow: null });
   assert.deepEqual(compareAttribute('sibling', 0, 1), { state: 'miss', arrow: null });
   const a = answers[0].profile;
   assert.ok(compare(a, a).won);

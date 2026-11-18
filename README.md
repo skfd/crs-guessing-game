@@ -74,8 +74,9 @@ each is one place in the code.
 - **Winning means every cell green.** A different person with identical points in all four
   sections is not a win; the game says "same points, different person".
 - **Yellow bands:** two steps for age, one step for education, languages, Canadian work,
-  wage tier and job offer; none for the three-option attributes. Every wrong ordinal cell
-  carries an arrow, grey ones included.
+  wage tier and job offer; none for the three-option attributes. The arrow comes with
+  yellow only; a grey cell says "wrong and not close" and nothing more (`ARROW_ON_MISS` in
+  `src/profile.js`).
 - **Day 1 is 18 November 2026**; the person changes at the player's local midnight.
   Progress is kept in `localStorage`. `data/answers.json` holds 366 people and wraps.
 - **Sampling** (`tools/make-answers.mjs`): a score band is drawn by IRCC's weights
@@ -128,19 +129,21 @@ each is one place in the code.
 
 ## Open questions
 
-- **Six guesses is too many as built.** `node tools/simulate.mjs` plays all 366 answers
-  with a player that ignores the score and only halves each attribute by its own colour and
-  arrow: 90% found in three guesses, all in four. With arrows on yellow cells only
-  (`--close-only`) the same player needs five for most and fails some. A person reading the
-  section points will do better than either. Fewer guesses, arrows only on yellow, or a
-  total-only clue are the levers; play-test before choosing.
+- **Is six guesses right?** Probably generous. `node tools/simulate.mjs` plays all 366
+  answers with a player that ignores the score and only narrows each attribute by its own
+  colour and arrow: 30% found in three guesses, 49% in four, 99% in five, all in six. With
+  arrows on grey cells too (the first build) it was 90% in three and all in four, which is
+  why they were turned off. A person who reads the section points should beat this player,
+  so five guesses or a total-only clue may be the better game. Play-test before choosing.
 - **Is 13 columns too wide?** It fits a desktop; on a phone the board scrolls sideways and
   the share grid is 13 squares per row. Nomination and spouse are nearly free cells when
   the breakdown is shown (a nomination is 600 points; spouse points above zero mean a
   spouse).
 - **Is lowering understandable?** A guess of "3+ years abroad" can come back as a green
-  "1–2 years ∅" when both score the same. Correct, but it may read as the game changing
-  the player's answer.
+  "1–2 years ∅" when both score the same. Worse is the reverse: the player picks the right
+  value, it makes no difference next to the rest of that guess, and it comes back lowered
+  and grey; the form then carries the lowered value into the next guess. Correct by the
+  rules of the game, but it may read as the game changing the player's answer.
 - **Are the sampled people plausible?** The weights are guesses; nobody has looked at a
   month of answers in a row.
 - **Stale pool data.** The band weights are from before 3 November 2026. Replace

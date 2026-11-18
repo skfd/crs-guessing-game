@@ -31,6 +31,11 @@ export function canonical(input, spousePoints = 0) {
   return { profile: p, lowered };
 }
 
+// Whether a grey (wrong and not close) ordinal cell also gets an arrow. With arrows on
+// every wrong cell a player who never looks at the score finds 90% of people in three
+// guesses (tools/simulate.mjs), so the arrow comes with yellow only.
+export const ARROW_ON_MISS = false;
+
 // Feedback for one attribute: { state: 'hit' | 'close' | 'miss', arrow: 'up' | 'down' | null }.
 // The arrow points from the guess towards the answer and is only given for ordinals.
 export function compareAttribute(key, guessIndex, answerIndex) {
@@ -38,10 +43,9 @@ export function compareAttribute(key, guessIndex, answerIndex) {
   if (guessIndex === answerIndex) return { state: 'hit', arrow: null };
   if (a.kind !== 'ordinal') return { state: 'miss', arrow: null };
   const distance = Math.abs(guessIndex - answerIndex);
-  return {
-    state: distance <= (a.close ?? 0) ? 'close' : 'miss',
-    arrow: answerIndex > guessIndex ? 'up' : 'down',
-  };
+  const state = distance <= (a.close ?? 0) ? 'close' : 'miss';
+  const arrow = answerIndex > guessIndex ? 'up' : 'down';
+  return { state, arrow: state === 'close' || ARROW_ON_MISS ? arrow : null };
 }
 
 // Full feedback for a guess against the answer. Both must already be canonical.
