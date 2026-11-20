@@ -59,6 +59,16 @@ export function stillPossible(key, cells) {
   }));
 }
 
+// The open option nearest to option `i`: `i` itself if it is open, the lower one on a
+// tie. `open` is what stillPossible returns.
+export function nearestOpen(open, i) {
+  for (let d = 0; d < open.length; d += 1) {
+    if (open[i - d]) return i - d;
+    if (open[i + d]) return i + d;
+  }
+  return i;
+}
+
 // Full feedback for a guess against the answer. Both must already be canonical.
 export function compare(guess, answer) {
   const cells = ATTRIBUTES.map((a) => ({

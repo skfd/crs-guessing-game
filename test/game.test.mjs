@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { ATTRIBUTES, KEYS, LOWER_ORDER } from '../src/attributes.js';
 import { score, sameScore, tidy } from '../src/score.js';
-import { canonical, compare, compareAttribute, stillPossible } from '../src/profile.js';
+import { canonical, compare, compareAttribute, nearestOpen, stillPossible } from '../src/profile.js';
 import { rng } from '../src/rng.js';
 
 const read = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url), 'utf8'));
@@ -82,6 +82,13 @@ test('feedback never rules out the right option, and a hit leaves only it', () =
       }
     }
   }
+});
+
+test('nearestOpen stays put when it can and otherwise takes the nearest, lower on a tie', () => {
+  assert.equal(nearestOpen([false, true, false, true], 1), 1);
+  assert.equal(nearestOpen([true, false, false, false, true], 2), 0);
+  assert.equal(nearestOpen([false, false, false, true], 0), 3);
+  assert.equal(nearestOpen([true, false, false], 2), 0);
 });
 
 test('every answer is a valid canonical profile', () => {

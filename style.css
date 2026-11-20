@@ -90,6 +90,16 @@ tr.breakdown .ok { color: var(--hit); font-weight: 600; }
 }
 .field-head .picked { color: var(--fg); }
 .chips { display: flex; flex-wrap: wrap; gap: 3px; }
+/* A settled attribute is one line: its name, the right option, and a way back to the chips. */
+.field.settled { grid-column: auto; }
+.field.settled .chips { display: none; }
+.field.settled .field-head { white-space: normal; margin: 0; }
+.field.settled .picked { display: inline; color: var(--hit); font-weight: 600; }
+.field.settled .picked::after { content: " ✓"; }
+.reopen {
+  background: none; color: var(--muted); padding: 0; border-radius: 0;
+  font-size: inherit; font-weight: 400; text-decoration: underline;
+}
 /* One option. Grey is ruled out by a guess and can still be picked; faint and dashed
    cannot be combined with the rest of the form and cannot be picked. */
 .chip {

@@ -158,7 +158,23 @@ Changed on 2026-11-20, at the user's request for something like Wordle's keyboar
 - Chips carry the short labels the board uses; the full wording of the current choice is
   beside the attribute's name (on its own line on a phone). The wording of a chip that is
   not picked is only in its tooltip, which a phone does not have.
-- The form is taller for it: about 870px on a 375px-wide phone, more than a screen.
+- The form is taller for it: about 870px on a 375px-wide phone, more than a screen, before
+  anything is known.
+- **A settled attribute folds to one line** ("Spouse: No accompanying spouse ✓"), so the
+  form shrinks as the player learns; after two guesses of one practice game it was 470px
+  on that phone. "change" unfolds it, and picking the right option again folds it back.
+  It only folds while the form is set to the right option.
+- **The next guess starts from the last one with every ruled-out choice moved** to the
+  nearest option still open, the lower one on a tie (`nearestOpen` in `src/profile.js`).
+  Before, it started as a copy of the last guess, wrong choices included. The form's own
+  rules still apply afterwards, so a second language pushed down by the first can land on
+  a ruled-out option.
+- **This makes pressing Guess a strategy.** A player who never touches the form and only
+  presses Guess finds 363 of the 366 people within six guesses (1 in one, 20 in two, 100
+  in three, 194 in four, 37 in five, 11 in six). Measured once on 2026-11-20 with a
+  throwaway script, not kept. Before this change the second press was refused as a
+  repeat. Whether that is acceptable is an open question for the user; the remedies are
+  fewer guesses, or moving only the choices the player is looking at.
 
 ## Design notes from the prior-art survey
 

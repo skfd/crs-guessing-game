@@ -5,7 +5,7 @@
 import { ATTRIBUTES, KEYS } from './attributes.js';
 import { LANG1_CLB, LANG2_CLB } from './tables.js';
 import { score, sameScore, tidy, SECTIONS } from './score.js';
-import { canonical, compare, stillPossible } from './profile.js';
+import { canonical, compare, nearestOpen, stillPossible } from './profile.js';
 import { answerForDay, shareText } from './daily.js';
 import { MODE, closeness, revealedSections, steps, variantOffset } from './modes.js';
 import { $, el, answersFile, clue, day, label, load, mode, save, shareUrl } from './page.js';
@@ -50,13 +50,26 @@ for (const a of ATTRIBUTES) {
   const inputs = a.options.map((text, i) => el('input', { type: 'radio', name: a.key, value: i, ariaLabel: text }));
   const chips = inputs.map((input, i) => el('label', { className: 'chip', title: a.options[i] }, [input, a.short[i]]));
   const picked = el('span', { className: 'picked' });
-  for (const input of inputs) input.addEventListener('change', syncForm);
-  fields[a.key] = { inputs, chips, picked };
-  const field = el('div', { className: a.options.length > 7 ? 'field wide' : 'field', role: 'radiogroup', ariaLabel: a.label }, [
-    el('div', { className: 'field-head' }, [`${a.label}: `, picked]),
+  // Shown on a settled attribute, whose chips are folded away: brings them back.
+  const reopen = el('button', { type: 'button', className: 'reopen', textContent: 'change', hidden: true });
+  const node = el('div', { className: a.options.length > 7 ? 'field wide' : 'field', role: 'radiogroup', ariaLabel: a.label }, [
+    el('div', { className: 'field-head' }, [`${a.label}: `, picked, ' ', reopen]),
     el('div', { className: 'chips' }, chips),
   ]);
-  $('fields').append(field);
+  // `hit` is the option known to be right, or -1; `open` is what stillPossible says;
+  // `opened` is true while the player has unfolded a settled attribute.
+  const field = { inputs, chips, picked, reopen, node, hit: -1, open: null, opened: false };
+  fields[a.key] = field;
+  inputs.forEach((input, i) => input.addEventListener('change', () => {
+    if (i === field.hit) field.opened = false; // back on the right option: fold again
+    syncForm();
+  }));
+  reopen.addEventListener('click', () => {
+    field.opened = true;
+    syncForm();
+    inputs[field.hit].focus();
+  });
+  $('fields').append(node);
 }
 if (hitTheScore) {
   $('form-note').textContent = answer.spousePoints
@@ -88,8 +101,13 @@ function syncForm() {
     inputs[i].checked = true;
   }
   for (const a of ATTRIBUTES) {
-    const { inputs, picked } = fields[a.key];
-    picked.textContent = a.options[inputs.findIndex((input) => input.checked)];
+    const field = fields[a.key];
+    const i = field.inputs.findIndex((input) => input.checked);
+    field.picked.textContent = a.options[i];
+    // An attribute that is known and set to what is known needs no chips: one line.
+    const settled = i === field.hit && !field.opened;
+    field.node.classList.toggle('settled', settled);
+    field.reopen.hidden = !settled;
   }
 }
 
@@ -102,6 +120,8 @@ function markForm(results) {
     const cells = results.map((r) => r.cells.find((c) => c.key === a.key));
     const open = stillPossible(a.key, cells);
     const found = cells.some((c) => c.state === 'hit');
+    fields[a.key].open = open;
+    fields[a.key].hit = found ? open.indexOf(true) : -1;
     fields[a.key].chips.forEach((chip, i) => {
       chip.classList.toggle('hit', found && open[i]);
       chip.classList.toggle('out', !open[i]);
@@ -190,8 +210,13 @@ function render() {
 
   // Mark what is already known in the form and carry the last guess forward.
   const last = results.at(-1);
+  // The next guess starts from the last one, with every choice a guess has ruled out
+  // moved to the nearest one that is still open.
   markForm(results);
-  if (last) writeForm(last.profile);
+  if (last) {
+    writeForm(hitTheScore ? last.profile : Object.fromEntries(
+      KEYS.map((k) => [k, nearestOpen(fields[k].open, last.profile[k])])));
+  }
 
   let note = '';
   if (last && !last.won && !hitTheScore && last.score.total === answerScore.total) {
