@@ -46,7 +46,9 @@ Made with the user on 2026-11-18. Change them on purpose, not by drift.
   - Up-front clue: total only / total plus section breakdown / breakdown revealed one
     section per wrong guess.
 - **Hidden profiles are synthetic**, sampled so that their scores follow IRCC's published
-  score-band distribution of the pool. IRCC does not publish attributes, only score bands.
+  score-band distribution of the pool. For the pool IRCC publishes only score bands. For
+  people invited it publishes attributes one at a time, never joined to each other or
+  to the score; see "What IRCC publishes about who is invited" under Leads.
 - **Score with the 3 November 2026 rules only**, once they are verified against canada.ca
   and IRCC's own calculator. No "would this person be invited" line until a draw has
   happened under the new rules.
@@ -597,6 +599,21 @@ Rules and data:
   page); cut-offs and distributions from before that date are not comparable to new-rules
   scores. The last round in the JSON is #453 of 28 October 2026.
 - `~/Code/express_entry_score_stats` is the user's own repo on cut-off history. Not opened.
+
+What IRCC publishes about who is invited (read 2026-11-20, through a fetching agent; the
+data files themselves were not opened, except the start of the age-group CSV):
+
+- Express Entry Year-End Report 2024, the latest edition; the 2025 address is a 404:
+  <https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/express-entry-year-end-report-2024.html>
+  Tables 7 to 10 count the 98,903 invitations of 2024 by age, education, first-language
+  CLB, years of Canadian and foreign work, and additional points. Each is one attribute
+  at a time. No table gives the scores of people invited, or points by section.
+- Open data, updated monthly, invited candidates by year, province, program and one more
+  attribute; one file is by "ITA score", not opened. Counts are rounded to 5:
+  <https://open.canada.ca/data/en/dataset/593e9165-c6ce-4f9b-b519-03d315f92cd4>
+- Open data on people admitted through Express Entry; no score fields seen:
+  <https://open.canada.ca/data/en/dataset/52e4b14b-597a-4ecf-a184-23a6e69b0d57>
+- All of it is under the rules before 3 November 2026.
 
 Scoring code, all MIT per the GitHub API, none checked against IRCC's tool:
 
