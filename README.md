@@ -194,7 +194,7 @@ links, in "find the person" only.
   the whole combination is right. It never says which part is wrong, so the section
   points are what tells the player which part to change.
 - **Two rules for a joined cell.** `count`: yellow when some part is right, with "1 of 2"
-  in the cell, grey when none is. `all` (`-all` in the address, "no yellow" on the page):
+  in the cell, grey when none is. `all` (`-all` in the address, "no yellow" on the page, four guesses):
   green or grey and nothing else. Single attributes keep their yellow and arrow.
 - **Groupings.** `work` joins Canadian work with its wage tier; `lang` joins first and
   second language; `pairs` joins five: education with study in Canada, the two languages,
@@ -226,6 +226,23 @@ links, in "find the person" only.
   joining costs that player little: 2.56 for `pairs` with `count`, 3.19 for `pairs-all`,
   3.58 for `themes` under `all`. The colours matter most to a player who cannot do the
   arithmetic.
+- **Days that cannot be won**, asked for by the user on 2026-11-20: a game a good player
+  sometimes loses. Two knobs, both measured with the reasoner.
+  - **`pairs-all` has four guesses, not six** (`GUESSES` in `src/groups.js`). With the
+    full clue the reasoner finds 63% by three guesses, 90% by four, 98% by five: four
+    guesses is one lost day in ten for a player who forgets nothing.
+  - **The total-only clue** (`node tools/simulate-tuples.mjs pairs total`, a few
+    minutes). Nothing was built for it; `?clue=total` already combined with `?tuples=`.
+
+    | total-only clue | reasoner by 3 | by 4 | by 5 | by 6 | mean |
+    |---|---|---|---|---|---|
+    | nothing joined | 99% | 100% | 100% | 100% | 2.37 |
+    | pairs, count | 67% | 97% | 100% | 100% | 3.25 |
+    | pairs, all | 12% | 33% | 58% | 75% | 5.44 |
+
+    So `pairs` with the total alone is hard but always winnable in six, and `pairs-all`
+    with the total alone and its four guesses is lost two days in three even by the
+    reasoner: probably too far.
 - **Still automatic.** The chips are still marked, a group with one combination left is
   still picked for the player, and a green group still folds. In one game, after two
   guesses seven of the eight groups were settled. The next knob, if it still plays

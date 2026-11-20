@@ -71,9 +71,12 @@ export const TUPLE_CHOICES = [
   { id: '', label: 'One by one' },
   { id: 'work', label: 'Work joined' },
   { id: 'pairs', label: 'Five pairs' },
-  { id: 'pairs-all', label: 'Five pairs, no yellow' },
+  { id: 'pairs-all', label: 'Five pairs, no yellow, four guesses' },
 ];
 const MOST_CHIPS = 40;
+// Where a choice has its own number of guesses. Four on pairs-all is where a player who
+// forgets nothing still loses one day in ten (tools/simulate-tuples.mjs).
+const GUESSES = { 'pairs-all': 4 };
 
 // Reads ?tuples=. Anything unknown is the game as it was: every attribute by itself.
 export function parseTuples(asked) {
@@ -82,7 +85,8 @@ export function parseTuples(asked) {
   if (!grouping || name === 'none' || grouping.some((g) => combos(g).length > MOST_CHIPS)) {
     return { id: '', grouping: GROUPINGS.none, rule: 'count' };
   }
-  return { id: name + (all ?? ''), grouping, rule: all ? 'all' : 'count' };
+  const id = name + (all ?? '');
+  return { id, grouping, rule: all ? 'all' : 'count', guesses: GUESSES[id] };
 }
 
 // What a combination is called, short (chip, cell) and in full (tooltip, the line above

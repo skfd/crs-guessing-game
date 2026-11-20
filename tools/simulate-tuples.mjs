@@ -3,12 +3,13 @@
 //
 //   node tools/simulate-tuples.mjs            every grouping and rule
 //   node tools/simulate-tuples.mjs pairs      one grouping
+//   node tools/simulate-tuples.mjs pairs total   under the total-only clue (minutes)
 //
 // The clicker ignores the score and narrows each cell by its own colour, picking the
 // middle of what is left: what the marked chips let a person do without thinking.
 //
 // The reasoner starts from everyone who has the hidden person's four section subtotals
-// (the full clue), guesses one of them at random, and keeps whoever would have drawn the
+// (the full clue) or only the same total (the total-only clue), guesses one of them at random, and keeps whoever would have drawn the
 // same colours. It is not the best possible player, but it never forgets anything.
 //
 // A grouping is worth playing when the clicker fails and the reasoner does not. Takes
@@ -26,7 +27,8 @@ const answers = file.answers.map((entry) => ({
   profile: Object.fromEntries(KEYS.map((k, i) => [k, entry.p[i]])), sp: entry.sp,
 }));
 const LIMIT = 12;
-const only = process.argv[2];
+const only = process.argv[2] === 'all' ? '' : process.argv[2];
+const clue = process.argv[3] === 'total' ? 'total' : 'full';
 
 // ---- everyone with the same four sections ------------------------------------------------
 
@@ -37,13 +39,18 @@ function unpack(n) {
   for (let i = KEYS.length - 1; i >= 0; i -= 1) { p[KEYS[i]] = n % SIZES[i]; n = Math.floor(n / SIZES[i]); }
   return p;
 }
-const sectionKey = (s) => (s.core * 128 + s.transfer) * 1024 + s.additional;
+// What a profile must share with the hidden person to be a candidate. Under the
+// total-only clue that is the total, less the spouse points a guess with a spouse borrows.
+const clueKey = (s) => (clue === 'total' ? s.total : (s.core * 128 + s.transfer) * 1024 + s.additional);
 
+const totals = answers.map((a) => score(a.profile, a.sp).total);
 function findCandidates() {
-  const wanted = new Map(); // section key -> the answers that have it
+  const wanted = new Map(); // clue key of a spouseless score -> the answers it could be
+  const want = (key, i) => { if (!wanted.get(key)?.includes(i)) wanted.set(key, [...(wanted.get(key) ?? []), i]); };
   answers.forEach((a, i) => {
-    const key = sectionKey(score(a.profile, a.sp));
-    wanted.set(key, [...(wanted.get(key) ?? []), i]);
+    const s = score(a.profile, a.sp);
+    want(clueKey({ ...s, total: s.total - s.spouse }), i);
+    if (clue === 'total') { want(s.total, i); want(s.total - a.sp, i); }
   });
   const found = answers.map(() => []);
   const isCanonical = new Map();
@@ -52,12 +59,14 @@ function findCandidates() {
     if (depth === KEYS.length) {
       const t = tidy(p);
       if (t.lang2 !== p.lang2 || t.hw !== p.hw) return; // cannot exist
-      const hits = wanted.get(sectionKey(score(p, 0)));
+      const bare = score(p, 0);
+      const hits = wanted.get(clueKey(bare));
       if (!hits) return;
       for (const i of hits) {
         const a = answers[i];
         // A spouse in a guess brings the hidden spouse's points.
-        if ((p.spouse ? a.sp : 0) !== (a.profile.spouse ? a.sp : 0)) continue;
+        const lent = p.spouse ? a.sp : 0;
+        if (clue === 'total' ? bare.total + lent !== totals[i] : lent !== (a.profile.spouse ? a.sp : 0)) continue;
         const n = pack(p);
         if (!isCanonical.has(n)) isCanonical.set(n, canonical({ ...p }, a.sp).lowered.length === 0);
         if (isCanonical.get(n)) found[i].push(n);
@@ -100,11 +109,11 @@ function clicker(answer, grouping, rule) {
 function reasoner(answer, candidates, grouping, rule, random) {
   let left = candidates;
   for (let n = 1; n <= LIMIT; n += 1) {
-    const guess = left[Math.floor(random() * left.length)];
+    const guess = unpack(left[Math.floor(random() * left.length)]);
     const { cells, won } = compareGrouped(grouping, guess, answer.profile, rule);
     if (won) return n;
     const seen = signature(cells);
-    left = left.filter((c) => signature(compareGrouped(grouping, guess, c, rule).cells) === seen);
+    left = left.filter((c) => signature(compareGrouped(grouping, guess, unpack(c), rule).cells) === seen);
   }
   return LIMIT + 1;
 }
@@ -112,9 +121,9 @@ function reasoner(answer, candidates, grouping, rule, random) {
 // ---- run ---------------------------------------------------------------------------------
 
 console.log('Scoring every profile...');
-const candidates = findCandidates().map((list) => list.map(unpack));
+const candidates = findCandidates();
 const sizes = candidates.map((c) => c.length).sort((a, b) => a - b);
-console.log(`People with the same four sections as the hidden one: median ${sizes[sizes.length >> 1]}, `
+console.log(`People with the same ${clue === 'total' ? 'total' : 'four sections'} as the hidden one: median ${sizes[sizes.length >> 1]}, `
   + `smallest ${sizes[0]}, largest ${sizes.at(-1)}.\n`);
 
 const by = (used, n) => `${Math.round(100 * used.filter((u) => u <= n).length / used.length)}%`.padStart(5);

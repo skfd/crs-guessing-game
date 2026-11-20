@@ -19,7 +19,7 @@ const comboIndex = (g, profile) => combos(g).findIndex((c) => c.every((v, x) => 
 const ARROW = { up: '↑', down: '↓' };
 const START = { spouse: 0, age: 2, edu: 4, lang1: 3, lang2: 0, first: 0, cwe: 0, hw: 0,
   offer: 0, foreign: 0, canEdu: 0, sibling: 0, pnp: 0 };
-const MAX = MODE[mode].guesses;
+const MAX = tuples.guesses ?? MODE[mode].guesses;
 const hitTheScore = mode === 'score';
 
 const answer = answerForDay(answersFile, day + variantOffset(mode, clue));
