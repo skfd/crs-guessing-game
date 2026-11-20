@@ -82,12 +82,30 @@ tr.breakdown .ok { color: var(--hit); font-weight: 600; }
   display: grid; grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
   gap: 0.6rem 0.75rem; margin: 0.5rem 0 1rem;
 }
-.fields label { display: flex; flex-direction: column; font-size: 0.8rem; color: var(--muted); gap: 0.15rem; }
-.fields select {
-  font: inherit; color: var(--fg); background: var(--card);
-  border: 2px solid var(--line); border-radius: 0.4rem; padding: 0.35rem 0.4rem; width: 100%;
+.field { min-width: 0; }
+.field.wide { grid-column: 1 / -1; }
+.field-head {
+  font-size: 0.8rem; color: var(--muted); margin-bottom: 0.2rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.fields select.known { border-color: var(--hit); }
+.field-head .picked { color: var(--fg); }
+.chips { display: flex; flex-wrap: wrap; gap: 3px; }
+/* One option. Grey is ruled out by a guess and can still be picked; faint and dashed
+   cannot be combined with the rest of the form and cannot be picked. */
+.chip {
+  position: relative; min-width: 2.4rem; padding: 0.3rem 0.4rem; text-align: center;
+  font-size: 0.85rem; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap;
+  background: var(--card); border: 2px solid var(--muted); border-radius: 0.35rem; cursor: pointer;
+}
+.chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: inherit; }
+.chip.out {
+  background: color-mix(in srgb, var(--miss) 30%, var(--bg)); border-color: transparent;
+  color: var(--muted); font-weight: 400; text-decoration: line-through;
+}
+.chip.hit { background: var(--hit); border-color: var(--hit); color: var(--on-colour); }
+.chip:has(input:disabled) { background: transparent; border: 2px dashed var(--line); color: var(--muted); opacity: 0.5; cursor: not-allowed; }
+.chip:has(input:checked) { border-color: var(--fg); box-shadow: 0 0 0 1px var(--fg); }
+.chip:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
 button {
   font: inherit; font-weight: 600; cursor: pointer;
   background: var(--fg); color: var(--bg); border: 0; border-radius: 0.5rem; padding: 0.6rem 1.4rem;

@@ -5,7 +5,7 @@
 import { ATTRIBUTES, KEYS } from './attributes.js';
 import { LANG1_CLB, LANG2_CLB } from './tables.js';
 import { score, sameScore, tidy, SECTIONS } from './score.js';
-import { canonical, compare } from './profile.js';
+import { canonical, compare, stillPossible } from './profile.js';
 import { answerForDay, shareText } from './daily.js';
 import { MODE, closeness, revealedSections, steps, variantOffset } from './modes.js';
 import { $, el, answersFile, clue, day, label, load, mode, save, shareUrl } from './page.js';
@@ -42,13 +42,21 @@ function evaluate(raw) {
 
 // ---- form -------------------------------------------------------------------------------
 
-const selects = {};
+// Every option of every attribute is a chip that stays on screen, so that what the
+// guesses have ruled out can be marked on it, as on Wordle's keyboard. A chip is a label
+// around a radio button.
+const fields = {};
 for (const a of ATTRIBUTES) {
-  const select = el('select', { name: a.key }, a.options.map(
-    (text, i) => el('option', { value: i, textContent: text })));
-  selects[a.key] = select;
-  select.addEventListener('change', syncForm);
-  $('fields').append(el('label', {}, [a.label, select]));
+  const inputs = a.options.map((text, i) => el('input', { type: 'radio', name: a.key, value: i }));
+  const chips = inputs.map((input, i) => el('label', { className: 'chip', title: a.options[i] }, [input, a.short[i]]));
+  const picked = el('span', { className: 'picked' });
+  for (const input of inputs) input.addEventListener('change', syncForm);
+  fields[a.key] = { inputs, chips, picked };
+  const field = el('div', { className: a.options.length > 7 ? 'field wide' : 'field', role: 'radiogroup', ariaLabel: a.label }, [
+    el('div', { className: 'field-head' }, [`${a.label}: `, picked]),
+    el('div', { className: 'chips' }, chips),
+  ]);
+  $('fields').append(field);
 }
 if (hitTheScore) {
   $('form-note').textContent = answer.spousePoints
@@ -57,21 +65,51 @@ if (hitTheScore) {
 }
 
 function readForm() {
-  return Object.fromEntries(KEYS.map((k) => [k, Number(selects[k].value)]));
+  return Object.fromEntries(KEYS.map((k) => [k, fields[k].inputs.findIndex((input) => input.checked)]));
 }
 function writeForm(profile) {
-  for (const k of KEYS) selects[k].value = profile[k];
+  for (const k of KEYS) fields[k].inputs[profile[k]].checked = true;
   syncForm();
 }
-// Greys out what cannot be: a second language above the first, a wage tier with no work.
+// Disables what cannot be: a second language above the first, a wage tier with no work.
+// A choice that has become impossible falls back to the highest one that is not. This is
+// not the same as ruled out: a ruled-out option can still be picked.
 function syncForm() {
   const p = readForm();
-  [...selects.lang2.options].forEach((option, i) => {
-    option.disabled = LANG2_CLB[i] > LANG1_CLB[p.lang1];
-  });
-  while (selects.lang2.selectedOptions[0].disabled) selects.lang2.value -= 1;
-  selects.hw.disabled = p.cwe === 0;
-  if (p.cwe === 0) selects.hw.value = 0;
+  const allow = {
+    lang2: (i) => LANG2_CLB[i] <= LANG1_CLB[p.lang1],
+    hw: (i) => i === 0 || p.cwe > 0,
+  };
+  for (const [key, allowed] of Object.entries(allow)) {
+    const { inputs } = fields[key];
+    inputs.forEach((input, i) => { input.disabled = !allowed(i); });
+    let i = p[key];
+    while (inputs[i].disabled) i -= 1;
+    inputs[i].checked = true;
+  }
+  for (const a of ATTRIBUTES) {
+    const { inputs, picked } = fields[a.key];
+    picked.textContent = a.options[inputs.findIndex((input) => input.checked)];
+  }
+}
+
+// Marks each chip with what the guesses so far say about it: green for the option known
+// to be right, grey for one that cannot be. "Hit the score" has no hidden person to rule
+// anything out against, so its chips stay plain.
+function markForm(results) {
+  if (hitTheScore) return;
+  for (const a of ATTRIBUTES) {
+    const cells = results.map((r) => r.cells.find((c) => c.key === a.key));
+    const open = stillPossible(a.key, cells);
+    const found = cells.some((c) => c.state === 'hit');
+    fields[a.key].chips.forEach((chip, i) => {
+      chip.classList.toggle('hit', found && open[i]);
+      chip.classList.toggle('out', !open[i]);
+      const what = found && open[i] ? ' (right)' : open[i] ? '' : ' (ruled out)';
+      fields[a.key].inputs[i].ariaLabel = a.options[i] + what;
+      chip.title = a.options[i] + what;
+    });
+  }
 }
 
 // ---- board ------------------------------------------------------------------------------
@@ -152,10 +190,7 @@ function render() {
 
   // Mark what is already known in the form and carry the last guess forward.
   const last = results.at(-1);
-  for (const a of ATTRIBUTES) {
-    const known = results.some((r) => r.cells.find((c) => c.key === a.key).state === 'hit');
-    selects[a.key].classList.toggle('known', known);
-  }
+  markForm(results);
   if (last) writeForm(last.profile);
 
   let note = '';

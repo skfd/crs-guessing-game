@@ -48,6 +48,17 @@ export function compareAttribute(key, guessIndex, answerIndex) {
   return { state, arrow: state === 'close' || ARROW_ON_MISS ? arrow : null };
 }
 
+// Which options of an attribute are still open after the feedback given so far: one
+// boolean per option. `cells` are that attribute's cells from earlier guesses. An option
+// is open if it would have drawn exactly the colour and arrow each of them got, so this
+// knows nothing the player was not shown.
+export function stillPossible(key, cells) {
+  return BY_KEY[key].options.map((_, i) => cells.every((c) => {
+    const seen = compareAttribute(key, c.value, i);
+    return seen.state === c.state && seen.arrow === c.arrow;
+  }));
+}
+
 // Full feedback for a guess against the answer. Both must already be canonical.
 export function compare(guess, answer) {
   const cells = ATTRIBUTES.map((a) => ({

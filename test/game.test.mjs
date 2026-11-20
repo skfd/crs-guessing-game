@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { ATTRIBUTES, KEYS, LOWER_ORDER } from '../src/attributes.js';
 import { score, sameScore, tidy } from '../src/score.js';
-import { canonical, compare, compareAttribute } from '../src/profile.js';
+import { canonical, compare, compareAttribute, stillPossible } from '../src/profile.js';
 import { rng } from '../src/rng.js';
 
 const read = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url), 'utf8'));
@@ -65,6 +65,23 @@ test('feedback colours and arrows', () => {
   const a = answers[0].profile;
   assert.ok(compare(a, a).won);
   assert.ok(!compare({ ...a, age: (a.age + 1) % 19 }, a).won);
+});
+
+test('feedback never rules out the right option, and a hit leaves only it', () => {
+  const random = rng(11);
+  for (const { profile: answer, spousePoints } of answers) {
+    const seen = Object.fromEntries(KEYS.map((k) => [k, []]));
+    for (let n = 0; n < 6; n += 1) {
+      const guess = canonical(randomProfile(random), spousePoints).profile;
+      for (const c of compare(guess, answer).cells) {
+        seen[c.key].push(c);
+        const open = stillPossible(c.key, seen[c.key]);
+        assert.ok(open[answer[c.key]], `${c.key}: the answer was ruled out`);
+        assert.ok(!open[c.value] || c.state === 'hit', `${c.key}: a wrong guess is still open`);
+        if (c.state === 'hit') assert.equal(open.filter(Boolean).length, 1);
+      }
+    }
+  }
 });
 
 test('every answer is a valid canonical profile', () => {

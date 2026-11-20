@@ -138,6 +138,26 @@ axes to be built. Every choice here is provisional.
     A spouse is one phrase, "with a spouse who brings 18 points".
   - The clue axis does not apply: a line-up shows the total only.
 
+## The guess form
+
+Changed on 2026-11-20, at the user's request for something like Wordle's keyboard.
+
+- **Every option is a chip that stays on screen**, where there used to be thirteen
+  dropdowns. A dropdown hides its options until it is opened, and a phone's picker
+  ignores colours on them, so marks inside one would not have been seen.
+- **A chip is marked with what the guesses so far say.** Green is the option known to be
+  right. Grey and struck through is ruled out, and can still be picked, as a grey letter
+  can in Wordle. The marks come from the colours and arrows already shown and nothing
+  else (`stillPossible` in `src/profile.js`, which `tools/simulate.mjs` now plays with
+  too), so they tell the player nothing new; they only save the bookkeeping.
+- **Faint and dashed is something else:** an option the rest of the form makes impossible
+  (a second language above the first, a wage tier with no Canadian work). It cannot be
+  picked.
+- **"Hit the score" has the chips but no marks.** It hides no one to rule options out
+  against.
+- Chips carry the short labels the board uses; the full wording of the current choice is
+  beside the attribute's name, and of any chip in its tooltip.
+
 ## Design notes from the prior-art survey
 
 - The score is a free Tradle-style closeness signal: show each guess's CRS, the gap and the
