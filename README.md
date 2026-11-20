@@ -170,6 +170,10 @@ this mode only.
   English-first scores the same.
 - **Eleven are nominated**, so that a nominated person has neighbours 12 to 70 points
   away. 29 of 1,830 rounds in a year still take whoever is nearest.
+- **On a desktop it has the frame of the guessing modes**, asked for by the user on
+  2026-11-20: from 84rem wide, the score and the round on the left, the four people two
+  by two where the choices are. At 1,366 by 768 a round fits the screen before the pick;
+  with the scores shown it is within a few pixels of the bottom. Narrower, it is one column.
 - **Open:** each person returns about every five days with the same score, so a regular
   could learn them. The user: "we're still prototyping". Saved picks from before the
   cast point at different people. `art/cast.html` shows all hundred; the pictures have

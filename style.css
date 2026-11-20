@@ -280,15 +280,29 @@ body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
     & #form-note { margin: 0 0 0.3rem; min-height: 1.2rem; }
     & details { margin-top: 0.5rem; padding-top: 0.4rem; }
   }
-  /* Line-up keeps its one column and takes the short header, so a round with its scores shown fits. */
+  /* Line-up takes the same frame as the guessing modes: the score and the round on the
+     left, the four people where the choices are, two by two. */
   body[data-mode="lineup"] {
-    & main { padding: 0.5rem 1rem 1rem; }
+    & main {
+      max-width: 96rem; padding: 0.5rem 1rem 1rem;
+      display: grid; grid-template-columns: minmax(0, 1fr) 46rem; grid-template-rows: auto auto auto auto 1fr;
+      column-gap: 1rem; align-items: start;
+    }
+    & main > * { grid-column: 1 / -1; }
     & header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1rem; margin-bottom: 0.5rem; }
     & h1 { margin: 0; font-size: 1.3rem; }
     & .tagline { margin: 0; flex: 1 1 20rem; font-size: 0.9rem; }
     & .picker { margin: 0; }
-    & #clue { margin-bottom: 0.5rem; }
-    & #end { margin: 0.5rem 0; padding: 0.6rem 1.25rem; }
+    & #clue { grid-column: 1; grid-row: 2; position: static; padding: 0.5rem 1rem; margin-bottom: 0.5rem; }
+    & .total-value { font-size: 2.4rem; }
+    & #lineup-game { display: contents; }
+    & .round-head { grid-column: 1; grid-row: 3; }
+    & .round-foot { grid-column: 1; grid-row: 4; }
+    & #end { grid-column: 1; grid-row: 5; margin: 0.5rem 0; padding: 0.6rem 1.25rem; }
+    & #people { grid-column: 2; grid-row: 2 / span 4; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    & button.person { padding: 0.6rem 0.75rem; grid-template-columns: 6.5rem 1fr; }
+    & button.person ul { font-size: 0.85rem; }
+    & button.person li { margin: 0.08rem 0; }
     & details { margin-top: 0.5rem; padding-top: 0.4rem; }
   }
   /* A cell of "hit the score" has a line of steps for each part: smaller, to fit eight across. */
