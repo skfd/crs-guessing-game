@@ -2,7 +2,7 @@
 // form, feedback rows, end screen. Rules live in score.js, profile.js and modes.js; this
 // file only draws.
 
-import { ATTRIBUTES, KEYS } from './attributes.js';
+import { ATTRIBUTES, BY_KEY, KEYS } from './attributes.js';
 import { LANG1_CLB, LANG2_CLB } from './tables.js';
 import { score, sameScore, tidy, SECTIONS } from './score.js';
 import { canonical, carryForward } from './profile.js';
@@ -56,28 +56,42 @@ function evaluate(raw) {
 // Every option of every attribute is a chip that stays on screen, so that what the
 // guesses have ruled out can be marked on it, as on Wordle's keyboard. A chip is a label
 // around a radio button.
-// A group of several attributes has a chip for every combination that can exist, a line
-// of them for each value of its first attribute.
+// A group of several attributes has a chip for every combination that can exist. A pair
+// is laid out as a table: a line for each value of its first attribute, named at the
+// start of the line, and on it a chip for each value of the second, which is all the
+// chip says.
 const fields = {};
 for (const g of GROUPS) {
   const list = combos(g);
   const wording = list.map((c) => comboWording(g, c));
+  // Beside the group's name: the full wording of a single attribute, the short name of a
+  // combination, whose full wording is two sentences.
+  const said = g.keys.length > 1 ? list.map((c) => comboName(g, c)) : wording;
   const inputs = list.map((_, i) => el('input', { type: 'radio', name: g.id, value: i, ariaLabel: wording[i] }));
-  const chips = inputs.map((input, i) => el('label', { className: 'chip', title: wording[i] }, [input, comboName(g, list[i])]));
+  const table = g.keys.length === 2 && list.length > 4;
+  const [down, across] = g.keys.map((k) => BY_KEY[k]);
+  const chips = inputs.map((input, i) => el('label', { className: 'chip', title: wording[i] }, [
+    input, table ? across.short[list[i][1]] : comboName(g, list[i]),
+  ]));
   const picked = el('span', { className: 'picked' });
   // Shown on a settled attribute, whose chips are folded away: brings them back.
   const reopen = el('button', { type: 'button', className: 'reopen', textContent: 'change', hidden: true });
-  const joined = g.keys.length > 1;
-  const lines = joined
-    ? [...new Set(list.map((c) => c[0]))].map((first) => el('div', { className: 'chip-line' }, chips.filter((_, i) => list[i][0] === first)))
+  const lines = table
+    ? [
+      el('div', { className: 'axis', textContent: `${down.label} ↓ ${across.label} →` }),
+      ...[...new Set(list.map((c) => c[0]))].map((first) => el('div', { className: 'chip-line' }, [
+        el('span', { className: 'line-name', textContent: down.short[first] }),
+        ...chips.filter((_, i) => list[i][0] === first),
+      ])),
+    ]
     : chips;
-  const node = el('div', { className: `field${list.length > 7 ? ' wide' : ''}${joined ? ' joined' : ''}`, role: 'radiogroup', ariaLabel: g.label }, [
+  const node = el('div', { className: `field${table ? ' table' : list.length > 7 ? ' wide' : ''}`, role: 'radiogroup', ariaLabel: g.label }, [
     el('div', { className: 'field-head' }, [`${g.label}: `, picked, ' ', reopen]),
     el('div', { className: 'chips' }, lines),
   ]);
   // `hit` is the option known to be right, or -1; `open` is what stillPossibleGroup says;
   // `opened` is true while the player has unfolded a settled attribute.
-  const field = { inputs, chips, wording, picked, reopen, node, hit: -1, open: null, opened: false };
+  const field = { inputs, chips, wording, said, picked, reopen, node, hit: -1, open: null, opened: false };
   fields[g.id] = field;
   inputs.forEach((input, i) => input.addEventListener('change', () => {
     if (i === field.hit) field.opened = false; // back on the right option: fold again
@@ -133,7 +147,7 @@ function syncForm() {
   for (const g of GROUPS) {
     const field = fields[g.id];
     const i = pickedIndex(g);
-    field.picked.textContent = i < 0 ? 'choose one' : field.wording[i];
+    field.picked.textContent = i < 0 ? 'choose one' : field.said[i];
     field.node.classList.toggle('unset', i < 0);
     // An attribute that is known and set to what is known needs no chips: one line.
     const settled = i >= 0 && i === field.hit && !field.opened;
@@ -214,10 +228,10 @@ function guessRows(result, revealed) {
   const cells = result.cells.map((c, j) => {
     const g = GROUPS[j];
     const wasLowered = c.keys.some((k) => result.lowered.includes(k));
-    const td = el('td', { className: `cell ${c.state}` });
+    const td = el('td', { className: `cell ${c.state}${c.keys.length > 1 ? ' joined' : ''}` });
     td.dataset.label = g.label; // shown above the value where the header row is not
     if (wasLowered) td.append(el('span', { className: 'lowered', textContent: '∅' }));
-    td.append(comboName(g, c.values));
+    td.append(comboName(g, c.values).replace(' + ', '\n+ '));
     if (c.arrow) td.append(el('span', { className: 'arrow', textContent: ARROW[c.arrow] }));
     // A yellow joined cell says how many of its parts are right, never which.
     const partly = c.keys.length > 1 && c.state === 'close';

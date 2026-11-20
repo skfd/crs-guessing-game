@@ -186,8 +186,13 @@ Changed on 2026-11-20, at the user's request for something like Wordle's keyboar
 
 An experiment, built on 2026-11-20 because the user found the game "basically
 autoguessing": every attribute is narrowed by its own colour, the chips keep the score,
-and nothing is left to work out. Not the default; reached by `?tuples=` or the "Choices"
-links, in "find the person" only.
+and nothing is left to work out. In "find the person" only.
+
+**Since 2026-11-20 this is the game.** The user found the two joined versions better and
+asked for "one by one" and "work joined" to go. The bare address plays `pairs`; the
+"Rules" links offer it ("yellow hints, six guesses") and `pairs-all` ("no yellow, four
+guesses"). The game with nothing joined is still at `?tuples=none`, with its old saved
+games, and `work` and `lang` still answer by address; no link leads to them.
 
 - **A tuple is one pick and one cell** (`src/groups.js`). The chip names a combination
   ("2y 1.5×"), and only combinations that can exist are offered. The cell is green when
@@ -247,13 +252,23 @@ links, in "find the person" only.
   still picked for the player, and a green group still folds. In one game, after two
   guesses seven of the eight groups were settled. The next knob, if it still plays
   itself, is to stop marking joined groups.
-- **Cost: the form is twice as tall.** 1,763px on a 375px-wide phone before anything is
-  known, against 870px; 995px after two guesses of one game. Chips for a pair are laid
-  out a line per value of its first attribute.
-- **Not done.** A game with tuples hides the same person as the game without, for the
-  same clue, so playing both on a day spoils one. It has its own saved game and share
-  label ("#3 tuples pairs"). "Hit the score" ignores `?tuples=`. `tools/simulate.mjs` is
-  unchanged and still plays the game with nothing joined.
+- **A pair is a table of chips.** A line for each value of its first attribute, named at
+  the start of the line, and on it a chip for each value of the second; a caption says
+  which runs down and which across. The chip says only the second value ("1.5×"); the
+  group's name line and the board cell say the combination ("2y 1.5×"). Sibling with
+  nomination has four combinations and stays four named chips.
+- **Cost: the form is twice as tall on a phone.** 1,694px on a 375px-wide phone before
+  anything is known, against 870px with nothing joined.
+- **On a desktop it is one screen**, asked for by the user on 2026-11-20. From 84rem
+  (1,344px) wide, "find the person" puts the clue and the guesses on the left and the
+  choices on the right, with the header on two lines and smaller chips. Measured at
+  1,366 by 768: nothing scrolls before the first guess or with six guesses on the
+  board. Between 48rem and 84rem the page is one column as before and does scroll.
+  "Hit the score", line-up and `?tuples=none` keep the old layout.
+- **Not done.** `?tuples=none` hides the same person as the joined game for the same
+  clue, so playing both on a day spoils one. `pairs` and `pairs-all` share a person too.
+  "Hit the score" ignores `?tuples=`. `tools/simulate.mjs` still plays the game with
+  nothing joined.
 
 ## Design notes from the prior-art survey
 

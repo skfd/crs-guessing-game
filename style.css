@@ -69,6 +69,8 @@ td.cell .arrow { margin-left: 0.15rem; }
 td.cell .lowered { opacity: 0.85; margin-right: 0.15rem; font-weight: 400; }
 /* On a yellow joined cell: how many of its parts are right. */
 td.cell .parts { display: block; font-size: 0.68rem; font-weight: 400; }
+/* A joined cell puts each part on a line of its own. */
+#board td.cell.joined { white-space: pre-line; }
 td.cell.empty { background: transparent; border: 1px dashed var(--line); height: 2.2rem; }
 td.score { text-align: right; padding: 0 0.4rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
 td.score .guess-total { font-weight: 700; font-size: 1.05rem; }
@@ -92,9 +94,14 @@ tr.breakdown .ok { color: var(--hit); font-weight: 600; }
 }
 .field-head .picked { color: var(--fg); }
 .chips { display: flex; flex-wrap: wrap; gap: 3px; }
-/* A joined group: one line of chips for each value of its first attribute. */
-.field.joined .chips { flex-direction: column; }
-.chip-line { display: flex; flex-wrap: wrap; gap: 3px; }
+/* A joined pair is a table: a line for each value of its first attribute, named at the
+   start, and a chip of one width for each value of the second. */
+.field.table { grid-column: span 2; }
+.field.table .chips { flex-direction: column; }
+.chip-line { display: flex; align-items: center; gap: 3px; }
+.line-name { flex: none; width: 3.5rem; padding-right: 0.3rem; text-align: right; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+.field.table .chip { flex: none; width: 2.8rem; min-width: 0; padding-left: 0; padding-right: 0; }
+.axis { font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
 /* A settled attribute is one line: its name, the right option, and a way back to the chips. */
 .field.settled { grid-column: auto; }
 .field.settled .chips { display: none; }
@@ -222,4 +229,44 @@ body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
   }
   #board tr.breakdown, #board tr.breakdown td { display: block; }
   #board tr.breakdown td { padding: 0.25rem 0.1rem 0; }
+}
+
+/* ---- desktop: "find the person" on one screen, guesses on the left, choices on the right ---- */
+@media (min-width: 48.01rem) {
+  .chip { padding: 0.12rem 0.4rem; }
+}
+@media (min-width: 84rem) {
+  body[data-mode="person"]:not([data-tuples="none"]) main {
+    max-width: 96rem; padding: 0.5rem 1rem 1rem;
+    display: grid; grid-template-columns: minmax(0, 1fr) 46rem; grid-template-rows: auto auto 1fr;
+    column-gap: 1rem; align-items: start;
+  }
+  body[data-mode="person"]:not([data-tuples="none"]) {
+    & main > * { grid-column: 1 / -1; }
+    & header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1rem; margin-bottom: 0.5rem; }
+    & h1 { margin: 0; font-size: 1.3rem; }
+    & .tagline { margin: 0; flex: 1 1 20rem; font-size: 0.9rem; }
+    & .picker, & .picker.minor { margin: 0; }
+    & #guess-game { display: contents; }
+    & #clue { grid-column: 1; grid-row: 2; padding: 0.5rem 1rem; margin-bottom: 0.5rem; }
+    & .total-value { font-size: 2.4rem; }
+    & #guess-game > section { grid-column: 1; grid-row: 3; }
+    & #guess-form, & #end { grid-column: 2; grid-row: 2 / span 2; margin: 0; }
+    & #board { min-width: 0; border-spacing: 2px; }
+    & #board th { font-size: 0.65rem; padding: 0 0 0.15rem; }
+    & td.score { padding: 0 0 0 0.25rem; }
+    & #board td.cell { font-size: 0.8rem; line-height: 1.15; padding: 0.3rem 0.15rem; min-width: 0; }
+    & td.cell.empty { height: 1.9rem; }
+    & tr.breakdown td { padding-bottom: 0.25rem; }
+    /* Age across the top, the tables side by side, the small choices beside the last table. */
+    & .fields { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.4rem 1.1rem; margin: 0 0 0.5rem; }
+    & .field { flex: none; order: 2; max-width: 100%; }
+    & .field.wide { flex: 1 1 100%; order: 0; }
+    & .field.wide .chip { min-width: 2.1rem; padding-left: 0.25rem; padding-right: 0.25rem; }
+    & .chip { padding-top: 0.06rem; padding-bottom: 0.06rem; }
+    & .field.table { order: 1; }
+    & .hard { float: right; margin: 0.6rem 0 0; }
+    & #form-note { margin: 0 0 0.3rem; min-height: 1.2rem; }
+    & details { margin-top: 0.5rem; padding-top: 0.4rem; }
+  }
 }
