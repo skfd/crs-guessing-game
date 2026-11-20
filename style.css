@@ -198,6 +198,15 @@ button.person {
 button.person:not(:disabled):hover { border-color: var(--fg); }
 button.person:disabled { opacity: 1; }
 button.person .letter { font-weight: 700; font-size: 1.1rem; }
+/* The picture stands beside the name and the quirk; what scores runs underneath, full width. */
+button.person { display: grid; grid-template-columns: 5.5rem 1fr; grid-template-rows: auto auto; column-gap: 0.7rem; align-content: start; }
+button.person .mug { grid-row: 1 / span 2; }
+button.person .mug svg { display: block; width: 100%; height: auto; }
+button.person .who { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.4rem; line-height: 1.2; }
+button.person .name { font-weight: 700; font-size: 1.05rem; }
+button.person .job { flex-basis: 100%; font-size: 0.82rem; color: var(--muted); }
+button.person .quirk { font-size: 0.82rem; font-style: italic; align-self: start; }
+button.person ul, button.person .reveal { grid-column: 1 / -1; }
 button.person ul { margin: 0; padding: 0; list-style: none; font-size: 0.9rem; }
 button.person li { margin: 0.15rem 0; }
 button.person .reveal { margin-top: auto; padding-top: 0.4rem; border-top: 1px solid var(--line); font-size: 0.78rem; color: var(--muted); width: 100%; }

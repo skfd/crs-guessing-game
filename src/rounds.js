@@ -7,8 +7,9 @@ import { VARIANT_OFFSETS } from './modes.js';
 
 export const ROUNDS = 5;
 export const LINEUP_SIZE = 4;
-// A line-up shows whole people with their scores, so it must not show anyone the guessing
-// modes hide today or will hide in the coming week.
+// A practice game of a guessing mode ends by showing its person, so it keeps away from
+// anyone those modes hide today or in the coming week. The line-up has its own cast and
+// needs no such care.
 export const KEEP_AWAY_DAYS = 7;
 // How far a wrong person's score may sit from the round's score, and how far apart the
 // wrong ones are kept from each other. Nearer than this and only a calculator could tell
@@ -21,6 +22,18 @@ export function people(answersFile) {
   return answersFile.answers.map((entry, index) => {
     const profile = Object.fromEntries(KEYS.map((k, i) => [k, entry.p[i]]));
     return { index, profile, spousePoints: entry.sp, score: score(profile, entry.sp) };
+  });
+}
+
+// The line-up's own people, from data/lineup.json: a profile and its score, plus a name,
+// a job, a quirk and a look, none of which score anything.
+export function cast(lineupFile) {
+  return lineupFile.people.map((entry, index) => {
+    const profile = Object.fromEntries(KEYS.map((k, i) => [k, entry.p[i]]));
+    return {
+      index, profile, spousePoints: entry.sp, score: score(profile, entry.sp),
+      name: entry.name, job: entry.job, quirk: entry.quirk, look: entry.look,
+    };
   });
 }
 
@@ -54,14 +67,11 @@ export function practiceDay(random, count, offset, today) {
 
 // The day's rounds: [{ total, people: [four people], answer: index of the one who has
 // that total }]. The same day always gives the same rounds. No two people in a round
-// share a total, and nobody stands in two rounds of the same day. `today` differs from
-// `day` in a practice game, which plays some other day's rounds but must still keep away
-// from the people hidden this week.
-export function roundsForDay(answersFile, day, today = day) {
+// share a total, and nobody stands in two rounds of the same day. `all` is what cast()
+// returns.
+export function roundsForDay(all, day) {
   const random = rng(day * 7919 + 17);
-  const all = people(answersFile);
-  const away = new Set([...reserved(day, all.length), ...reserved(today, all.length)]);
-  let pool = shuffle(all.filter((p) => !away.has(p.index)), random);
+  let pool = shuffle(all, random);
   const rounds = [];
   for (let r = 0; r < ROUNDS; r += 1) {
     const target = pool[0];
@@ -86,6 +96,15 @@ export function roundsForDay(answersFile, day, today = day) {
     pool = pool.filter((p) => !standing.includes(p));
   }
   return rounds;
+}
+
+// Whether the wrong three of a round all sit inside the window, rather than being the
+// nearest that could be found.
+export function roundIsFair(round) {
+  return round.people.every((p) => {
+    const gap = Math.abs(p.score.total - round.total);
+    return gap === 0 || (gap >= NEAREST && gap <= FURTHEST);
+  });
 }
 
 const AGE = (text) => {

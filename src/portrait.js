@@ -3,7 +3,7 @@
 // are strings of SVG.
 //
 // A look is { face, tone, light, hair, hairTone, brows, mouth, beard, glasses, hat, top,
-// topTone, extra }. Every field has a default, so {} is a person too.
+// topTone, extra, extra2 }. Every field has a default, so {} is a person too.
 
 const K = '#080808';
 const W = '#f8f8f8';
@@ -182,6 +182,8 @@ function extra(kind) {
   }
 }
 
+const ON_TOP = new Set(['pencil', 'flower', 'freckles', 'scar', 'bandaid', 'monocle', 'earrings', 'mic']);
+
 function lcg(seed) {
   let s = (seed * 2654435761 + 12345) >>> 0;
   return () => {
@@ -201,6 +203,10 @@ export function portrait(look = {}, seed = 1) {
   const [topBack, topFront] = top(look.top, look.topTone ?? 'mid');
   const flip = look.light === 'r' ? 'transform="translate(120 0) scale(-1 1)"' : '';
   const id = `pt-h${seed}`;
+  // Most extras sit on the clothes; a few go on the face or over the hair.
+  const extras = [look.extra, look.extra2].filter(Boolean);
+  const onTop = extras.filter((e) => ON_TOP.has(e));
+  const worn = extras.filter((e) => !ON_TOP.has(e));
   const brow = BROWS[look.brows] ?? BROWS.flat;
   const eyes = look.glasses === 'shades' ? '' : both(`<path d="M46.500 56 Q50.500 52.800 54.800 56 Q50.500 58.200 46.500 56Z" fill="${K}"/><circle cx="51.300" cy="55.300" r=".55" fill="${W}"/>`);
 
@@ -241,9 +247,9 @@ export function portrait(look = {}, seed = 1) {
     <g transform="rotate(${tilt} 60 70)">
       <rect x="-6" y="${(1 + r() * 2).toFixed(1)}" width="132" height="146" fill="#dcdcdc"/>
       <rect x="-6" y="0" width="132" height="146" fill="url(#pt-vig)"/>
-      ${hairBack}${topBack}${neck}${topFront}${extra(look.extra === 'pencil' || look.extra === 'flower' ? '' : look.extra)}
+      ${hairBack}${topBack}${neck}${topFront}${worn.map(extra).join('')}
       ${ears}${face}${beard(look.beard, head, look.hairTone ?? 'dark')}${hairFront}${glasses(look.glasses)}${hat(look.hat)}
-      ${look.extra === 'pencil' || look.extra === 'flower' ? extra(look.extra) : ''}
+      ${onTop.map(extra).join('')}
     </g>
     <rect ${lidSide ? 'x="0"' : 'x="104" transform="translate(224 0) scale(-1 1)"'} width="16" height="140" fill="url(#pt-lid)"/>
     <rect x="${streak}" width="${(0.5 + r() * 0.9).toFixed(2)}" height="140" fill="#000" opacity=".7"/>

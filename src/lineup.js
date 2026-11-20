@@ -1,11 +1,14 @@
 // The page for line-up mode: a score, four people, pick whose it is, five times.
 
 import { SECTIONS } from './score.js';
-import { dayNumber, shareText } from './daily.js';
-import { ROUNDS, bioLines, roundsForDay } from './rounds.js';
-import { $, el, answersFile, day, label, load, practice, save, shareUrl } from './page.js';
+import { shareText } from './daily.js';
+import { ROUNDS, bioLines, cast, roundsForDay } from './rounds.js';
+import { PORTRAIT_DEFS, portrait } from './portrait.js';
+import { $, el, day, label, load, save, shareUrl } from './page.js';
 
-const rounds = roundsForDay(answersFile, day, practice ? dayNumber() : day);
+const people = cast(await (await fetch('data/lineup.json')).json());
+const rounds = roundsForDay(people, day);
+document.body.insertAdjacentHTML('beforeend', PORTRAIT_DEFS);
 const LETTERS = ['A', 'B', 'C', 'D'];
 
 // One pick per finished round: the index of the person chosen.
@@ -16,8 +19,16 @@ let finished = picks.length === ROUNDS;
 
 function card(round, person, i, picked) {
   const answered = picked !== undefined;
+  const picture = el('span', { className: 'mug' });
+  picture.innerHTML = portrait(person.look, person.index + 1);
   const button = el('button', { type: 'button', className: 'person', disabled: answered }, [
-    el('span', { className: 'letter', textContent: LETTERS[i] }),
+    picture,
+    el('span', { className: 'who' }, [
+      el('span', { className: 'letter', textContent: LETTERS[i] }),
+      el('span', { className: 'name', textContent: person.name }),
+      el('span', { className: 'job', textContent: person.job }),
+    ]),
+    el('span', { className: 'quirk', textContent: person.quirk }),
     el('ul', {}, bioLines(person.profile, person.spousePoints).map((line) => el('li', { textContent: line }))),
   ]);
   if (answered) {

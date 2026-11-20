@@ -1,0 +1,1683 @@
+{
+ "note": "The line-up cast, built by tools/make-lineup.mjs from tools/lineup-cast.mjs. p is the option index of each attribute in the order of keys; sp is the spouse section points.",
+ "keys": [
+  "spouse",
+  "age",
+  "edu",
+  "lang1",
+  "lang2",
+  "first",
+  "cwe",
+  "hw",
+  "offer",
+  "foreign",
+  "canEdu",
+  "sibling",
+  "pnp"
+ ],
+ "people": [
+  {
+   "name": "Odile",
+   "job": "pastry chef",
+   "quirk": "Argues with a sourdough starter. Usually loses.",
+   "p": [0,7,3,5,1,1,2,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bob",
+    "hat": "toque",
+    "top": "chef",
+    "topTone": "light"
+   }
+  },
+  {
+   "name": "Bram",
+   "job": "glaciologist",
+   "quirk": "Has given every ice core a first name.",
+   "p": [0,2,7,6,0,0,0,0,0,1,2,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "hat": "beanie",
+    "glasses": "round",
+    "top": "parka",
+    "topTone": "dark",
+    "mouth": "smile",
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Wendell",
+   "job": "long-haul trucker",
+   "quirk": "Knits at truck stops. Takes commissions.",
+   "p": [1,18,1,3,0,0,0,0,1,2,0,0,0],
+   "sp": 18,
+   "look": {
+    "hair": "crop",
+    "hairTone": "light",
+    "hat": "cap",
+    "beard": "handlebar",
+    "top": "plaid",
+    "brows": "stern",
+    "face": 2,
+    "tone": 1
+   }
+  },
+  {
+   "name": "Ines",
+   "job": "auditor",
+   "quirk": "Alphabetises the spice rack, then audits it.",
+   "p": [0,11,6,5,2,0,3,2,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bun",
+    "glasses": "square",
+    "top": "blazer",
+    "topTone": "dark",
+    "brows": "raised",
+    "mouth": "smirk",
+    "extra": "earrings",
+    "face": 3
+   }
+  },
+  {
+   "name": "Kofi",
+   "job": "bike courier",
+   "quirk": "Knows every pothole in town by name.",
+   "p": [0,2,1,2,0,0,1,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "buzz",
+    "hat": "helmet",
+    "top": "tee",
+    "topTone": "dark",
+    "mouth": "grin",
+    "tone": 2,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Petra",
+   "job": "beekeeper",
+   "quirk": "Apologises to each bee individually.",
+   "p": [0,14,2,1,0,0,0,0,0,0,0,1,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "hairTone": "light",
+    "hat": "strawhat",
+    "top": "overalls",
+    "topTone": "light",
+    "mouth": "smile",
+    "extra": "freckles",
+    "face": 1,
+    "tone": 1
+   }
+  },
+  {
+   "name": "Anselm",
+   "job": "piano tuner",
+   "quirk": "Can hear a fridge humming flat from the driveway.",
+   "p": [1,18,3,4,0,0,0,0,0,2,0,0,0],
+   "sp": 12,
+   "look": {
+    "hair": "receding",
+    "hairTone": "grey",
+    "beard": "full",
+    "glasses": "round",
+    "top": "turtleneck",
+    "topTone": "dark",
+    "brows": "worried",
+    "face": 3
+   }
+  },
+  {
+   "name": "Yuki",
+   "job": "sound engineer",
+   "quirk": "Records the rain and rates it out of ten.",
+   "p": [0,2,4,5,0,0,1,1,0,0,1,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "fringe",
+    "hat": "headphones",
+    "top": "hoodie",
+    "topTone": "dark",
+    "mouth": "o",
+    "extra": "mic"
+   }
+  },
+  {
+   "name": "Rosalind",
+   "job": "welder",
+   "quirk": "Signs every weld. Small, but it is there.",
+   "p": [0,6,2,3,0,0,4,2,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "afro",
+    "top": "hiviz",
+    "topTone": "mid",
+    "brows": "thick",
+    "mouth": "smirk",
+    "face": 2,
+    "tone": 2,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Tomas",
+   "job": "sommelier",
+   "quirk": "Describes tap water in three adjectives.",
+   "p": [0,9,3,6,2,0,0,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "part",
+    "beard": "moustache",
+    "top": "shirt",
+    "topTone": "light",
+    "extra": "bowtie",
+    "brows": "raised"
+   }
+  },
+  {
+   "name": "Mirela",
+   "job": "nurse",
+   "quirk": "Wins every game of charades by diagnosis.",
+   "p": [1,4,4,4,0,0,2,1,0,0,0,0,1],
+   "sp": 25,
+   "look": {
+    "hair": "ponytail",
+    "top": "scrubs",
+    "topTone": "mid",
+    "extra": "stethoscope",
+    "mouth": "smile",
+    "face": 1,
+    "tone": 1
+   }
+  },
+  {
+   "name": "Dov",
+   "job": "magician",
+   "quirk": "Has never once found the right card first try.",
+   "p": [0,17,1,5,0,0,0,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "curly",
+    "hat": "tophat",
+    "beard": "goatee",
+    "top": "blazer",
+    "topTone": "dark",
+    "brows": "stern",
+    "mouth": "smirk",
+    "extra": "monocle",
+    "face": 3,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Farrukh",
+   "job": "actuary",
+   "quirk": "Calculates the odds of rain, then forgets the umbrella.",
+   "p": [0,3,6,6,1,0,1,3,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "part",
+    "glasses": "square",
+    "top": "shirt",
+    "topTone": "light",
+    "extra": "tie",
+    "mouth": "flat",
+    "tone": 1
+   }
+  },
+  {
+   "name": "Lindiwe",
+   "job": "structural engineer",
+   "quirk": "Cannot cross a bridge without tapping it.",
+   "p": [1,8,6,5,0,0,3,3,0,0,0,0,0],
+   "sp": 30,
+   "look": {
+    "hair": "curly",
+    "hat": "hardhat",
+    "top": "hiviz",
+    "topTone": "light",
+    "mouth": "smile",
+    "tone": 2,
+    "face": 1
+   }
+  },
+  {
+   "name": "Caspian",
+   "job": "barista",
+   "quirk": "Draws only one latte pattern: a slightly worried swan.",
+   "p": [0,2,3,4,0,0,1,0,0,0,1,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "mohawk",
+    "beard": "stubble",
+    "top": "tee",
+    "topTone": "mid",
+    "mouth": "smirk",
+    "extra": "earrings",
+    "light": "r"
+   }
+  },
+  {
+   "name": "Noor",
+   "job": "epidemiologist",
+   "quirk": "Keeps a spreadsheet of who brought which cold to the office.",
+   "p": [0,5,7,6,2,0,2,2,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "glasses": "round",
+    "top": "vneck",
+    "topTone": "dark",
+    "brows": "raised",
+    "extra": "lanyard",
+    "tone": 1,
+    "face": 3
+   }
+  },
+  {
+   "name": "Benedikt",
+   "job": "clockmaker",
+   "quirk": "Is always eleven minutes late.",
+   "p": [0,18,2,2,0,0,0,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bald",
+    "hairTone": "light",
+    "beard": "moustache",
+    "top": "shirt",
+    "topTone": "mid",
+    "extra": "monocle",
+    "brows": "worried",
+    "face": 2
+   }
+  },
+  {
+   "name": "Saoirse",
+   "job": "marine biologist",
+   "quirk": "Gets seasick. Has made peace with it.",
+   "p": [0,2,6,6,0,0,1,0,0,0,1,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "pigtails",
+    "top": "parka",
+    "topTone": "mid",
+    "extra": "freckles",
+    "mouth": "grin",
+    "face": 1
+   }
+  },
+  {
+   "name": "Thabo",
+   "job": "electrician",
+   "quirk": "Labels everything. The label maker has a label.",
+   "p": [1,12,2,3,0,0,5,0,0,0,0,0,1],
+   "sp": 10,
+   "look": {
+    "hair": "buzz",
+    "hat": "hardhat",
+    "top": "overalls",
+    "topTone": "mid",
+    "mouth": "flat",
+    "tone": 2,
+    "face": 2,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Marisol",
+   "job": "translator",
+   "quirk": "Dreams in subtitles.",
+   "p": [0,10,4,6,3,0,1,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bob",
+    "top": "scarf",
+    "topTone": "dark",
+    "glasses": "round",
+    "mouth": "smile",
+    "tone": 1
+   }
+  },
+  {
+   "name": "Ignatius",
+   "job": "philosophy lecturer",
+   "quirk": "Still deciding what to order.",
+   "p": [0,16,7,6,1,0,0,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "receding",
+    "beard": "long",
+    "top": "turtleneck",
+    "topTone": "mid",
+    "brows": "worried",
+    "glasses": "round",
+    "face": 3
+   }
+  },
+  {
+   "name": "Hana",
+   "job": "pharmacist",
+   "quirk": "Counts stairs in multiples of five.",
+   "p": [0,3,6,5,0,0,1,2,0,0,0,1,0],
+   "sp": 0,
+   "look": {
+    "hair": "fringe",
+    "top": "shirt",
+    "topTone": "light",
+    "extra": "lanyard",
+    "mouth": "flat",
+    "face": 1
+   }
+  },
+  {
+   "name": "Leopold",
+   "job": "accordion teacher",
+   "quirk": "Has been asked to stop exactly once per building.",
+   "p": [1,18,3,4,0,1,0,0,0,2,0,0,0],
+   "sp": 8,
+   "look": {
+    "hair": "part",
+    "hairTone": "light",
+    "hat": "beret",
+    "beard": "handlebar",
+    "top": "scarf",
+    "topTone": "mid",
+    "mouth": "grin",
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Amara",
+   "job": "software developer",
+   "quirk": "Names servers after cheeses.",
+   "p": [0,2,4,6,0,0,2,3,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "afro",
+    "hat": "headphones",
+    "top": "hoodie",
+    "topTone": "mid",
+    "mouth": "smirk",
+    "tone": 2
+   }
+  },
+  {
+   "name": "Gideon",
+   "job": "forklift operator",
+   "quirk": "Parallel parks like a legend, everywhere.",
+   "p": [0,7,1,1,0,0,3,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "hat": "cap",
+    "beard": "stubble",
+    "top": "hiviz",
+    "topTone": "dark",
+    "mouth": "flat",
+    "face": 2,
+    "tone": 1
+   }
+  },
+  {
+   "name": "Xiomara",
+   "job": "architect",
+   "quirk": "Rearranges hotel rooms on arrival.",
+   "p": [0,6,6,4,1,0,0,0,2,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bun",
+    "glasses": "square",
+    "top": "turtleneck",
+    "topTone": "dark",
+    "brows": "raised",
+    "tone": 1,
+    "face": 3,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Per",
+   "job": "lighthouse keeper",
+   "quirk": "Finds most rooms too crowded.",
+   "p": [0,18,1,3,0,0,0,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "hairTone": "grey",
+    "hat": "beanie",
+    "beard": "full",
+    "top": "parka",
+    "topTone": "dark",
+    "brows": "stern",
+    "face": 2
+   }
+  },
+  {
+   "name": "Delphine",
+   "job": "cheesemonger",
+   "quirk": "Can tell which field the cow stood in.",
+   "p": [0,2,2,5,0,0,1,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "ponytail",
+    "hat": "bandana",
+    "top": "chef",
+    "topTone": "light",
+    "mouth": "smile",
+    "extra": "freckles"
+   }
+  },
+  {
+   "name": "Ravindra",
+   "job": "data analyst",
+   "quirk": "Makes a chart before choosing a restaurant.",
+   "p": [0,2,6,5,1,0,1,1,0,0,1,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "part",
+    "glasses": "round",
+    "top": "vneck",
+    "topTone": "mid",
+    "mouth": "flat",
+    "tone": 2,
+    "face": 3
+   }
+  },
+  {
+   "name": "Bettina",
+   "job": "kindergarten teacher",
+   "quirk": "Can silence a room with one eyebrow.",
+   "p": [1,13,4,4,0,0,0,0,0,2,0,0,0],
+   "sp": 21,
+   "look": {
+    "hair": "bob",
+    "hairTone": "light",
+    "top": "tee",
+    "topTone": "light",
+    "brows": "raised",
+    "extra": "flower",
+    "face": 1
+   }
+  },
+  {
+   "name": "Oluwaseun",
+   "job": "cardiologist",
+   "quirk": "Takes the stairs and tells you about it.",
+   "p": [0,15,6,6,0,0,0,0,0,2,0,0,1],
+   "sp": 0,
+   "look": {
+    "hair": "buzz",
+    "hairTone": "grey",
+    "top": "scrubs",
+    "topTone": "light",
+    "extra": "stethoscope",
+    "glasses": "square",
+    "mouth": "smile",
+    "tone": 2,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Kasimir",
+   "job": "tattoo artist",
+   "quirk": "Has no tattoos. Says nobody asked nicely.",
+   "p": [0,4,1,3,0,1,2,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "mohawk",
+    "beard": "goatee",
+    "top": "tee",
+    "topTone": "dark",
+    "brows": "stern",
+    "extra": "earrings",
+    "face": 3
+   }
+  },
+  {
+   "name": "Thandeka",
+   "job": "pilot",
+   "quirk": "Narrates the commute in a calm, even voice.",
+   "p": [0,9,4,6,0,0,0,0,3,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bun",
+    "hat": "cap",
+    "top": "shirt",
+    "topTone": "light",
+    "extra": "tie",
+    "glasses": "shades",
+    "tone": 2
+   }
+  },
+  {
+   "name": "Jules",
+   "job": "line cook",
+   "quirk": "Owns nine knives and one fork.",
+   "p": [0,2,2,3,0,0,2,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "hat": "bandana",
+    "top": "chef",
+    "topTone": "mid",
+    "extra": "bandaid",
+    "mouth": "smirk",
+    "tone": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Signe",
+   "job": "furniture restorer",
+   "quirk": "Sits on every chair as a matter of principle.",
+   "p": [0,18,3,2,1,0,0,0,0,0,0,1,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "hairTone": "grey",
+    "top": "overalls",
+    "topTone": "mid",
+    "extra": "pencil",
+    "mouth": "flat",
+    "face": 3
+   }
+  },
+  {
+   "name": "Emeka",
+   "job": "physiotherapist",
+   "quirk": "Corrects the posture of statues.",
+   "p": [0,2,6,5,0,0,1,1,0,0,1,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "top": "tee",
+    "topTone": "light",
+    "extra": "whistle",
+    "mouth": "grin",
+    "tone": 2,
+    "face": 2
+   }
+  },
+  {
+   "name": "Valentina",
+   "job": "opera singer",
+   "quirk": "Sneezes in a perfect C sharp.",
+   "p": [0,7,6,3,2,0,0,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "top": "blazer",
+    "topTone": "dark",
+    "extra": "necklace",
+    "mouth": "o",
+    "tone": 1,
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Arvid",
+   "job": "snowplough driver",
+   "quirk": "Has a favourite cul-de-sac. Will not say which.",
+   "p": [1,18,1,2,0,0,5,0,0,0,0,0,0],
+   "sp": 15,
+   "look": {
+    "hair": "receding",
+    "hairTone": "light",
+    "hat": "beanie",
+    "beard": "stubble",
+    "top": "parka",
+    "topTone": "mid",
+    "mouth": "flat",
+    "face": 2
+   }
+  },
+  {
+   "name": "Meseret",
+   "job": "accountant",
+   "quirk": "Balances the restaurant bill to the cent, unprompted.",
+   "p": [1,8,5,4,0,0,2,1,0,0,0,0,0],
+   "sp": 33,
+   "look": {
+    "hair": "curly",
+    "glasses": "square",
+    "top": "blazer",
+    "topTone": "mid",
+    "mouth": "smile",
+    "tone": 2,
+    "face": 3
+   }
+  },
+  {
+   "name": "Cormac",
+   "job": "stand-up comedian",
+   "quirk": "Tests new material on self-checkout machines.",
+   "p": [0,3,4,6,0,0,1,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "curly",
+    "hairTone": "light",
+    "beard": "stubble",
+    "top": "tee",
+    "topTone": "dark",
+    "mouth": "grin",
+    "extra": "mic",
+    "extra2": "freckles"
+   }
+  },
+  {
+   "name": "Liesl",
+   "job": "veterinary technician",
+   "quirk": "Is recognised in the street by eleven dogs.",
+   "p": [0,2,3,5,0,0,2,0,0,0,0,0,1],
+   "sp": 0,
+   "look": {
+    "hair": "pigtails",
+    "hairTone": "light",
+    "top": "scrubs",
+    "topTone": "mid",
+    "mouth": "smile",
+    "extra": "bandaid",
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Tariq",
+   "job": "crane operator",
+   "quirk": "Afraid of ladders. Not cranes. Ladders.",
+   "p": [0,10,2,3,0,0,3,3,0,0,0,0,1],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "hat": "hardhat",
+    "beard": "full",
+    "top": "hiviz",
+    "topTone": "mid",
+    "brows": "worried",
+    "tone": 1,
+    "face": 2
+   }
+  },
+  {
+   "name": "Philippa",
+   "job": "patent lawyer",
+   "quirk": "Reads the terms and conditions. All of them.",
+   "p": [0,12,6,6,3,0,4,3,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bob",
+    "hairTone": "light",
+    "glasses": "square",
+    "top": "blazer",
+    "topTone": "dark",
+    "mouth": "flat",
+    "extra": "necklace",
+    "face": 3
+   }
+  },
+  {
+   "name": "Zoran",
+   "job": "plumber",
+   "quirk": "Whistles in the exact key of the pipes.",
+   "p": [1,18,2,1,0,0,2,0,0,0,0,0,0],
+   "sp": 5,
+   "look": {
+    "hair": "bald",
+    "beard": "moustache",
+    "top": "overalls",
+    "topTone": "dark",
+    "mouth": "o",
+    "face": 1,
+    "tone": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Akira",
+   "job": "animator",
+   "quirk": "Blinks on twos.",
+   "p": [0,2,4,4,0,1,1,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "fringe",
+    "glasses": "round",
+    "top": "hoodie",
+    "topTone": "light",
+    "extra": "pencil",
+    "mouth": "smirk",
+    "face": 3
+   }
+  },
+  {
+   "name": "Guadalupe",
+   "job": "midwife",
+   "quirk": "Has an exceptionally calm car.",
+   "p": [0,14,4,5,2,0,3,1,0,0,0,0,1],
+   "sp": 0,
+   "look": {
+    "hair": "bun",
+    "top": "scrubs",
+    "topTone": "dark",
+    "mouth": "smile",
+    "extra": "earrings",
+    "tone": 1,
+    "face": 1
+   }
+  },
+  {
+   "name": "Ebbe",
+   "job": "librarian",
+   "quirk": "Shushes the television.",
+   "p": [0,18,6,5,0,0,0,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "part",
+    "hairTone": "grey",
+    "glasses": "round",
+    "top": "turtleneck",
+    "topTone": "light",
+    "mouth": "o",
+    "extra": "lanyard",
+    "face": 3,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Nkechi",
+   "job": "civil engineer",
+   "quirk": "Rates roundabouts. Most get a six.",
+   "p": [1,5,6,5,0,0,1,2,0,1,0,0,0],
+   "sp": 28,
+   "look": {
+    "hair": "ponytail",
+    "hat": "hardhat",
+    "top": "shirt",
+    "topTone": "mid",
+    "mouth": "smirk",
+    "tone": 2
+   }
+  },
+  {
+   "name": "Rupert",
+   "job": "butler",
+   "quirk": "Irons the newspaper. Also the receipts.",
+   "p": [0,18,1,6,0,0,0,0,1,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "receding",
+    "hairTone": "light",
+    "top": "blazer",
+    "topTone": "dark",
+    "extra": "bowtie",
+    "brows": "raised",
+    "face": 3
+   }
+  },
+  {
+   "name": "Soledad",
+   "job": "flamenco teacher",
+   "quirk": "Cannot wait in a queue without tapping a rhythm.",
+   "p": [0,11,3,2,1,0,0,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bun",
+    "extra": "flower",
+    "top": "vneck",
+    "topTone": "dark",
+    "brows": "stern",
+    "extra2": "earrings",
+    "tone": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Ilya",
+   "job": "chess coach",
+   "quirk": "Thinks four moves ahead about lunch.",
+   "p": [0,2,4,4,1,0,0,0,0,1,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "curly",
+    "glasses": "round",
+    "top": "turtleneck",
+    "topTone": "dark",
+    "mouth": "flat",
+    "face": 3
+   }
+  },
+  {
+   "name": "Marguerite",
+   "job": "florist",
+   "quirk": "Talks to the tulips. Gossips about the roses.",
+   "p": [0,17,2,6,1,1,5,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "curly",
+    "hairTone": "grey",
+    "hat": "strawhat",
+    "top": "overalls",
+    "topTone": "light",
+    "mouth": "grin",
+    "extra": "flower",
+    "face": 1
+   }
+  },
+  {
+   "name": "Desmond",
+   "job": "bus driver",
+   "quirk": "Waves at every other bus. Keeps score of who waves back.",
+   "p": [1,18,1,4,0,1,4,0,0,0,0,0,0],
+   "sp": 20,
+   "look": {
+    "hair": "bald",
+    "hairTone": "grey",
+    "beard": "moustache",
+    "top": "shirt",
+    "topTone": "mid",
+    "extra": "tie",
+    "mouth": "smile",
+    "tone": 2,
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Anneke",
+   "job": "wind-turbine technician",
+   "quirk": "Not bothered by heights. Bothered by pigeons.",
+   "p": [0,2,3,5,0,0,3,2,0,0,1,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "ponytail",
+    "hairTone": "light",
+    "hat": "helmet",
+    "top": "hiviz",
+    "topTone": "dark",
+    "mouth": "smirk",
+    "extra": "freckles"
+   }
+  },
+  {
+   "name": "Babajide",
+   "job": "pharmacologist",
+   "quirk": "Reads the leaflet inside the box for fun.",
+   "p": [1,7,7,5,1,0,2,2,0,0,0,0,0],
+   "sp": 36,
+   "look": {
+    "hair": "buzz",
+    "glasses": "square",
+    "top": "shirt",
+    "topTone": "light",
+    "extra": "lanyard",
+    "brows": "raised",
+    "tone": 2,
+    "face": 3
+   }
+  },
+  {
+   "name": "Clementine",
+   "job": "puppeteer",
+   "quirk": "Both hands have distinct opinions.",
+   "p": [0,4,4,4,2,0,0,0,0,1,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "pigtails",
+    "hat": "beret",
+    "top": "scarf",
+    "topTone": "light",
+    "mouth": "grin",
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Henrik",
+   "job": "sauna builder",
+   "quirk": "Considers eighty degrees a bit fresh.",
+   "p": [0,15,2,2,0,0,0,0,2,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "hairTone": "light",
+    "beard": "long",
+    "top": "tee",
+    "topTone": "mid",
+    "mouth": "smile",
+    "face": 2
+   }
+  },
+  {
+   "name": "Priya",
+   "job": "radiologist",
+   "quirk": "Guesses what is inside wrapped presents. Always right.",
+   "p": [0,10,6,6,0,0,1,3,0,0,0,1,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "top": "scrubs",
+    "topTone": "light",
+    "glasses": "square",
+    "mouth": "smirk",
+    "tone": 2,
+    "face": 1
+   }
+  },
+  {
+   "name": "Mateus",
+   "job": "surf instructor",
+   "quirk": "Has not worn socks since a wedding.",
+   "p": [0,2,1,3,0,0,0,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "hairTone": "light",
+    "beard": "stubble",
+    "top": "tee",
+    "topTone": "light",
+    "glasses": "shades",
+    "mouth": "grin",
+    "tone": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Ottilie",
+   "job": "cartographer",
+   "quirk": "Refuses to use the sat-nav on principle. Often late.",
+   "p": [1,18,6,6,2,0,0,0,0,2,0,0,0],
+   "sp": 24,
+   "look": {
+    "hair": "bob",
+    "hairTone": "grey",
+    "glasses": "round",
+    "top": "scarf",
+    "topTone": "mid",
+    "brows": "raised",
+    "extra": "pencil",
+    "face": 3
+   }
+  },
+  {
+   "name": "Jabari",
+   "job": "firefighter",
+   "quirk": "Excellent with cats. Trees optional.",
+   "p": [0,2,3,4,0,0,4,1,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "buzz",
+    "hat": "helmet",
+    "beard": "moustache",
+    "top": "parka",
+    "topTone": "dark",
+    "mouth": "grin",
+    "tone": 2,
+    "face": 2
+   }
+  },
+  {
+   "name": "Wilhelmina",
+   "job": "tax inspector",
+   "quirk": "Keeps receipts for the receipts.",
+   "p": [0,18,4,3,0,0,1,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bun",
+    "hairTone": "light",
+    "glasses": "square",
+    "top": "blazer",
+    "topTone": "mid",
+    "brows": "stern",
+    "extra": "necklace",
+    "face": 3,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Lucian",
+   "job": "violin maker",
+   "quirk": "Smells wood before buying furniture.",
+   "p": [1,13,3,2,1,0,0,0,0,0,0,0,0],
+   "sp": 3,
+   "look": {
+    "hair": "part",
+    "beard": "goatee",
+    "glasses": "round",
+    "top": "shirt",
+    "topTone": "dark",
+    "brows": "worried",
+    "extra": "pencil",
+    "face": 3,
+    "tone": 1
+   }
+  },
+  {
+   "name": "Aiyana",
+   "job": "park ranger",
+   "quirk": "On first-name terms with a moose.",
+   "p": [0,6,4,6,0,0,5,1,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "hat": "strawhat",
+    "top": "shirt",
+    "topTone": "mid",
+    "extra": "whistle",
+    "mouth": "smile",
+    "tone": 1,
+    "face": 1
+   }
+  },
+  {
+   "name": "Fintan",
+   "job": "sheep farmer",
+   "quirk": "Counts sheep professionally and still sleeps badly.",
+   "p": [0,18,1,5,0,0,0,0,0,2,0,1,0],
+   "sp": 0,
+   "look": {
+    "hair": "curly",
+    "hairTone": "light",
+    "hat": "cap",
+    "beard": "full",
+    "top": "plaid",
+    "brows": "worried",
+    "extra": "freckles",
+    "face": 2,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Zainab",
+   "job": "biochemist",
+   "quirk": "Has strong opinions about loading a dishwasher. Published.",
+   "p": [0,2,7,5,0,0,1,0,0,0,2,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bob",
+    "glasses": "round",
+    "top": "shirt",
+    "topTone": "light",
+    "extra": "lanyard",
+    "brows": "raised",
+    "tone": 2
+   }
+  },
+  {
+   "name": "Oskar",
+   "job": "tram driver",
+   "quirk": "Rings the bell for birthdays.",
+   "p": [1,8,2,2,0,0,1,0,0,0,0,0,0],
+   "sp": 14,
+   "look": {
+    "hair": "part",
+    "hairTone": "light",
+    "hat": "cap",
+    "top": "shirt",
+    "topTone": "dark",
+    "extra": "tie",
+    "mouth": "grin",
+    "face": 1
+   }
+  },
+  {
+   "name": "Camille",
+   "job": "perfumer",
+   "quirk": "Can smell Tuesday.",
+   "p": [0,5,6,6,3,0,2,2,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "fringe",
+    "top": "turtleneck",
+    "topTone": "light",
+    "extra": "necklace",
+    "mouth": "o",
+    "face": 3,
+    "tone": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Tevita",
+   "job": "rugby coach",
+   "quirk": "Gives the pep talk before assembling flat-pack furniture.",
+   "p": [1,16,4,4,0,0,0,0,1,2,0,0,0],
+   "sp": 17,
+   "look": {
+    "hair": "buzz",
+    "top": "hoodie",
+    "topTone": "mid",
+    "extra": "whistle",
+    "brows": "thick",
+    "mouth": "grin",
+    "tone": 1,
+    "face": 2
+   }
+  },
+  {
+   "name": "Gwendolyn",
+   "job": "crossword setter",
+   "quirk": "Seven letters: cannot stop.",
+   "p": [0,18,6,6,0,0,0,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "curly",
+    "hairTone": "light",
+    "glasses": "square",
+    "top": "vneck",
+    "topTone": "mid",
+    "extra": "pencil",
+    "mouth": "smirk",
+    "face": 1
+   }
+  },
+  {
+   "name": "Ruben",
+   "job": "drone pilot",
+   "quirk": "Is not allowed to do the wedding again.",
+   "p": [0,2,3,5,0,0,0,0,0,0,1,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "fringe",
+    "hairTone": "light",
+    "hat": "cap",
+    "top": "hoodie",
+    "topTone": "light",
+    "glasses": "shades",
+    "mouth": "smirk",
+    "light": "r"
+   }
+  },
+  {
+   "name": "Yasmin",
+   "job": "dentist",
+   "quirk": "Hums while working. Takes requests.",
+   "p": [0,9,6,5,1,0,1,1,0,2,0,0,1],
+   "sp": 0,
+   "look": {
+    "hair": "ponytail",
+    "top": "scrubs",
+    "topTone": "light",
+    "mouth": "grin",
+    "extra": "earrings",
+    "tone": 1,
+    "face": 1
+   }
+  },
+  {
+   "name": "Aurelio",
+   "job": "gelato maker",
+   "quirk": "Believes pistachio is a personality.",
+   "p": [1,12,2,1,0,0,0,0,0,0,0,0,0],
+   "sp": 9,
+   "look": {
+    "hair": "curly",
+    "hat": "toque",
+    "beard": "handlebar",
+    "top": "chef",
+    "topTone": "light",
+    "mouth": "smile",
+    "tone": 1,
+    "face": 1
+   }
+  },
+  {
+   "name": "Tindra",
+   "job": "game designer",
+   "quirk": "Speed-runs the grocery shop.",
+   "p": [0,2,4,6,1,0,3,2,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "mohawk",
+    "hairTone": "light",
+    "hat": "headphones",
+    "top": "hoodie",
+    "topTone": "dark",
+    "mouth": "smirk",
+    "extra": "earrings",
+    "face": 3,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Baraka",
+   "job": "zookeeper",
+   "quirk": "The capybaras have been told too much.",
+   "p": [0,3,4,4,0,0,2,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "afro",
+    "top": "overalls",
+    "topTone": "mid",
+    "extra": "whistle",
+    "mouth": "grin",
+    "tone": 2,
+    "face": 1
+   }
+  },
+  {
+   "name": "Cosima",
+   "job": "harpist",
+   "quirk": "Needs a bigger car. Has needed one for years.",
+   "p": [0,7,6,4,2,0,0,0,0,1,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "hairTone": "light",
+    "top": "vneck",
+    "topTone": "dark",
+    "extra": "necklace",
+    "mouth": "flat",
+    "face": 3
+   }
+  },
+  {
+   "name": "Mordecai",
+   "job": "locksmith",
+   "quirk": "Locked out twice this year. Will not discuss it.",
+   "p": [0,18,1,3,0,0,5,1,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "receding",
+    "hairTone": "grey",
+    "beard": "goatee",
+    "glasses": "square",
+    "top": "overalls",
+    "topTone": "dark",
+    "brows": "stern",
+    "face": 2,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Ngozi",
+   "job": "air-traffic controller",
+   "quirk": "Directs supermarket trolleys with two fingers.",
+   "p": [1,11,4,6,0,0,3,3,0,0,0,0,0],
+   "sp": 38,
+   "look": {
+    "hair": "bun",
+    "hat": "headphones",
+    "top": "shirt",
+    "topTone": "light",
+    "extra": "mic",
+    "mouth": "flat",
+    "tone": 2
+   }
+  },
+  {
+   "name": "Sven",
+   "job": "commercial diver",
+   "quirk": "Holds breath during adverts.",
+   "p": [0,6,2,3,0,0,1,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "buzz",
+    "hairTone": "light",
+    "beard": "stubble",
+    "top": "turtleneck",
+    "topTone": "dark",
+    "extra": "scar",
+    "mouth": "flat",
+    "face": 2
+   }
+  },
+  {
+   "name": "Paloma",
+   "job": "wedding photographer",
+   "quirk": "Has cried at 214 weddings, including the bad ones.",
+   "p": [0,2,4,5,2,0,1,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bob",
+    "hat": "beret",
+    "top": "blazer",
+    "topTone": "mid",
+    "mouth": "smile",
+    "extra": "lanyard",
+    "tone": 1,
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Hamish",
+   "job": "distiller",
+   "quirk": "Describes everything as having notes of toffee.",
+   "p": [0,18,4,6,0,0,0,0,3,2,0,1,0],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "hairTone": "grey",
+    "beard": "full",
+    "top": "plaid",
+    "brows": "raised",
+    "mouth": "smirk",
+    "face": 2
+   }
+  },
+  {
+   "name": "Chiara",
+   "job": "particle physicist",
+   "quirk": "Collided with the same door three times this week.",
+   "p": [0,4,7,6,3,0,0,0,0,1,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "curly",
+    "glasses": "round",
+    "top": "tee",
+    "topTone": "mid",
+    "extra": "bandaid",
+    "brows": "worried",
+    "face": 3
+   }
+  },
+  {
+   "name": "Dmitri",
+   "job": "figure-skating coach",
+   "quirk": "Sticks every landing, including off the bus.",
+   "p": [1,18,4,2,0,0,0,0,0,0,0,0,0],
+   "sp": 11,
+   "look": {
+    "hair": "part",
+    "hairTone": "grey",
+    "top": "scarf",
+    "topTone": "dark",
+    "extra": "whistle",
+    "brows": "stern",
+    "face": 3,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Folasade",
+   "job": "UX designer",
+   "quirk": "Has redesigned the office microwave's buttons. Unasked.",
+   "p": [0,2,4,6,0,0,1,2,0,0,2,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "afro",
+    "glasses": "round",
+    "top": "vneck",
+    "topTone": "light",
+    "mouth": "smirk",
+    "extra": "earrings",
+    "tone": 2,
+    "face": 1
+   }
+  },
+  {
+   "name": "Elio",
+   "job": "elevator mechanic",
+   "quirk": "Takes the stairs. Says nothing.",
+   "p": [1,14,2,4,0,0,4,2,0,0,0,0,1],
+   "sp": 22,
+   "look": {
+    "hair": "crop",
+    "hat": "cap",
+    "beard": "moustache",
+    "top": "overalls",
+    "topTone": "mid",
+    "mouth": "flat",
+    "tone": 1,
+    "face": 2
+   }
+  },
+  {
+   "name": "Winifred",
+   "job": "archivist",
+   "quirk": "Files grudges by date.",
+   "p": [0,18,6,5,1,0,0,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "bun",
+    "hairTone": "light",
+    "glasses": "round",
+    "top": "turtleneck",
+    "topTone": "mid",
+    "brows": "stern",
+    "extra": "necklace",
+    "face": 3,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Koa",
+   "job": "lifeguard",
+   "quirk": "Has rescued the same inflatable flamingo four times.",
+   "p": [0,2,1,5,0,0,1,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "top": "tee",
+    "topTone": "light",
+    "extra": "whistle",
+    "glasses": "shades",
+    "mouth": "grin",
+    "tone": 1
+   }
+  },
+  {
+   "name": "Leocadia",
+   "job": "notary",
+   "quirk": "Stamps things for emphasis.",
+   "p": [0,17,6,5,1,0,0,0,0,2,0,0,1],
+   "sp": 0,
+   "look": {
+    "hair": "bob",
+    "hairTone": "grey",
+    "glasses": "square",
+    "top": "blazer",
+    "topTone": "dark",
+    "brows": "raised",
+    "extra": "earrings",
+    "face": 1
+   }
+  },
+  {
+   "name": "Radek",
+   "job": "stonemason",
+   "quirk": "Has a favourite rock and it is not for sale.",
+   "p": [1,9,1,1,0,0,2,0,0,0,0,0,0],
+   "sp": 6,
+   "look": {
+    "hair": "buzz",
+    "beard": "full",
+    "top": "tee",
+    "topTone": "mid",
+    "brows": "thick",
+    "mouth": "flat",
+    "face": 2,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Imogen",
+   "job": "astronomer",
+   "quirk": "Is never free on clear nights.",
+   "p": [0,3,7,6,0,0,2,1,0,0,2,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "fringe",
+    "hairTone": "light",
+    "hat": "beanie",
+    "top": "parka",
+    "topTone": "light",
+    "mouth": "smile",
+    "extra": "freckles",
+    "face": 3
+   }
+  },
+  {
+   "name": "Suleiman",
+   "job": "tailor",
+   "quirk": "Estimates inside leg at a glance. Keeps it private.",
+   "p": [0,18,2,2,1,0,0,0,0,0,0,1,0],
+   "sp": 0,
+   "look": {
+    "hair": "receding",
+    "hairTone": "grey",
+    "beard": "moustache",
+    "glasses": "round",
+    "top": "shirt",
+    "topTone": "light",
+    "extra": "pencil",
+    "mouth": "smile",
+    "tone": 1,
+    "face": 1
+   }
+  },
+  {
+   "name": "Freya",
+   "job": "ferry captain",
+   "quirk": "Announces arrival at the supermarket.",
+   "p": [0,15,4,5,0,0,5,2,0,0,0,0,1],
+   "sp": 0,
+   "look": {
+    "hair": "ponytail",
+    "hairTone": "light",
+    "hat": "cap",
+    "top": "parka",
+    "topTone": "dark",
+    "mouth": "smirk",
+    "face": 2,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Jun",
+   "job": "robotics technician",
+   "quirk": "Says thank you to the vacuum.",
+   "p": [0,2,3,4,0,0,2,1,0,0,1,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "glasses": "square",
+    "top": "hoodie",
+    "topTone": "mid",
+    "extra": "lanyard",
+    "mouth": "smile",
+    "face": 1
+   }
+  },
+  {
+   "name": "Ottoline",
+   "job": "taxidermist",
+   "quirk": "The owl is not for sale and is not looking at you.",
+   "p": [0,18,3,4,0,0,0,0,0,2,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "hairTone": "grey",
+    "glasses": "round",
+    "top": "blazer",
+    "topTone": "mid",
+    "extra": "monocle",
+    "mouth": "flat",
+    "face": 3
+   }
+  },
+  {
+   "name": "Dariusz",
+   "job": "chimney sweep",
+   "quirk": "Is invited to weddings for luck and stays for cake.",
+   "p": [0,10,1,2,0,0,0,0,1,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "curly",
+    "hat": "tophat",
+    "beard": "stubble",
+    "top": "scarf",
+    "topTone": "dark",
+    "mouth": "grin",
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Seraphina",
+   "job": "auctioneer",
+   "quirk": "Orders coffee in under two seconds.",
+   "p": [1,8,4,6,2,0,2,3,0,0,0,0,0],
+   "sp": 40,
+   "look": {
+    "hair": "bob",
+    "top": "blazer",
+    "topTone": "light",
+    "extra": "necklace",
+    "mouth": "o",
+    "tone": 2,
+    "face": 3
+   }
+  },
+  {
+   "name": "Milo",
+   "job": "apprentice carpenter",
+   "quirk": "Measures twice, cuts once, measures again to be sure.",
+   "p": [0,1,1,4,0,0,0,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "fringe",
+    "top": "overalls",
+    "topTone": "light",
+    "extra": "pencil",
+    "extra2": "freckles",
+    "mouth": "smile"
+   }
+  },
+  {
+   "name": "Tova",
+   "job": "ski-lift attendant",
+   "quirk": "Has heard every chairlift joke. Laughs anyway.",
+   "p": [0,0,1,5,1,0,0,0,0,0,0,1,0],
+   "sp": 0,
+   "look": {
+    "hair": "pigtails",
+    "hat": "beanie",
+    "top": "parka",
+    "topTone": "mid",
+    "mouth": "grin",
+    "face": 1,
+    "light": "r"
+   }
+  },
+  {
+   "name": "Evander",
+   "job": "hot-air balloon pilot",
+   "quirk": "Never knows where lunch will be.",
+   "p": [0,18,3,5,0,0,2,0,0,1,0,0,1],
+   "sp": 0,
+   "look": {
+    "hair": "crop",
+    "hairTone": "grey",
+    "beard": "handlebar",
+    "top": "scarf",
+    "topTone": "light",
+    "glasses": "shades",
+    "mouth": "smile",
+    "tone": 2,
+    "face": 2
+   }
+  },
+  {
+   "name": "Xanthe",
+   "job": "mushroom forager",
+   "quirk": "Will not say where. Do not ask.",
+   "p": [0,6,0,1,0,0,0,0,0,0,0,0,0],
+   "sp": 0,
+   "look": {
+    "hair": "long",
+    "hat": "strawhat",
+    "top": "plaid",
+    "brows": "stern",
+    "extra": "freckles",
+    "face": 3,
+    "tone": 1
+   }
+  }
+ ]
+}

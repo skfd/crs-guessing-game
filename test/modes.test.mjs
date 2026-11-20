@@ -10,10 +10,14 @@ import {
   steps, variantId, variantName, variantOffset,
 } from '../src/modes.js';
 import {
-  KEEP_AWAY_DAYS, LINEUP_SIZE, ROUNDS, bioLines, people, practiceDay, reserved, roundsForDay,
+  KEEP_AWAY_DAYS, LINEUP_SIZE, ROUNDS, bioLines, cast, people, practiceDay, reserved, roundIsFair,
+  roundsForDay,
 } from '../src/rounds.js';
+import { canonical } from '../src/profile.js';
+import { portrait } from '../src/portrait.js';
 
 const answersFile = JSON.parse(fs.readFileSync(new URL('../data/answers.json', import.meta.url), 'utf8'));
+const lineupFile = JSON.parse(fs.readFileSync(new URL('../data/lineup.json', import.meta.url), 'utf8'));
 const variant = (query) => parseVariant(new URLSearchParams(query));
 
 test('the bare address is the original game, and nonsense falls back to it', () => {
@@ -83,12 +87,13 @@ test('closeness squares and the one-line share text', () => {
     'CRS guessing game #3 line-up 2/5\n🟩⬜🟩');
 });
 
-test('every day of line-up has five fair rounds', () => {
-  const count = answersFile.answers.length;
-  for (let day = 1; day <= count; day += 1) {
-    const rounds = roundsForDay(answersFile, day);
+test('every day of line-up has five rounds with one right answer', () => {
+  const all = cast(lineupFile);
+  assert.equal(all.length, 100);
+  let fair = 0;
+  for (let day = 1; day <= 366; day += 1) {
+    const rounds = roundsForDay(all, day);
     assert.equal(rounds.length, ROUNDS);
-    const away = reserved(day, count);
     const seen = new Set();
     for (const round of rounds) {
       assert.equal(round.people.length, LINEUP_SIZE);
@@ -96,15 +101,30 @@ test('every day of line-up has five fair rounds', () => {
       assert.equal(matches.length, 1, `day ${day}: not exactly one match`);
       assert.equal(round.people[round.answer], matches[0]);
       assert.equal(new Set(round.people.map((p) => p.score.total)).size, LINEUP_SIZE);
-      assert.equal(new Set(round.people.map((p) => bioLines(p.profile, p.spousePoints).join('|'))).size, LINEUP_SIZE);
       for (const p of round.people) {
-        assert.ok(!away.has(p.index), `day ${day}: shows a person a guessing mode hides`);
         assert.ok(!seen.has(p.index), `day ${day}: the same person twice`);
         seen.add(p.index);
       }
+      if (roundIsFair(round)) fair += 1;
     }
   }
-  assert.deepEqual(roundsForDay(answersFile, 3), roundsForDay(answersFile, 3), 'not repeatable');
+  // A few rounds have to take whoever is nearest; it should stay a few.
+  assert.ok(fair >= 366 * ROUNDS * 0.97, `only ${fair} rounds inside the window`);
+  assert.deepEqual(roundsForDay(all, 3), roundsForDay(all, 3), 'not repeatable');
+});
+
+test('the cast is stored as the game reads it, and everyone can be drawn', () => {
+  const names = new Set();
+  for (const entry of lineupFile.people) {
+    const profile = Object.fromEntries(KEYS.map((k, i) => [k, entry.p[i]]));
+    assert.deepEqual(canonical(profile, entry.sp).lowered, [], `${entry.name} is not in canonical form`);
+    assert.ok(entry.name && entry.job && entry.quirk);
+    assert.ok(!names.has(entry.name), `two people called ${entry.name}`);
+    names.add(entry.name);
+    const svg = portrait(entry.look, 1);
+    assert.match(svg, /^<svg /);
+    assert.doesNotMatch(svg, /undefined|NaN/);
+  }
 });
 
 test('line-up keeps away from the people the guessing modes hide this week', () => {
@@ -126,18 +146,11 @@ test('practice never shows a person hidden this week', () => {
         assert.ok(!away.has((day - 1 + offset) % count));
       }
     }
-    for (let n = 0; n < 40; n += 1) {
-      const day = 1 + Math.floor(random() * count);
-      for (const round of roundsForDay(answersFile, day, today)) {
-        assert.equal(round.people.filter((p) => p.score.total === round.total).length, 1);
-        for (const p of round.people) assert.ok(!away.has(p.index), 'line-up practice shows a hidden person');
-      }
-    }
   }
 });
 
 test('a description covers everything that scores', () => {
-  const all = people(answersFile);
+  const all = [...people(answersFile), ...cast(lineupFile)];
   const texts = new Map();
   for (const p of all) {
     const text = bioLines(p.profile, p.spousePoints).join('|');
