@@ -42,13 +42,25 @@ function shuffle(list, random) {
   return a;
 }
 
+// A day for a practice game of a guessing variant: any day whose person is not one the
+// guessing modes hide this week. A practice game ends by showing its person.
+export function practiceDay(random, count, offset, today) {
+  const away = reserved(today, count);
+  for (;;) {
+    const day = 1 + Math.floor(random() * count);
+    if (!away.has((day - 1 + offset) % count)) return day;
+  }
+}
+
 // The day's rounds: [{ total, people: [four people], answer: index of the one who has
 // that total }]. The same day always gives the same rounds. No two people in a round
-// share a total, and nobody stands in two rounds of the same day.
-export function roundsForDay(answersFile, day) {
+// share a total, and nobody stands in two rounds of the same day. `today` differs from
+// `day` in a practice game, which plays some other day's rounds but must still keep away
+// from the people hidden this week.
+export function roundsForDay(answersFile, day, today = day) {
   const random = rng(day * 7919 + 17);
   const all = people(answersFile);
-  const away = reserved(day, all.length);
+  const away = new Set([...reserved(day, all.length), ...reserved(today, all.length)]);
   let pool = shuffle(all.filter((p) => !away.has(p.index)), random);
   const rounds = [];
   for (let r = 0; r < ROUNDS; r += 1) {

@@ -9,7 +9,9 @@ import {
   CLUES, MODES, PERSON_VARIANTS, VARIANT_OFFSETS, closeness, parseVariant, revealedSections,
   steps, variantId, variantName, variantOffset,
 } from '../src/modes.js';
-import { KEEP_AWAY_DAYS, LINEUP_SIZE, ROUNDS, bioLines, people, reserved, roundsForDay } from '../src/rounds.js';
+import {
+  KEEP_AWAY_DAYS, LINEUP_SIZE, ROUNDS, bioLines, people, practiceDay, reserved, roundsForDay,
+} from '../src/rounds.js';
 
 const answersFile = JSON.parse(fs.readFileSync(new URL('../data/answers.json', import.meta.url), 'utf8'));
 const variant = (query) => parseVariant(new URLSearchParams(query));
@@ -110,6 +112,28 @@ test('line-up keeps away from the people the guessing modes hide this week', () 
   const away = reserved(10, count);
   assert.equal(away.size, KEEP_AWAY_DAYS * VARIANT_OFFSETS.length);
   for (const offset of VARIANT_OFFSETS) assert.ok(away.has((10 - 1 + offset) % count));
+});
+
+test('practice never shows a person hidden this week', () => {
+  const count = answersFile.answers.length;
+  const random = rng(5);
+  for (const today of [1, 3, 200, 366, 900]) {
+    const away = reserved(today, count);
+    for (const offset of VARIANT_OFFSETS) {
+      for (let n = 0; n < 200; n += 1) {
+        const day = practiceDay(random, count, offset, today);
+        assert.ok(day >= 1 && day <= count);
+        assert.ok(!away.has((day - 1 + offset) % count));
+      }
+    }
+    for (let n = 0; n < 40; n += 1) {
+      const day = 1 + Math.floor(random() * count);
+      for (const round of roundsForDay(answersFile, day, today)) {
+        assert.equal(round.people.filter((p) => p.score.total === round.total).length, 1);
+        for (const p of round.people) assert.ok(!away.has(p.index), 'line-up practice shows a hidden person');
+      }
+    }
+  }
 });
 
 test('a description covers everything that scores', () => {

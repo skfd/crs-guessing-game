@@ -1,11 +1,11 @@
 // The page for line-up mode: a score, four people, pick whose it is, five times.
 
 import { SECTIONS } from './score.js';
-import { shareText } from './daily.js';
+import { dayNumber, shareText } from './daily.js';
 import { ROUNDS, bioLines, roundsForDay } from './rounds.js';
-import { $, el, answersFile, day, label, load, save, shareUrl } from './page.js';
+import { $, el, answersFile, day, label, load, practice, save, shareUrl } from './page.js';
 
-const rounds = roundsForDay(answersFile, day);
+const rounds = roundsForDay(answersFile, day, practice ? dayNumber() : day);
 const LETTERS = ['A', 'B', 'C', 'D'];
 
 // One pick per finished round: the index of the person chosen.

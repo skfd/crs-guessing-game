@@ -205,7 +205,17 @@ function renderEnd(results, won) {
 $('guess-form').addEventListener('submit', (event) => {
   event.preventDefault();
   if (guesses.length >= MAX) return;
-  guesses.push(readForm());
+  // The same guess twice teaches nothing, and under the section-per-miss clue it would
+  // buy a section for free. Compared as the game reads them, so a guess that is lowered
+  // to an earlier one counts as the same.
+  const raw = readForm();
+  const same = (a, b) => KEYS.every((k) => a[k] === b[k]);
+  const read = evaluate(raw).profile;
+  if (guesses.some((g) => same(evaluate(g).profile, read))) {
+    $('note').textContent = 'You have already guessed that. Change something first.';
+    return;
+  }
+  guesses.push(raw);
   save(guesses);
   render();
 });

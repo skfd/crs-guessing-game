@@ -1,7 +1,8 @@
 // What every mode's page needs: which variant and day this is, the answer list, saved
 // progress, and two DOM helpers.
 
-import { MODE, MODES, CLUES, parseVariant, variantId, variantName } from './modes.js';
+import { MODE, MODES, CLUES, parseVariant, variantId, variantName, variantOffset } from './modes.js';
+import { practiceDay } from './rounds.js';
 import { dayNumber } from './daily.js';
 
 export const $ = (id) => document.getElementById(id);
@@ -16,7 +17,7 @@ export const practice = params.has('practice');
 export const { mode, clue } = parseVariant(params);
 export const answersFile = await (await fetch('data/answers.json')).json();
 export const day = practice
-  ? 1 + Math.floor(Math.random() * answersFile.answers.length)
+  ? practiceDay(Math.random, answersFile.answers.length, variantOffset(mode, clue), dayNumber())
   : Number(params.get('day')) || dayNumber();
 
 const name = variantName(mode, clue);
