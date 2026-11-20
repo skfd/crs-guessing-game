@@ -1,7 +1,8 @@
 # crs-guessing-game
 
 **Status: first prototype is playable.** One mode ("find the hidden person"), a year of
-daily answers, no hosting yet. Nobody but its author has played it.
+daily answers, live at <https://skfd.github.io/crs-guessing-game/>. Nobody but its author
+has played it.
 
 ```
 npm run serve     # http://localhost:5173  (ES modules do not load from file://)
@@ -148,7 +149,8 @@ each is one place in the code.
   month of answers in a row.
 - **Stale pool data.** The band weights are from before 3 November 2026. Replace
   `data/bands.json` and rebuild once IRCC publishes a distribution under the new rules.
-- **Hosting.** Any static host works. Not chosen.
+- **Hosting.** GitHub Pages serves `main` from the repo root, so every push to `main` is a
+  release. The repo is public because Pages on a free plan needs it to be.
 - **Name.** "CRS guessing game" is a working title; it is one constant in `src/daily.js`
   plus the page title.
 - The other modes on the two axes above are untouched.
