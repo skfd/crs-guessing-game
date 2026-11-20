@@ -42,14 +42,14 @@ function parseProfile(words) {
   return { p, sp };
 }
 
-const HAIR = ['bald', 'buzz', 'crop', 'part', 'fringe', 'bob', 'long', 'bun', 'ponytail', 'curly', 'afro', 'receding', 'mohawk', 'pigtails'];
-const HATS = ['toque', 'beanie', 'cap', 'hardhat', 'beret', 'headphones', 'helmet', 'strawhat', 'bandana', 'tophat'];
-const TOPS = ['tee', 'shirt', 'blazer', 'hoodie', 'turtleneck', 'plaid', 'chef', 'parka', 'overalls', 'scarf', 'vneck', 'scrubs', 'hiviz'];
+const HAIR = ['bald', 'buzz', 'crop', 'part', 'fringe', 'bob', 'long', 'bun', 'ponytail', 'curly', 'afro', 'receding', 'mohawk', 'pigtails', 'locs', 'braids', 'wavy', 'coils', 'thin'];
+const HATS = ['toque', 'beanie', 'cap', 'hardhat', 'beret', 'headphones', 'helmet', 'strawhat', 'bandana', 'tophat', 'coil', 'halo', 'veil', 'peaks', 'cowl', 'beadband'];
+const TOPS = ['tee', 'shirt', 'blazer', 'hoodie', 'turtleneck', 'plaid', 'chef', 'parka', 'overalls', 'scarf', 'vneck', 'scrubs', 'hiviz', 'ruff', 'yoke', 'cloak'];
 const GLASSES = ['round', 'square', 'shades'];
 const BEARDS = { stubble: 'stubble', moustache: 'moustache', handlebar: 'handlebar', goatee: 'goatee', fullbeard: 'full', longbeard: 'long' };
 const BROWS = ['raised', 'stern', 'worried', 'thick'];
 const MOUTHS = ['smile', 'smirk', 'grin', 'frown', 'o', 'flat'];
-const EXTRAS = ['tie', 'bowtie', 'stethoscope', 'lanyard', 'earrings', 'necklace', 'pencil', 'mic', 'flower', 'whistle', 'bandaid', 'freckles', 'scar', 'monocle'];
+const EXTRAS = ['tie', 'bowtie', 'stethoscope', 'lanyard', 'earrings', 'necklace', 'pencil', 'mic', 'flower', 'whistle', 'bandaid', 'freckles', 'scar', 'monocle', 'browdots', 'neckrings'];
 
 function parseLook(words) {
   const look = {};
@@ -67,13 +67,49 @@ function parseLook(words) {
       // One extra is drawn; freckles, a scar and a plaster can sit with another.
       if (look.extra) look.extra2 = w; else look.extra = w;
     } else if ((m = /^f(\d)$/.exec(w))) look.face = Number(m[1]);
-    else if ((m = /^t(\d)$/.exec(w))) look.tone = Number(m[1]);
+    else if ((m = /^t(\d)$/.exec(w))) look.t = Number(m[1]);
     else if (w === 'r') look.light = 'r';
     else if (w === 'grey') look.hairTone = 'grey';
     else if (w === 'white' || w === 'light') look.hairTone = 'light';
     else throw new Error(`look word not understood: ${w}`);
   }
   return look;
+}
+
+// What the cast list does not say is drawn from the name, so it never changes between
+// builds: the shape of the head and the body, the features, and the exact skin tone.
+function hash(text) {
+  let h = 2166136261;
+  for (const ch of text) h = Math.imul(h ^ ch.codePointAt(0), 16777619) >>> 0;
+  return h;
+}
+function fillIn(look, name, age) {
+  const u = (salt) => hash(`${name}/${salt}`) / 4294967296;
+  const pick = (salt, list) => list[Math.floor(u(salt) * list.length)];
+  const between = (salt, lo, hi) => Number((lo + u(salt) * (hi - lo)).toFixed(2));
+  const { t, ...rest } = look;
+  const build = between('build', 0.84, 1.2);
+  const young = age <= 19;
+  return {
+    ...rest,
+    face: rest.face ?? pick('face', [0, 1, 2, 3, 4, 5]),
+    headW: between('headW', 0.88, 1.14),
+    headH: between('headH', 0.93, 1.08),
+    tilt: between('tilt', -4, 4),
+    build,
+    slope: between('slope', 0.96, 1.07),
+    neck: Math.round(15 + build * 9 + u('neck') * 3),
+    sit: Math.round(u('sit') * 7) + (young ? 7 : 0),
+    ...(young ? { size: 0.92 } : {}),
+    // t0, t1 and t2 in the cast list are light, middle and dark; unsaid is anything but the darkest.
+    tone: t === undefined ? pick('tone', [0, 0, 1, 1, 2, 3]) : pick('tone', [[0, 1], [1, 2], [3, 4]][t]),
+    eyes: pick('eyes', ['almond', 'round', 'narrow', 'hooded', 'wide']),
+    eyeGap: between('gap', -1, 1.2),
+    nose: pick('nose', ['mid', 'narrow', 'wide', 'long', 'button']),
+    ...(u('lips') < 0.35 ? { lips: 'full' } : {}),
+    age: age < 25 ? 0 : age < 40 ? 1 : age < 52 ? 2 : 3,
+    ...(age >= 52 && !rest.hairTone ? { hairTone: 'grey' } : {}),
+  };
 }
 
 const people = [];
@@ -85,7 +121,8 @@ for (const [name, job, quirk, profileWords, lookWords] of CAST) {
     lowered += 1;
     console.log(`  ${name}: ${c.lowered.join(', ')} made no difference and ${c.lowered.length > 1 ? 'were' : 'was'} lowered`);
   }
-  people.push({ name, job, quirk, p: KEYS.map((k) => c.profile[k]), sp, look: parseLook(lookWords) });
+  const age = Number(profileWords.split(' ')[0]);
+  people.push({ name, job, quirk, p: KEYS.map((k) => c.profile[k]), sp, look: fillIn(parseLook(lookWords), name, age) });
 }
 
 const file = {

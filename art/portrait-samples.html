@@ -18,18 +18,22 @@
 <script type="module">
 import { PORTRAIT_DEFS, portrait } from '../src/portrait.js';
 const PEOPLE = [
-  ['Odile, pastry chef', { hair: 'bob', hat: 'toque', top: 'chef', topTone: 'light', brows: 'flat', mouth: 'flat' }],
-  ['Bram, glaciologist', { face: 1, hair: 'crop', hat: 'beanie', glasses: 'round', top: 'parka', topTone: 'dark', mouth: 'smile', light: 'r' }],
-  ['Wendell, long-haul trucker', { face: 2, tone: 1, hair: 'crop', hairTone: 'light', hat: 'cap', beard: 'handlebar', top: 'plaid', brows: 'stern' }],
-  ['Ines, auditor', { face: 3, hair: 'bun', glasses: 'square', top: 'blazer', topTone: 'dark', brows: 'raised', mouth: 'smirk', extra: 'earrings' }],
-  ['Kofi, bike courier', { tone: 2, hair: 'buzz', hat: 'helmet', top: 'tee', topTone: 'dark', mouth: 'grin', light: 'r' }],
-  ['Petra, beekeeper', { face: 1, tone: 1, hair: 'long', hairTone: 'light', hat: 'strawhat', top: 'overalls', topTone: 'light', mouth: 'smile', extra: 'freckles' }],
-  ['Anselm, piano tuner', { face: 3, hair: 'receding', hairTone: 'grey', beard: 'full', glasses: 'round', top: 'turtleneck', topTone: 'dark', brows: 'worried' }],
-  ['Yuki, sound engineer', { hair: 'fringe', hat: 'headphones', top: 'hoodie', topTone: 'dark', mouth: 'o', extra: 'mic' }],
-  ['Rosalind, welder', { face: 2, tone: 2, hair: 'afro', top: 'hiviz', topTone: 'mid', brows: 'thick', mouth: 'smirk', light: 'r' }],
-  ['Tomas, sommelier', { hair: 'part', beard: 'moustache', top: 'shirt', topTone: 'light', extra: 'bowtie', brows: 'raised' }],
-  ['Mirela, nurse', { face: 1, tone: 1, hair: 'ponytail', top: 'scrubs', topTone: 'mid', extra: 'stethoscope', mouth: 'smile' }],
-  ['Dov, magician', { face: 3, hair: 'curly', hat: 'tophat', beard: 'goatee', top: 'blazer', topTone: 'dark', brows: 'stern', mouth: 'smirk', extra: 'monocle', light: 'r' }],
+  ['narrow head, slight build, tone 0', { face: 3, headW: 0.86, headH: 1.08, build: 0.84, neck: 17, hair: 'fringe', top: 'tee', eyes: 'round', nose: 'narrow', age: 0 }],
+  ['wide head, broad build, tone 1', { face: 2, headW: 1.16, headH: 0.94, build: 1.2, neck: 28, slope: 1.06, tone: 1, hair: 'buzz', beard: 'stubble', top: 'plaid', nose: 'wide', brows: 'thick' }],
+  ['tone 2, coils, full lips', { face: 1, tone: 2, hair: 'coils', top: 'vneck', topTone: 'light', lips: 'full', eyes: 'wide', mouth: 'smile', light: 'r' }],
+  ['tone 3, locs, glasses', { face: 4, tone: 3, hair: 'locs', glasses: 'round', top: 'shirt', topTone: 'light', mouth: 'smile', headW: 0.95 }],
+  ['tone 4, braids', { face: 0, tone: 4, hair: 'braids', top: 'blazer', topTone: 'light', lips: 'full', extra: 'earrings', light: 'r' }],
+  ['tone 4, bald, heavy jaw, old', { face: 5, tone: 4, hair: 'bald', beard: 'full', hairTone: 'light', top: 'turtleneck', topTone: 'light', age: 3, headW: 1.08, build: 1.12, neck: 26 }],
+  ['old, thin hair, tone 0', { face: 3, hair: 'thin', hairTone: 'grey', age: 3, glasses: 'square', top: 'shirt', nose: 'long', mouth: 'frown', sit: 5, tilt: -4 }],
+  ['middle-aged, wavy, tone 1', { face: 1, tone: 1, hair: 'wavy', age: 2, top: 'scarf', topTone: 'dark', eyes: 'hooded', mouth: 'smirk', tilt: 4 }],
+  ['young, small in frame', { face: 4, hair: 'pigtails', age: 0, top: 'hoodie', topTone: 'light', eyes: 'round', nose: 'button', mouth: 'grin', sit: 12, size: 0.9, build: 0.86, neck: 18 }],
+  ['invented: coil wrap', { face: 2, tone: 2, hat: 'coil', beard: 'long', top: 'yoke', topTone: 'dark', brows: 'thick', nose: 'wide', headW: 1.05, build: 1.1 }],
+  ['invented: veil with brow dots', { face: 0, tone: 1, hat: 'veil', top: 'tee', topTone: 'dark', eyes: 'almond', mouth: 'smile', glasses: 'round' }],
+  ['invented: halo disc', { face: 3, tone: 3, hair: 'bun', hat: 'halo', top: 'cloak', topTone: 'dark', extra: 'browdots', light: 'r' }],
+  ['invented: twin peaks, ruff', { face: 4, hair: 'long', hairTone: 'light', hat: 'peaks', top: 'ruff', topTone: 'dark', mouth: 'smirk', age: 2 }],
+  ['invented: cowl', { face: 5, tone: 2, hat: 'cowl', beard: 'goatee', top: 'cloak', topTone: 'mid', brows: 'stern', nose: 'long', age: 2, headW: 0.94 }],
+  ['invented: bead band, neck rings', { face: 1, tone: 4, hair: 'buzz', hat: 'beadband', top: 'vneck', topTone: 'light', extra: 'neckrings', lips: 'full', neck: 20, headH: 1.06 }],
+  ['everyday: toque, parka, tone 3', { face: 2, tone: 3, hair: 'crop', hat: 'beanie', top: 'parka', topTone: 'light', glasses: 'square', beard: 'moustache', mouth: 'grin', age: 2, build: 1.15, neck: 26 }],
 ];
 document.getElementById('defs').innerHTML = PORTRAIT_DEFS;
 document.getElementById('grid').innerHTML = PEOPLE.map(([name, look], i) =>

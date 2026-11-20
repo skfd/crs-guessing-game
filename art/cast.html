@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>The line-up cast</title>
+<style>
+  body { margin: 0; padding: 16px; background: #f6f3ec; color: #1d1b18; font: 12px/1.3 system-ui, "Segoe UI", sans-serif; }
+  h1 { font-size: 18px; margin: 0 0 10px; }
+  #grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; }
+  .card { background: #fff; border: 1px solid #d9d4c8; border-radius: 6px; padding: 5px; }
+  .card svg { width: 100%; height: auto; display: block; }
+  b { display: block; margin-top: 3px; }
+  span { color: #6b665d; }
+</style>
+<h1>The line-up cast: all 100 (needs npm run serve; hover for the quirk)</h1>
+<div id="defs"></div>
+<div id="grid"></div>
+<script type="module">
+import { PORTRAIT_DEFS, portrait } from '../src/portrait.js';
+const file = await (await fetch('../data/lineup.json')).json();
+document.getElementById('defs').innerHTML = PORTRAIT_DEFS;
+document.getElementById('grid').innerHTML = file.people.map((p, i) =>
+  `<div class="card" title="${p.quirk}">${portrait(p.look, i + 1)}<b>${p.name}</b><span>${p.job}</span></div>`).join('');
+</script>

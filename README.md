@@ -109,8 +109,9 @@ axes to be built. Every choice here is provisional.
   a note saying the change made no difference. Under the section-per-miss clue a repeat
   would otherwise buy a section for nothing.
 - **Practice keeps away from this week's hidden people.** A practice game of a guessing
-  variant never picks a person any variant hides today or in the next seven days, and a
-  practice line-up never shows one (`practiceDay` and `roundsForDay` in `src/rounds.js`).
+  variant never picks a person any variant hides today or in the next seven days
+  (`practiceDay` in `src/rounds.js`). The line-up has had its own cast since 2026-11-20
+  and no longer needs the care.
 - **Clue "total only"** shows the total and nothing else. **Clue "a section per miss"**
   shows one more section after each wrong guess: additional, spouse, transferability, core
   last. Under both, a guess still shows its own four section subtotals, but the ✓ ↑ ↓
@@ -130,13 +131,45 @@ axes to be built. Every choice here is provisional.
   - The wrong three score 12 to 70 points away from the round's score and at least 8
     points from each other (`src/rounds.js`). Nearer and only a calculator tells them
     apart; further and the round answers itself. Both numbers are guesses.
-  - The people come from the same 366 as the daily answers, minus anyone a guessing
-    variant hides today or in the next seven days, since a line-up shows whole people
-    with their scores. Nobody stands in two rounds of one day.
-  - Descriptions are built from the attributes by a template (`bioLines`): no names,
-    origins or occupations. What a description leaves out, the person does not have.
-    A spouse is one phrase, "with a spouse who brings 18 points".
+  - Nobody stands in two rounds of one day.
+  - What scores is described by a template (`bioLines`). What a description leaves out,
+    the person does not have. A spouse is one phrase, "with a spouse who brings 18
+    points".
   - The clue axis does not apply: a line-up shows the total only.
+
+## The line-up cast
+
+Decided with the user on 2026-11-20, replacing "no names, origins or occupations" for
+this mode only.
+
+- **A hundred invented people of its own** (`tools/lineup-cast.mjs`, written by hand,
+  built into `data/lineup.json` by `node tools/make-lineup.mjs`). Each has a name, a job
+  and a quirk on top of what scores. None of the three scores anything or hints at it.
+- **No origin in the text, ever.** A name says nothing about which language is the
+  stronger one.
+- **The picture may suggest a culture, but an invented one.** About a quarter wear
+  something that belongs to no real place (a coiled wrap, a veil with a crest, a halo
+  disc, twin peaks, a cowl, a bead band, a ruff, a yoke, a cloak), next to toques,
+  parkas, plaid and hi-viz. Dress is given out without regard to score, language or job.
+- **Portraits are a burnt-out photocopy** (`src/portrait.js`): a face built from parts
+  in soft greys, then thresholded through noise, so only toner and paper are left. No
+  height chart and no placard; the user asked for the look, not a literal mugshot.
+- **What varies:** head outline and stretch, build, neck, how the person sits in the
+  frame, skin as five levels of toner coverage (dark skin keeps highlights, not
+  shadows), eyes, nose, lips, hair style and texture, beard, glasses, hat, clothes, one
+  or two extras. The cast list says hair, hat, clothes and extras; the rest is drawn
+  from the name, so it is stable between builds.
+- **Age shows**, in lines and grey hair, following the age in the description. It is the
+  only thing in a picture that follows a scoring attribute.
+- **Stored as the game reads them** (`canonical`), so 20 of the 100 lost something that
+  made no difference: mostly work abroad with weak language, and French-first where
+  English-first scores the same.
+- **Eleven are nominated**, so that a nominated person has neighbours 12 to 70 points
+  away. 29 of 1,830 rounds in a year still take whoever is nearest.
+- **Open:** each person returns about every five days with the same score, so a regular
+  could learn them. The user: "we're still prototyping". Saved picks from before the
+  cast point at different people. `art/cast.html` shows all hundred; the pictures have
+  only been checked at that size.
 
 ## The guess form
 
@@ -427,8 +460,11 @@ src/main.js               entry: draws the pickers, loads the page for the mode
 src/page.js               variant, day, saved progress, DOM helpers
 src/game.js               the DOM for the two guessing modes
 src/lineup.js             the DOM for line-up
+src/portrait.js           line-up portraits: a look -> SVG
 data/bands.json           IRCC's pool distribution used as weights
 data/answers.json         the hidden people, built by tools/make-answers.mjs
+data/lineup.json          the line-up cast, built by tools/make-lineup.mjs from tools/lineup-cast.mjs
+art/                      style samples and a sheet of the whole cast
 tools/                    make-answers, simulate, simulate-score, simulate-tuples, serve, ircc-oracle
 test/                     node --test
 ```

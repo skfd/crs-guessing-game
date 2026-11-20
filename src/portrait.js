@@ -2,12 +2,22 @@
 // "copy of a copy" filter so that only toner and paper are left. No DOM: both exports
 // are strings of SVG.
 //
-// A look is { face, tone, light, hair, hairTone, brows, mouth, beard, glasses, hat, top,
-// topTone, extra, extra2 }. Every field has a default, so {} is a person too.
+// A look says how a person differs from the next one. Every field has a default, so {}
+// is a person too.
+//   head    face 0-5 (the outline), headW and headH (its stretch), tilt (degrees)
+//   body    build (shoulder width), slope (shoulder height), neck (width), sit (how far
+//           down the frame), size
+//   skin    tone 0-4, as how much of the face the copier turns to toner
+//   face    eyes, eyeGap, nose, lips, brows, mouth, age 0-3 (lines and bags)
+//   hair    hair, hairTone, beard
+//   worn    hat, glasses, top, topTone, extra, extra2
+//   light   'r' for light from the right
+// Some of the hats and clothes belong to no real place: the cast is from everywhere and
+// from nowhere in particular.
 
 const K = '#080808';
 const W = '#f8f8f8';
-const SKIN = ['#e4e4e4', '#cfcfcf', '#b4b4b4'];
+const SKIN = ['#ececec', '#d2d2d2', '#9a9a9a', '#6a6a6a', '#525252'];
 const OUT = `stroke="${K}" stroke-width="1.3" stroke-linejoin="round"`;
 const THIN = `stroke="${K}" stroke-width=".8" fill="none" stroke-linecap="round"`;
 
@@ -36,6 +46,8 @@ const HEADS = [
   'M37 54 Q37 28 60 28 Q83 28 83 54 Q83 72 77 81 Q70 89 60 89 Q50 89 43 81 Q37 72 37 54Z', // round
   'M38 52 Q38 28 60 28 Q82 28 82 52 L81 72 Q78 84 68 88 L52 88 Q42 84 39 72Z',             // square
   'M39 52 Q39 27 60 27 Q81 27 81 52 Q81 68 72 80 Q66 90 60 90 Q54 90 48 80 Q39 68 39 52Z', // long
+  'M37 50 Q37 27 60 27 Q83 27 83 50 Q83 62 75 74 Q66 91 60 91 Q54 91 45 74 Q37 62 37 50Z', // pointed chin
+  'M39 50 Q39 28 60 28 Q81 28 81 50 L84 70 Q82 86 68 89 L52 89 Q38 86 36 70Z',             // heavy jaw
 ];
 
 const mirror = (d) => `<g transform="translate(120 0) scale(-1 1)">${d}</g>`;
@@ -79,10 +91,36 @@ function hair(style, tone) {
     case 'receding': return ['', `${both(`<path d="M37 58 Q33 34 45 27 Q50 26 50 30 Q44 36 43 46 Q39 48 37 58Z" ${fill}/>`)}<path d="M52 27 Q60 24 68 27" stroke="${K}" stroke-width="1.2" fill="none"/>`];
     case 'mohawk': return ['', `<path d="M53 34 Q49 8 60 4 Q71 8 67 34 Q60 30 53 34Z" ${fill}/>${strand('M58 10 L57 28')}${strand('M63 10 L64 28')}`];
     case 'pigtails': return [both(`<path d="M36 44 Q18 46 20 78 Q24 88 30 78 Q28 62 38 56Z" ${fill}/>`), `${crop}${strand('M60 23 L60 33')}`];
+    case 'locs': {
+      let ropes = '';
+      for (let i = 0; i < 9; i += 1) {
+        const x = 32 + i * 7;
+        const len = 96 + ((i * 37) % 22);
+        ropes += `<rect x="${x - 2.8}" y="36" width="5.600" height="${len - 36}" rx="2.800" ${fill}/>`;
+      }
+      return [ropes, `${crop}${strand('M52 24 L50 33')}${strand('M60 23 L60 32')}${strand('M68 24 L70 33')}`];
+    }
+    case 'braids': {
+      let b = '';
+      for (let y = 56; y <= 116; y += 6.5) b += `<ellipse cx="32" cy="${y}" rx="4.600" ry="4" ${fill}/><ellipse cx="88" cy="${y}" rx="4.600" ry="4" ${fill}/>`;
+      return [b, `${crop}${strand('M60 23 L60 34')}`];
+    }
+    case 'wavy': return [`<path d="M33 50 Q29 18 60 18 Q91 18 87 50 Q95 62 86 72 Q96 84 87 96 Q94 108 84 116 L36 116 Q26 108 33 96 Q24 84 34 72 Q25 62 33 50Z" ${fill}/>`,
+      `${both(`<path d="M60 26 Q43 28 37 60 Q33 34 46 25 Q54 21 60 26Z" ${fill}/>`)}${strand('M30 66 Q34 76 29 88')}${strand('M90 66 Q86 76 91 88')}`];
+    case 'coils': {
+      let c = `<path d="M38 48 Q37 25 60 24 Q83 25 82 48 Q72 36 60 35 Q48 36 38 48Z" ${fill}/>`;
+      for (let a = 180; a <= 360; a += 15) {
+        const x = 60 + 23 * Math.cos((a * Math.PI) / 180);
+        const y = 47 + 23 * Math.sin((a * Math.PI) / 180);
+        c += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" ${fill}/>`;
+      }
+      return ['', c];
+    }
+    case 'thin': return ['', `${both(`<path d="M37 58 Q34 40 41 34 Q43 44 41 50 Q39 52 37 58Z" ${fill}/>`)}<path d="M44 33 Q60 25 76 33 M47 30 Q60 23 73 30 M52 27.500 Q60 23 68 27.500" stroke="${K}" stroke-width=".9" fill="none"/>`];
     default: return ['', `${crop}${strand('M48 30 Q54 26 62 27')}`];
   }
 }
-const TALL_HAIR = new Set(['bun', 'afro', 'mohawk', 'curly']);
+const TALL_HAIR = new Set(['bun', 'afro', 'mohawk', 'curly', 'coils', 'thin']);
 
 // ---- what is worn ----
 function top(style, tone) {
@@ -104,6 +142,19 @@ function top(style, tone) {
     case 'vneck': return ['', `${body}<path d="M48 97 L60 118 L72 97 Q60 101 48 97Z" fill="#c2c2c2" ${OUT}/>`];
     case 'scrubs': return ['', `${body}<path d="M48 97 L60 116 L72 97 Q60 101 48 97Z" fill="#c2c2c2" ${OUT}/><rect x="72" y="122" width="14" height="12" fill="none" stroke="${ink}" stroke-width="1"/>`];
     case 'hiviz': return ['', `${body}${both(`<path d="M30 104 L44 100 L50 142 L34 142Z" fill="${W}" ${OUT}/><path d="M36 112 L46 110 M38 126 L48 125" stroke="${K}" stroke-width="2.4"/>`)}`];
+    case 'ruff': {
+      const r = [];
+      for (let a = 0; a < 360; a += 24) {
+        const x = 60 + 24 * Math.cos((a * Math.PI) / 180);
+        const y = 101 + 7 * Math.sin((a * Math.PI) / 180);
+        r.push(`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5.500" fill="${W}" ${OUT}/>`);
+      }
+      // The far half of the ruff goes behind the neck.
+      return [r.slice(8).join(''), `${body}${r.slice(0, 8).join('')}`];
+    }
+    case 'yoke': return ['', `${body}<path d="M34 102 L60 130 L86 102 Q60 110 34 102Z" fill="#ededed" ${OUT}/><path d="M42 108 L48 113 L54 108 L60 113 L66 108 L72 113 L78 108" stroke="${K}" stroke-width="1.200" fill="none"/><circle cx="60" cy="121" r="1.800" fill="${K}"/><circle cx="53" cy="117" r="1" fill="${K}"/><circle cx="67" cy="117" r="1" fill="${K}"/>`];
+    case 'cloak': return [both(`<path d="M34 108 L40 78 L52 98Z" fill="${fill}" ${OUT}/>`),
+      `${body}${line('M60 104 L60 142', 1.2)}<path d="M46 106 Q60 112 74 106" stroke="${ink}" stroke-width="1" fill="none" stroke-dasharray="1 1.600"/><circle cx="48" cy="107" r="3.600" fill="${W}" ${OUT}/><circle cx="72" cy="107" r="3.600" fill="${W}" ${OUT}/>`];
     default: return ['', `${body}<path d="M47 98 Q60 109 73 98" fill="none" stroke="${ink}" stroke-width="1.6"/>`]; // tee
   }
 }
@@ -120,9 +171,50 @@ function hat(style) {
     case 'strawhat': return `<ellipse cx="60" cy="38" rx="42" ry="8" fill="#dedede" ${OUT}/><path d="M40 37 Q40 13 60 13 Q80 13 80 37Z" fill="#dedede" ${OUT}/><path d="M40 33 Q60 38 80 33" stroke="${K}" stroke-width="3.5" fill="none"/><path d="M24 39 L96 39 M30 42 L90 42" ${THIN}/>`;
     case 'bandana': return `<path d="M37 44 Q36 22 60 21 Q84 22 83 44 Q60 34 37 44Z" fill="#2a2a2a" ${OUT}/><path d="M82 40 L94 36 L90 46 L96 52 L84 48Z" fill="#2a2a2a" ${OUT}/><g fill="${W}"><circle cx="48" cy="31" r="1.2"/><circle cx="60" cy="27" r="1.2"/><circle cx="72" cy="31" r="1.2"/><circle cx="54" cy="35" r="1.2"/><circle cx="66" cy="35" r="1.2"/></g>`;
     case 'tophat': return `<rect x="43" y="-2" width="34" height="30" fill="${K}"/><rect x="43" y="19" width="34" height="5" fill="#e9e9e9"/><path d="M30 28 Q60 22 90 28 L90 32 Q60 27 30 32Z" fill="${K}"/>`;
+    case 'coil': return `<path d="M38 41 Q33 25 44 15 Q45 0 60 -3 Q75 0 76 15 Q87 25 82 41 Q60 30 38 41Z" fill="#ededed" ${OUT}/><path d="M39 33 Q60 22 81 33 M41 23 Q60 12 79 23 M46 12 Q60 4 74 12" ${THIN}/><circle cx="60" cy="31" r="3" fill="${K}" stroke="${W}" stroke-width=".8"/>`;
+    case 'halo': return `<path d="M37 45 Q60 35 83 45" stroke="${K}" stroke-width="4" fill="none"/><path d="M37 45 Q60 35 83 45" stroke="${W}" stroke-width="1.200" fill="none" stroke-dasharray="1.500 2.500"/>`;
+    case 'veil': {
+      let dots = '';
+      for (let i = 0; i <= 8; i += 1) {
+        const x = 40 + i * 5;
+        const y = 47 - 9 * Math.sin((Math.PI * i) / 8);
+        dots += `<circle cx="${x}" cy="${y.toFixed(1)}" r="1.300" fill="${W}"/>`;
+      }
+      return `<path d="M36 54 Q34 22 60 17 Q86 22 84 54 Q80 40 60 36 Q40 40 36 54Z" fill="#262626" ${OUT}/><path d="M60 17 L55 5 L65 5Z" fill="#262626" ${OUT}/>${dots}`;
+    }
+    case 'peaks': return `${both(`<path d="M38 42 Q34 20 24 -2 Q48 6 59 31Z" fill="#ededed" ${OUT}/><path d="M33 14 L46 21 M37 26 L52 28" ${THIN}/>`)}<path d="M36 45 Q60 34 84 45 L84 38 Q60 27 36 38Z" fill="#2a2a2a" ${OUT}/>`;
+    case 'cowl': return `<path d="M35 58 Q30 19 60 16 Q90 19 85 58 Q85 31 60 29 Q35 31 35 58Z" fill="#202020" ${OUT}/><path d="M83 24 Q106 26 101 58 Q96 42 82 35Z" fill="#202020" ${OUT}/>`;
+    case 'beadband': {
+      let beads = '';
+      for (let i = 0; i <= 8; i += 1) {
+        const x = 40 + i * 5;
+        const y = 46 - 6 * Math.sin((Math.PI * i) / 8);
+        beads += `<circle cx="${x}" cy="${y.toFixed(1)}" r="2.400" fill="${W}" ${OUT}/>`;
+      }
+      return `${beads}<path d="M60 42 L60 47" stroke="${K}" stroke-width="1"/><circle cx="60" cy="49" r="2" fill="${K}" stroke="${W}" stroke-width=".7"/>`;
+    }
     default: return '';
   }
 }
+
+// The part of a hat that hangs behind the head.
+function hatBack(style) {
+  switch (style) {
+    case 'halo': {
+      let rays = '';
+      for (let a = 150; a <= 390; a += 15) {
+        const c = Math.cos((a * Math.PI) / 180);
+        const q = Math.sin((a * Math.PI) / 180);
+        rays += `M${(60 + 27 * c).toFixed(1)} ${(46 + 27 * q).toFixed(1)} L${(60 + 35 * c).toFixed(1)} ${(46 + 35 * q).toFixed(1)} `;
+      }
+      return `<circle cx="60" cy="46" r="36" fill="#ededed" ${OUT}/><circle cx="60" cy="46" r="26" fill="none" stroke="${K}" stroke-width=".8"/><path d="${rays}" stroke="${K}" stroke-width="1.400"/>`;
+    }
+    case 'veil': return `<path d="M31 62 Q26 16 60 13 Q94 16 89 62 L100 128 L20 128Z" fill="#262626" ${OUT}/>`;
+    case 'cowl': return `<path d="M27 108 Q20 18 60 13 Q100 18 93 108Z" fill="#202020" ${OUT}/>`;
+    default: return '';
+  }
+}
+const COVERS_HAIR = new Set(['veil', 'cowl', 'coil']);
 
 function glasses(style) {
   const arms = `<path d="M43.5 55 L38 53 M76.5 55 L82 53 M57 55.5 Q60 53.5 63 55.5" ${THIN.replace('.8', '1.3')}/>`;
@@ -178,11 +270,22 @@ function extra(kind) {
     case 'freckles': return `<g fill="${K}">${[[47, 64], [50, 66], [53, 63.5], [67, 63.5], [70, 66], [73, 64]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".6"/>`).join('')}</g>`;
     case 'scar': return `<path d="M68 44 L73 58 M68.500 50 L72 49 M70 55 L73.500 54" stroke="${K}" stroke-width=".8"/>`;
     case 'monocle': return `<circle cx="69.500" cy="56" r="6.5" fill="${W}" fill-opacity=".3" stroke="${K}" stroke-width="1.5"/><path d="M75 60 Q80 80 74 100" ${THIN}/>`;
+    case 'browdots': return `<g fill="${K}" stroke="${W}" stroke-width=".500"><circle cx="54" cy="43.500" r="1.300"/><circle cx="60" cy="41.500" r="1.600"/><circle cx="66" cy="43.500" r="1.300"/></g>`;
+    case 'neckrings': return [86, 91, 96].map((y) => `<rect x="46.500" y="${y}" width="27" height="4.400" rx="2.200" fill="#ededed" ${OUT}/>`).join('');
     default: return '';
   }
 }
 
-const ON_TOP = new Set(['pencil', 'flower', 'freckles', 'scar', 'bandaid', 'monocle', 'earrings', 'mic']);
+const EYES = {
+  almond: 'M46.500 56 Q50.500 52.800 54.800 56 Q50.500 58.200 46.500 56Z',
+  round: 'M47.700 55.800 Q47.700 52.600 50.700 52.600 Q53.700 52.600 53.700 55.800 Q53.700 58.600 50.700 58.600 Q47.700 58.600 47.700 55.800Z',
+  narrow: 'M46 56.300 Q50.500 54 55.300 56 Q50.500 57.500 46 56.300Z',
+  hooded: 'M46.500 56.500 Q50.500 54 54.800 56.500 Q50.500 58.600 46.500 56.500Z M45.500 54.200 Q50.500 51.200 55.800 54.200 L55.800 55 Q50.500 52.400 45.500 55Z',
+  wide: 'M45.500 56 Q50.500 51.500 55.800 56 Q50.500 59.300 45.500 56Z',
+};
+const NOSES = { mid: [1, 1], narrow: [0.72, 1], wide: [1.38, 1.05], long: [0.9, 1.5], button: [0.8, 0.7] };
+
+const ON_TOP = new Set(['browdots', 'pencil', 'flower', 'freckles', 'scar', 'bandaid', 'monocle', 'earrings', 'mic']);
 
 function lcg(seed) {
   let s = (seed * 2654435761 + 12345) >>> 0;
@@ -196,10 +299,15 @@ function lcg(seed) {
 export function portrait(look = {}, seed = 1) {
   const r = lcg(seed);
   const head = HEADS[look.face ?? 0] ?? HEADS[0];
-  const skin = SKIN[look.tone ?? 0] ?? SKIN[0];
-  const hatted = look.hat && look.hat !== 'headphones';
-  const style = hatted && TALL_HAIR.has(look.hair) ? 'crop' : look.hair;
-  const [hairBack, hairFront] = hair(style, look.hairTone ?? 'dark');
+  const tone = look.tone ?? 0;
+  const skin = SKIN[tone] ?? SKIN[0];
+  // On dark skin the copier leaves highlights, not shadows: the marks turn white.
+  const dark = tone >= 3;
+  const mark = dark ? W : K;
+  const hatted = look.hat && !['headphones', 'halo', 'beadband'].includes(look.hat);
+  const style = COVERS_HAIR.has(look.hat) ? 'bald' : hatted && TALL_HAIR.has(look.hair) ? 'crop' : look.hair;
+  let [hairBack, hairFront] = hair(style, look.hairTone ?? 'dark');
+  if (COVERS_HAIR.has(look.hat)) { hairBack = ''; hairFront = ''; }
   const [topBack, topFront] = top(look.top, look.topTone ?? 'mid');
   const flip = look.light === 'r' ? 'transform="translate(120 0) scale(-1 1)"' : '';
   const id = `pt-h${seed}`;
@@ -208,29 +316,54 @@ export function portrait(look = {}, seed = 1) {
   const onTop = extras.filter((e) => ON_TOP.has(e));
   const worn = extras.filter((e) => !ON_TOP.has(e));
   const brow = BROWS[look.brows] ?? BROWS.flat;
-  const eyes = look.glasses === 'shades' ? '' : both(`<path d="M46.500 56 Q50.500 52.800 54.800 56 Q50.500 58.200 46.500 56Z" fill="${K}"/><circle cx="51.300" cy="55.300" r=".55" fill="${W}"/>`);
+  const gap = look.eyeGap ?? 0;
+  const eyePath = EYES[look.eyes] ?? EYES.almond;
+  const oneEye = dark
+    ? `<path d="${EYES.wide}" fill="${W}"/><circle cx="50.700" cy="55.800" r="1.900" fill="${K}"/>`
+    : `<path d="${eyePath}" fill="${K}"/><circle cx="51.300" cy="55.300" r=".55" fill="${W}"/>`;
+  const eyes = look.glasses === 'shades' ? '' : both(`<g transform="translate(${-gap} 0)">${oneEye}</g>`);
+  const [nw, nh] = NOSES[look.nose] ?? NOSES.mid;
+  const nose = `<g transform="translate(60 71) scale(${nw} ${nh}) translate(-60 -71)"><path d="M55 70.500 Q57 68.800 58.500 70.800 Q60 72 61.500 70.800 Q63 68.800 65 70.500 Q62.500 73.200 60 72.600 Q57.500 73.200 55 70.500Z" fill="${K}"/>${dark ? `<path d="M58.500 56 L58 67" stroke="${W}" stroke-width="2" stroke-linecap="round" filter="url(#pt-softer)"/>` : ''}</g>`;
+  const fullLips = look.lips === 'full' && ['flat', 'smile', 'smirk', undefined].includes(look.mouth)
+    ? `<path d="M54 78.500 Q60 84.500 66 78.500 Q60 80.500 54 78.500Z" fill="${dark ? W : '#5a5a5a'}"/>` : '';
+  const age = look.age ?? 1;
+  const wear = (d, w = 0.8) => `<path d="${d}" stroke="${mark}" stroke-width="${w}" fill="none" stroke-linecap="round"/>`;
+  const lines = (age >= 2 ? both(wear('M54 69.500 Q50.500 74 52 79.500') + wear('M47 60 Q50.500 62.300 54.500 60.200', 0.7)) : '')
+    + (age >= 3 ? wear('M50 40.500 Q60 38.500 70 40.500') + wear('M52 44.500 Q60 43 68 44.500')
+      + both(wear('M43.800 54 L41.600 52.600 M43.800 56.200 L41.400 56.800', 0.7) + wear('M44 78 Q45 84.500 50.500 86.500')) : '');
 
+  // Shadows on light skin; on dark skin, what little the light still catches.
+  const shade = [0.92, 0.92, 0.8, 0.5, 0.3][tone] ?? 0.92;
+  const shine = [0, 0, 0.55, 0.9, 0.9][tone] ?? 0;
   const face = `<clipPath id="${id}"><path d="${head}"/></clipPath>
     <g clip-path="url(#${id})">
       <rect x="30" y="20" width="60" height="76" fill="${skin}"/>
       <g ${flip}>
-        <path d="M70 22 Q76 44 71 62 Q69 76 74 96 L96 96 L96 22Z" fill="#000" opacity=".92" filter="url(#pt-soft)"/>
-        <path d="M61 52 L66.500 69 L60.500 71.500Z" fill="#000" opacity=".75" filter="url(#pt-softer)"/>
+        <path d="M70 22 Q76 44 71 62 Q69 76 74 96 L96 96 L96 22Z" fill="#000" opacity="${shade}" filter="url(#pt-soft)"/>
+        <path d="M61 52 L66.500 69 L60.500 71.500Z" fill="#000" opacity="${shade * 0.8}" filter="url(#pt-softer)"/>
         <ellipse cx="60" cy="90" rx="13" ry="4" fill="#000" opacity=".5" filter="url(#pt-soft)"/>
+        ${shine ? `<g fill="#fff" opacity="${shine}" filter="url(#pt-softer)"><ellipse cx="52" cy="40" rx="${tone === 4 ? 7.500 : 9}" ry="${tone === 4 ? 4.500 : 5.500}"/><ellipse cx="47" cy="65" rx="${tone === 4 ? 4 : 4.500}" ry="${tone === 4 ? 4.500 : 5}"/><ellipse cx="57" cy="84" rx="4" ry="2.200"/></g>` : ''}
       </g>
-      ${both('<ellipse cx="50.500" cy="54.500" rx="7" ry="4.200" fill="#000" opacity=".42" filter="url(#pt-softer)"/>')}
+      ${both(`<ellipse cx="50.500" cy="54.500" rx="7" ry="4.200" fill="#000" opacity="${dark ? 0.7 : 0.42}" filter="url(#pt-softer)"/>`)}
       <ellipse cx="60" cy="82.500" rx="5.500" ry="1.800" fill="#000" opacity=".45" filter="url(#pt-softer)"/>
     </g>
-    <path d="${head}" fill="none" stroke="${K}" stroke-width="1.1"/>
-    ${both(`<path d="${brow}" stroke="${K}" stroke-width="${look.brows === 'thick' ? 3 : 2}" fill="none" stroke-linecap="round"/>`)}
-    ${eyes}
-    <path d="M55 70.500 Q57 68.800 58.500 70.800 Q60 72 61.500 70.800 Q63 68.800 65 70.500 Q62.500 73.200 60 72.600 Q57.500 73.200 55 70.500Z" fill="${K}"/>
-    ${MOUTHS[look.mouth] ?? MOUTHS.flat}`;
+    <path d="${head}" fill="none" stroke="${K}" stroke-width="1.100"/>
+    ${both(`<g transform="translate(${-gap} 0)"><path d="${brow}" stroke="${K}" stroke-width="${look.brows === 'thick' ? 3 : 2}" fill="none" stroke-linecap="round"/></g>`)}
+    ${eyes}${nose}${lines}
+    ${dark ? (MOUTHS[look.mouth] ?? MOUTHS.flat).replaceAll(`stroke="${K}"`, `stroke="${W}"`) : MOUTHS[look.mouth] ?? MOUTHS.flat}${fullLips}`;
 
-  const neck = `<g clip-path="url(#pt-neck)"><rect x="49" y="78" width="22" height="30" fill="${skin}"/>
+  const neckW = look.neck ?? 22;
+  const neck = `<clipPath id="${id}n"><rect x="${60 - neckW / 2}" y="78" width="${neckW}" height="30"/></clipPath>
+    <g clip-path="url(#${id}n)"><rect x="40" y="78" width="40" height="30" fill="${skin}"/>
       <ellipse cx="${look.light === 'r' ? 56 : 64}" cy="91" rx="15" ry="8" fill="#000" opacity=".85" filter="url(#pt-soft)"/></g>
-    <path d="M49 84 L49 100 M71 84 L71 100" stroke="${K}" stroke-width="1"/>`;
-  const ears = both(`<path d="M38.500 53 Q33 51 33.500 59 Q34 66 39 67Z" fill="${skin}" stroke="${K}" stroke-width="1"/>`);
+    <path d="M${60 - neckW / 2} 84 L${60 - neckW / 2} 100 M${60 + neckW / 2} 84 L${60 + neckW / 2} 100" stroke="${K}" stroke-width="1"/>`;
+  const ears = COVERS_HAIR.has(look.hat) && look.hat !== 'coil' ? ''
+    : both(`<path d="M38.500 53 Q33 51 33.500 59 Q34 66 39 67Z" fill="${skin}" stroke="${K}" stroke-width="1"/>`);
+
+  // The head stretches and tips about the chin; the body about the bottom of the frame.
+  const headAt = `transform="rotate(${look.tilt ?? 0} 60 88) translate(60 88) scale(${look.headW ?? 1} ${look.headH ?? 1}) translate(-60 -88)"`;
+  const bodyAt = `transform="translate(60 142) scale(${look.build ?? 1} ${look.slope ?? 1}) translate(-60 -142)"`;
+  const sitAt = `transform="translate(0 ${look.sit ?? 0}) translate(60 142) scale(${look.size ?? 1}) translate(-60 -142)"`;
 
   // Dirt: the copier lid's shadow, a toner streak, a dropout line, specks.
   const streak = (20 + r() * 80).toFixed(1);
@@ -247,9 +380,12 @@ export function portrait(look = {}, seed = 1) {
     <g transform="rotate(${tilt} 60 70)">
       <rect x="-6" y="${(1 + r() * 2).toFixed(1)}" width="132" height="146" fill="#dcdcdc"/>
       <rect x="-6" y="0" width="132" height="146" fill="url(#pt-vig)"/>
-      ${hairBack}${topBack}${neck}${topFront}${worn.map(extra).join('')}
-      ${ears}${face}${beard(look.beard, head, look.hairTone ?? 'dark')}${hairFront}${glasses(look.glasses)}${hat(look.hat)}
-      ${onTop.map(extra).join('')}
+      <g ${sitAt}>
+        <g ${headAt}>${hatBack(look.hat)}${hairBack}</g>
+        <g ${bodyAt}>${topBack}</g>${neck}<g ${bodyAt}>${topFront}</g>${worn.map(extra).join('')}
+        <g ${headAt}>${ears}${face}${beard(look.beard, head, look.hairTone ?? 'dark').replaceAll("pt-b", `${id}b`)}${hairFront}${glasses(look.glasses)}${hat(look.hat)}
+        ${onTop.map(extra).join('')}</g>
+      </g>
     </g>
     <rect ${lidSide ? 'x="0"' : 'x="104" transform="translate(224 0) scale(-1 1)"'} width="16" height="140" fill="url(#pt-lid)"/>
     <rect x="${streak}" width="${(0.5 + r() * 0.9).toFixed(2)}" height="140" fill="#000" opacity=".7"/>
