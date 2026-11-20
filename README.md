@@ -571,6 +571,7 @@ src/lineup.js             the DOM for line-up
 src/portrait.js           line-up portraits: a look -> SVG
 data/bands.json           IRCC's pool distribution used as weights
 data/answers.json         the hidden people, built by tools/make-answers.mjs
+data/ircc/                IRCC statistics as downloaded; nothing reads them
 data/lineup.json          the line-up cast, built by tools/make-lineup.mjs from tools/lineup-cast.mjs
 art/                      style samples and a sheet of the whole cast
 tools/                    make-answers, simulate, simulate-score, simulate-tuples, serve, ircc-oracle
@@ -613,6 +614,8 @@ data files themselves were not opened, except the start of the age-group CSV):
   <https://open.canada.ca/data/en/dataset/593e9165-c6ce-4f9b-b519-03d315f92cd4>
 - Open data on people admitted through Express Entry; no score fields seen:
   <https://open.canada.ca/data/en/dataset/52e4b14b-597a-4ecf-a184-23a6e69b0d57>
+- All three were downloaded on 2026-11-20 into `data/ircc/`, which has its own README.
+  Nothing reads them.
 - All of it is under the rules before 3 November 2026.
 
 Scoring code, all MIT per the GitHub API, none checked against IRCC's tool:

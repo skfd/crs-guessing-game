@@ -5,3 +5,5 @@
 *.jpg binary
 *.ico binary
 *.woff2 binary
+data/ircc/** -text
+data/ircc/README.md text eol=lf
