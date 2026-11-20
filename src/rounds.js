@@ -65,30 +65,66 @@ export function practiceDay(random, count, offset, today) {
   }
 }
 
+// The wrong people for `target`, taken from `others` in the order given: `below` of them
+// score less and the rest more, all inside the window and APART from each other. Null
+// when `others` cannot supply that.
+function wrongOnes(target, others, below) {
+  const want = [below, LINEUP_SIZE - 1 - below];
+  const picked = [[], []];
+  for (const p of others) {
+    const gap = p.score.total - target.score.total;
+    const side = gap < 0 ? 0 : 1;
+    if (Math.abs(gap) < NEAREST || Math.abs(gap) > FURTHEST) continue;
+    if (picked[side].length === want[side]) continue;
+    if (picked[side].every((q) => Math.abs(q.score.total - p.score.total) >= APART)) picked[side].push(p);
+  }
+  return picked[0].length === want[0] && picked[1].length === want[1] ? picked.flat() : null;
+}
+
+// Who may be the right answer of a round: only someone the cast can surround, with three
+// people inside the window below and three above. Whoever is near either end of the cast
+// only ever stands as a wrong one. Otherwise the ends give themselves away: when anybody
+// could be the answer, a score under 150 belonged to the lowest of the four in 70 rounds
+// of 100, and one over 560 to the highest in 81.
+export function canBeAnswer(person, all) {
+  const others = [...all].sort((a, b) => a.score.total - b.score.total);
+  return [0, LINEUP_SIZE - 1].every((below) => wrongOnes(person, others, below));
+}
+
 // The day's rounds: [{ total, people: [four people], answer: index of the one who has
 // that total }]. The same day always gives the same rounds. No two people in a round
 // share a total, and nobody stands in two rounds of the same day. `all` is what cast()
 // returns.
+//
+// How many of the wrong three score below the answer is drawn first, evenly from none
+// to all three, and then the first person who can be surrounded that way is the answer.
+// So the answer is as likely to be the lowest of the four as the highest or either
+// middle one, whatever its score. Drawing the wrong three from anywhere in the window
+// put the answer in the middle two in 74 rounds of 100.
 export function roundsForDay(all, day) {
   const random = rng(day * 7919 + 17);
+  const answers = new Set(all.filter((p) => canBeAnswer(p, all)));
   let pool = shuffle(all, random);
   const rounds = [];
   for (let r = 0; r < ROUNDS; r += 1) {
-    const target = pool[0];
-    const others = pool.slice(1).filter((p) => p.score.total !== target.score.total);
-    const picked = [];
-    const fits = (p) => picked.every((q) => Math.abs(q.score.total - p.score.total) >= APART);
-    for (const p of others) {
-      if (picked.length === LINEUP_SIZE - 1) break;
-      const gap = Math.abs(p.score.total - target.score.total);
-      if (gap >= NEAREST && gap <= FURTHEST && fits(p)) picked.push(p);
+    const below = Math.floor(random() * LINEUP_SIZE);
+    let target = null;
+    let picked = null;
+    for (const p of pool) {
+      if (!answers.has(p)) continue;
+      picked = wrongOnes(p, pool, below);
+      if (picked) { target = p; break; }
     }
-    // A score with too few neighbours takes whoever is nearest instead.
-    const nearest = [...others].sort((a, b) =>
-      Math.abs(a.score.total - target.score.total) - Math.abs(b.score.total - target.score.total));
-    for (const p of nearest) {
-      if (picked.length === LINEUP_SIZE - 1) break;
-      if (!picked.includes(p) && picked.every((q) => q.score.total !== p.score.total)) picked.push(p);
+    if (!target) {
+      // Nobody left today can be surrounded that way: take whoever is nearest instead.
+      target = pool.find((p) => answers.has(p)) ?? pool[0];
+      picked = [];
+      const nearest = pool.filter((p) => p.score.total !== target.score.total).sort((a, b) =>
+        Math.abs(a.score.total - target.score.total) - Math.abs(b.score.total - target.score.total));
+      for (const p of nearest) {
+        if (picked.length === LINEUP_SIZE - 1) break;
+        if (picked.every((q) => q.score.total !== p.score.total)) picked.push(p);
+      }
     }
     const standing = shuffle([target, ...picked], random);
     rounds.push({ total: target.score.total, people: standing, answer: standing.indexOf(target) });

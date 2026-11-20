@@ -10,7 +10,8 @@ import {
   steps, variantId, variantName, variantOffset,
 } from '../src/modes.js';
 import {
-  KEEP_AWAY_DAYS, LINEUP_SIZE, ROUNDS, bioLines, cast, people, practiceDay, reserved, roundIsFair,
+  KEEP_AWAY_DAYS, LINEUP_SIZE, ROUNDS, bioLines, canBeAnswer, cast, people, practiceDay, reserved,
+  roundIsFair,
   roundsForDay,
 } from '../src/rounds.js';
 import { canonical } from '../src/profile.js';
@@ -91,6 +92,7 @@ test('every day of line-up has five rounds with one right answer', () => {
   const all = cast(lineupFile);
   assert.equal(all.length, 100);
   let fair = 0;
+  const places = [0, 0, 0, 0];
   for (let day = 1; day <= 366; day += 1) {
     const rounds = roundsForDay(all, day);
     assert.equal(rounds.length, ROUNDS);
@@ -106,10 +108,14 @@ test('every day of line-up has five rounds with one right answer', () => {
         seen.add(p.index);
       }
       if (roundIsFair(round)) fair += 1;
+      assert.ok(canBeAnswer(round.people[round.answer], all), `day ${day}: an answer from the end of the cast`);
+      places[round.people.filter((p) => p.score.total < round.total).length] += 1;
     }
   }
   // A few rounds have to take whoever is nearest; it should stay a few.
   assert.ok(fair >= 366 * ROUNDS * 0.97, `only ${fair} rounds inside the window`);
+  // The answer is the lowest of the four as often as the highest or a middle one.
+  for (const n of places) assert.ok(n > 366 * ROUNDS * 0.2 && n < 366 * ROUNDS * 0.3, `places ${places}`);
   assert.deepEqual(roundsForDay(all, 3), roundsForDay(all, 3), 'not repeatable');
 });
 

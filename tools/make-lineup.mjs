@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import { ATTRIBUTES, KEYS } from '../src/attributes.js';
 import { canonical } from '../src/profile.js';
 import { score } from '../src/score.js';
-import { cast, roundsForDay, roundIsFair, ROUNDS } from '../src/rounds.js';
+import { cast, canBeAnswer, roundsForDay, roundIsFair, ROUNDS } from '../src/rounds.js';
 import { CAST } from './lineup-cast.mjs';
 
 const LANG1 = { 3: 0, 5: 1, 6: 2, 7: 3, 8: 4, 9: 5, 10: 6 };
@@ -167,10 +167,24 @@ const dressed = (x) => INVENTED.includes(x.look.hat) || INVENTED.includes(x.look
 console.log(`Mean total in invented dress ${mean(plain.filter(dressed))}, without ${mean(plain.filter((x) => !dressed(x)))}`);
 let unfair = 0;
 const DAYS = 366;
+// Where the answer stands among the four by score, lowest first: [total shown, place].
+const places = [];
 for (let day = 1; day <= DAYS; day += 1) {
-  for (const round of roundsForDay(all, day)) if (!roundIsFair(round)) unfair += 1;
+  for (const round of roundsForDay(all, day)) {
+    if (!roundIsFair(round)) unfair += 1;
+    places.push([round.total, round.people.filter((x) => x.score.total < round.total).length]);
+  }
 }
 console.log(`Rounds that fell back on the nearest scores: ${unfair} of ${DAYS * ROUNDS}`);
+const can = all.filter((x) => canBeAnswer(x, all)).map((x) => x.score.total);
+console.log(`${can.length} people can be the answer, with totals ${Math.min(...can)} to ${Math.max(...can)}`);
+const share = (list) => [0, 1, 2, 3]
+  .map((k) => `${Math.round((100 * list.filter((x) => x[1] === k).length) / list.length)}%`).join(' ');
+places.sort((a, b) => a[0] - b[0]);
+const fifth = Math.floor(places.length / 5);
+console.log(`The answer is the lowest .. highest of the four: ${share(places)}`);
+console.log(`  in the fifth of rounds with the lowest score shown: ${share(places.slice(0, fifth))}`);
+console.log(`  in the fifth with the highest: ${share(places.slice(-fifth))}`);
 
 if (!process.argv.includes('--check')) {
   const json = `${JSON.stringify(file, null, 1)
