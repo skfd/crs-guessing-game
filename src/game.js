@@ -116,10 +116,38 @@ function syncForm() {
   }
   // A guess needs every attribute. After a guess, the ones it ruled out are left unset.
   const missing = unset().map((a) => a.label);
-  $('guess-button').disabled = missing.length > 0;
+  const barred = ruledOutPicks().map((a) => a.label);
+  $('guess-button').disabled = missing.length > 0 || barred.length > 0;
   if (!hitTheScore) {
-    $('form-note').textContent = missing.length ? `Still to choose: ${missing.join(', ')}.` : '';
+    $('form-note').textContent = [
+      missing.length ? `Still to choose: ${missing.join(', ')}.` : '',
+      barred.length ? `Hard mode: ${barred.join(', ')} ${barred.length > 1 ? 'are' : 'is'} set to something ruled out.` : '',
+    ].filter(Boolean).join(' ');
   }
+}
+
+// Hard mode: a guess may not use a choice the guesses so far have ruled out. The setting
+// is the player's, kept across days; it is not part of a saved game.
+const HARD_KEY = 'crs-guessing-game:v1:hard';
+const hardMode = $('hard-mode');
+try { hardMode.checked = localStorage.getItem(HARD_KEY) === '1'; } catch { /* no storage: off */ }
+hardMode.addEventListener('change', () => {
+  try { localStorage.setItem(HARD_KEY, hardMode.checked ? '1' : '0'); } catch { /* not kept */ }
+  syncForm();
+});
+// The attributes that hard mode will not let through as the form stands.
+function ruledOutPicks() {
+  if (hitTheScore || !hardMode.checked) return [];
+  return ATTRIBUTES.filter((a) => {
+    const { inputs, open } = fields[a.key];
+    const i = inputs.findIndex((input) => input.checked);
+    return i >= 0 && open && !open[i];
+  });
+}
+// Whether no guess used a choice that the guesses before it had ruled out.
+function playedHard(results) {
+  return guesses.every((raw, n) => ATTRIBUTES.every((a) => stillPossible(
+    a.key, results.slice(0, n).map((r) => r.cells.find((c) => c.key === a.key)))[raw[a.key]]));
 }
 
 // Marks each chip with what the guesses so far say about it: green for the option known
@@ -131,12 +159,15 @@ function markForm(results) {
     const cells = results.map((r) => r.cells.find((c) => c.key === a.key));
     const open = stillPossible(a.key, cells);
     const found = cells.some((c) => c.state === 'hit');
+    // A yellow cell leaves only an option or two next to it: those are yellow too.
+    const near = !found && cells.some((c) => c.state === 'close');
     fields[a.key].open = open;
     fields[a.key].hit = found ? open.indexOf(true) : -1;
     fields[a.key].chips.forEach((chip, i) => {
       chip.classList.toggle('hit', found && open[i]);
+      chip.classList.toggle('near', near && open[i]);
       chip.classList.toggle('out', !open[i]);
-      const what = found && open[i] ? ' (right)' : open[i] ? '' : ' (ruled out)';
+      const what = !open[i] ? ' (ruled out)' : found ? ' (right)' : near ? ' (close)' : '';
       fields[a.key].inputs[i].ariaLabel = a.options[i] + what;
       chip.title = a.options[i] + what;
     });
@@ -262,7 +293,10 @@ function renderEnd(results, won) {
       label, won, url: shareUrl, max: MAX, result: won ? results.length : 'X',
       rows: [results.map((r) => closeness(answerScore.total - r.score.total))],
     })
-    : shareText({ label, won, url: shareUrl, max: MAX, rows: results.map((r) => r.cells.map((c) => c.state)) });
+    : shareText({
+      label, won, url: shareUrl, max: MAX, rows: results.map((r) => r.cells.map((c) => c.state)),
+      hard: hardMode.checked && playedHard(results),
+    });
   $('share-preview').textContent = text;
   $('share-button').onclick = async () => {
     try {
@@ -276,7 +310,7 @@ function renderEnd(results, won) {
 
 $('guess-form').addEventListener('submit', (event) => {
   event.preventDefault();
-  if (guesses.length >= MAX || unset().length) return;
+  if (guesses.length >= MAX || unset().length || ruledOutPicks().length) return;
   // The same guess twice teaches nothing, and under the section-per-miss clue it would
   // buy a section for free. Compared as the game reads them, so a guess that is lowered
   // to an earlier one counts as the same.

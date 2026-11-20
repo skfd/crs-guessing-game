@@ -169,6 +169,14 @@ Changed on 2026-11-20, at the user's request for something like Wordle's keyboar
   as "choose one", and Guess is disabled until every attribute is chosen, with a line
   naming what is missing. If only one option is left open it is picked for the player.
   The form's own rules still apply: no Canadian work sets the wage tier to "not high-wage".
+- **Yellow chips.** After a yellow cell, the option or two it leaves open are yellow, until
+  the attribute is found. With one left it is also picked, as above.
+- **Hard mode** is a tick box under the choices, in "find the person" only, kept in
+  `localStorage` across days. With it on, Guess is disabled while any choice is one the
+  guesses have ruled out, and a line says which. A result is shared with Wordle's `*`
+  when hard mode is on at the end and no guess used a ruled-out choice. It asks little
+  now that ruled-out choices are left unset anyway: what it forbids is picking one on
+  purpose, which is only useful for watching the section points move.
 - **Why unset and not moved.** The first build moved a ruled-out choice to the nearest
   open option. A player who only pressed Guess then found 363 of the 366 people within
   six guesses; with choices left unset that player finds 3 and is stopped on the rest.

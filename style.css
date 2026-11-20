@@ -114,6 +114,9 @@ tr.breakdown .ok { color: var(--hit); font-weight: 600; }
   color: var(--muted); font-weight: 400; text-decoration: line-through;
 }
 .chip.hit { background: var(--hit); border-color: var(--hit); color: var(--on-colour); }
+.chip.near { background: var(--close); border-color: var(--close); color: var(--on-colour); }
+.hard { display: flex; align-items: center; gap: 0.4rem; margin: 0 0 0.75rem; cursor: pointer; }
+.hard input { margin: 0; }
 .chip:has(input:disabled) { background: transparent; border: 2px dashed var(--line); color: var(--muted); opacity: 0.5; cursor: not-allowed; }
 .legend-chip { cursor: default; padding: 0.1rem 0.4rem; }
 .chip:has(input:checked) { border-color: var(--fg); box-shadow: 0 0 0 1px var(--fg); }

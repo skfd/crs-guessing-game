@@ -37,6 +37,7 @@
     <form id="guess-form" autocomplete="off">
       <div id="fields" class="fields"></div>
       <p id="form-note" class="small"></p>
+      <label class="hard small" data-only="person"><input type="checkbox" id="hard-mode"> Hard mode: a guess may not use a ruled-out choice</label>
       <button id="guess-button" type="submit">Guess</button>
     </form>
     </div>
@@ -72,7 +73,7 @@
           <li><span class="swatch miss"></span> wrong, and not close</li>
           <li><span class="swatch lowered">∅</span> your choice made no difference to the score, so it was read as the lowest option that scores the same</li>
         </ul>
-        <p>The choices for your next guess keep score for you: <span class="chip legend-chip hit">green</span> is the one known to be right, <span class="chip legend-chip out">grey</span> ones are ruled out by a guess so far. You can still pick a grey one. Once you have something right it folds down to one line, and "change" brings its choices back. Your next guess starts from your last, minus anything it ruled out: those you choose again before you can guess.</p>
+        <p>The choices for your next guess keep score for you: <span class="chip legend-chip hit">green</span> is the one known to be right, <span class="chip legend-chip near">yellow</span> ones are what a close guess leaves, <span class="chip legend-chip out">grey</span> ones are ruled out by a guess so far. You can still pick a grey one, unless you turn on hard mode under the choices; a result played in hard mode is marked with a *. Once you have something right it folds down to one line, and "change" brings its choices back. Your next guess starts from your last, minus anything it ruled out: those you choose again before you can guess.</p>
         <p>You also see what your guess would score, section by section. Arrows point from your guess towards the answer: ↑ means later in the list (older, more years, a higher level). The score works the same way: each section the clue shows says whether the hidden person has more ↑ or fewer ↓ points than your guess.</p>
       </div>
       <div data-only="score">

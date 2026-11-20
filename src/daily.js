@@ -27,9 +27,10 @@ const SQUARE = { hit: '🟩', close: '🟨', miss: '⬜' };
 // `rows` is one array of cell states per line of squares: in "find the person" a line per
 // guess, in the other modes a single line with a square per guess or per round. `result`
 // is what goes before the slash and defaults to the number of lines, or X for a loss.
-// Nothing in the text gives a value away.
-export function shareText({ label, rows, won, url, max = MAX_GUESSES, result }) {
+// `hard` adds Wordle's asterisk for a game played in hard mode. Nothing in the text gives
+// a value away.
+export function shareText({ label, rows, won, url, max = MAX_GUESSES, result, hard = false }) {
   const shown = result ?? (won ? rows.length : 'X');
   const grid = rows.map((cells) => cells.map((state) => SQUARE[state]).join('')).join('\n');
-  return `${TITLE} ${label} ${shown}/${max}\n${grid}${url ? `\n${url}` : ''}`;
+  return `${TITLE} ${label} ${shown}/${max}${hard ? '*' : ''}\n${grid}${url ? `\n${url}` : ''}`;
 }

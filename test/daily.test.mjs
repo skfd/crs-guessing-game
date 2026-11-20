@@ -20,4 +20,5 @@ test('the share text shows squares and nothing else', () => {
   const text = shareText({ label: '#12', rows: [['hit', 'close', 'miss'], ['hit', 'hit', 'hit']], won: true, url: 'https://example.test/' });
   assert.equal(text, 'CRS guessing game #12 2/6\n🟩🟨⬜\n🟩🟩🟩\nhttps://example.test/');
   assert.match(shareText({ label: '#12', rows: [['miss']], won: false }), /#12 X\/6\n⬜$/);
+  assert.match(shareText({ label: '#12', rows: [['hit']], won: true, hard: true }), /#12 1\/6\*\n🟩$/);
 });
