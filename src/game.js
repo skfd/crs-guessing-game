@@ -1,58 +1,44 @@
-// The page: clue, guess form, feedback rows, end screen. Rules live in score.js and
-// profile.js; this file only draws.
+// The page for the two guessing modes, "find the person" and "hit the score": clue, guess
+// form, feedback rows, end screen. Rules live in score.js, profile.js and modes.js; this
+// file only draws.
 
 import { ATTRIBUTES, KEYS } from './attributes.js';
 import { LANG1_CLB, LANG2_CLB } from './tables.js';
-import { score, sameScore, SECTIONS } from './score.js';
+import { score, sameScore, tidy, SECTIONS } from './score.js';
 import { canonical, compare } from './profile.js';
-import { MAX_GUESSES, answerForDay, dayNumber, shareText } from './daily.js';
+import { answerForDay, shareText } from './daily.js';
+import { MODE, closeness, revealedSections, steps, variantOffset } from './modes.js';
+import { $, el, answersFile, clue, day, label, load, mode, save, shareUrl } from './page.js';
 
-const $ = (id) => document.getElementById(id);
-const el = (tag, props = {}, children = []) => {
-  const node = Object.assign(document.createElement(tag), props);
-  node.append(...children);
-  return node;
-};
 const ARROW = { up: '↑', down: '↓' };
 const START = { spouse: 0, age: 2, edu: 4, lang1: 3, lang2: 0, first: 0, cwe: 0, hw: 0,
   offer: 0, foreign: 0, canEdu: 0, sibling: 0, pnp: 0 };
+const MAX = MODE[mode].guesses;
+const hitTheScore = mode === 'score';
 
-const params = new URLSearchParams(location.search);
-const practice = params.has('practice');
-const answersFile = await (await fetch('data/answers.json')).json();
-const day = practice
-  ? 1 + Math.floor(Math.random() * answersFile.answers.length)
-  : Number(params.get('day')) || dayNumber();
-const answer = answerForDay(answersFile, day);
+const answer = answerForDay(answersFile, day + variantOffset(mode, clue));
 const answerScore = score(answer.profile, answer.spousePoints);
-const label = practice ? 'practice' : `#${day}`;
-const storageKey = `crs-guessing-game:v1:day:${day}`;
 
 // Guesses are kept as the raw form values; feedback is recomputed from them.
-let guesses = [];
-if (!practice) {
-  try {
-    const saved = JSON.parse(localStorage.getItem(storageKey) ?? '[]');
-    if (Array.isArray(saved)) guesses = saved.slice(0, MAX_GUESSES);
-  } catch { /* a broken save is the same as no save */ }
-}
+let guesses = load().slice(0, MAX);
 
+// A guess that says "spouse" borrows the hidden spouse's points: the spouse is a given,
+// not something to guess.
 function evaluate(raw) {
-  // A guess that says "spouse" borrows the hidden spouse's points: the spouse is a given,
-  // not something to guess.
+  if (hitTheScore) {
+    // Any profile with the right total wins, so there is nothing to colour. Each cell
+    // says instead what a step either way would have been worth.
+    const profile = tidy(raw);
+    const result = score(profile, answer.spousePoints);
+    const hints = steps(profile, answer.spousePoints);
+    return {
+      profile, lowered: [], score: result, won: result.total === answerScore.total,
+      cells: ATTRIBUTES.map((a) => ({ key: a.key, value: profile[a.key], state: 'plain', hint: hints[a.key] })),
+    };
+  }
   const { profile, lowered } = canonical(raw, answer.spousePoints);
-  const result = compare(profile, answer.profile);
-  return { profile, lowered, ...result, score: score(profile, answer.spousePoints) };
+  return { profile, lowered, ...compare(profile, answer.profile), score: score(profile, answer.spousePoints) };
 }
-
-// ---- clue -------------------------------------------------------------------------------
-
-$('day-label').textContent = label;
-$('clue-total').textContent = answerScore.total;
-$('clue-sections').append(...SECTIONS.map((s) => el('div', {}, [
-  el('dt', { textContent: s.label }),
-  el('dd', { textContent: answerScore[s.key] }),
-])));
 
 // ---- form -------------------------------------------------------------------------------
 
@@ -63,6 +49,11 @@ for (const a of ATTRIBUTES) {
   selects[a.key] = select;
   select.addEventListener('change', syncForm);
   $('fields').append(el('label', {}, [a.label, select]));
+}
+if (hitTheScore) {
+  $('form-note').textContent = answer.spousePoints
+    ? `An accompanying spouse brings ${answer.spousePoints} points of their own here.`
+    : 'An accompanying spouse brings no points of their own here.';
 }
 
 function readForm() {
@@ -90,7 +81,9 @@ $('board-head').append(
   el('th', { scope: 'col', textContent: 'Score' }),
 );
 
-function guessRows(result) {
+const signed = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
+
+function guessRows(result, revealed) {
   const cells = result.cells.map((c) => {
     const a = ATTRIBUTES.find((x) => x.key === c.key);
     const wasLowered = result.lowered.includes(c.key);
@@ -100,6 +93,12 @@ function guessRows(result) {
     if (c.arrow) td.append(el('span', { className: 'arrow', textContent: ARROW[c.arrow] }));
     td.title = `${a.label}: ${a.options[c.value]}`
       + (wasLowered ? ' (your choice made no difference to the score)' : '');
+    if (c.hint) {
+      const parts = [];
+      if (c.hint.up !== null) parts.push(`▲${signed(c.hint.up)}`);
+      if (c.hint.down !== null) parts.push(`▼${signed(c.hint.down)}`);
+      td.append(el('span', { className: 'steps', textContent: parts.join(' ') || '–' }));
+    }
     return td;
   });
   const gap = answerScore.total - result.score.total;
@@ -108,12 +107,15 @@ function guessRows(result) {
     el('span', { className: 'guess-total', textContent: result.score.total }),
     el('span', { className: 'gap', textContent: gapText }),
   ]);
+  // The guess's own section points are always shown; whether each is more or fewer than
+  // the hidden person's is only shown for sections the clue has revealed.
   const parts = SECTIONS.flatMap((s, i) => {
     const diff = answerScore[s.key] - result.score[s.key];
-    const mark = diff === 0 ? '✓' : diff > 0 ? '↑' : '↓';
+    const open = revealed.includes(s.key);
+    const mark = !open ? '' : diff === 0 ? ' ✓' : diff > 0 ? ' ↑' : ' ↓';
     const span = el('span', {
-      className: diff === 0 ? 'ok' : '',
-      textContent: `${s.label} ${result.score[s.key]} ${mark}`,
+      className: open && diff === 0 ? 'ok' : '',
+      textContent: `${s.label} ${result.score[s.key]}${mark}`,
     });
     return i ? [' · ', span] : [span];
   });
@@ -126,11 +128,22 @@ function guessRows(result) {
 function render() {
   const results = guesses.map(evaluate);
   const won = results.some((r) => r.won);
-  const over = won || guesses.length >= MAX_GUESSES;
+  const over = won || guesses.length >= MAX;
+  const revealed = revealedSections(clue, guesses.length, over);
+
+  $('clue-total').textContent = answerScore.total;
+  $('clue-sections').replaceChildren(...SECTIONS.map((s) => {
+    const open = revealed.includes(s.key);
+    return el('div', { className: open ? '' : 'hidden-section' }, [
+      el('dt', { textContent: s.label }),
+      el('dd', { textContent: open ? answerScore[s.key] : '?' }),
+    ]);
+  }));
+  $('clue-sections').hidden = clue === 'total' && !over;
 
   const body = $('board-body');
-  body.replaceChildren(...results.flatMap(guessRows));
-  for (let i = guesses.length; i < MAX_GUESSES && !over; i += 1) {
+  body.replaceChildren(...results.flatMap((r) => guessRows(r, revealed)));
+  for (let i = guesses.length; i < MAX && !over; i += 1) {
     body.append(el('tr', {}, [
       ...ATTRIBUTES.map(() => el('td', { className: 'cell empty' })), el('td'),
     ]));
@@ -144,30 +157,40 @@ function render() {
   }
   if (last) writeForm(last.profile);
 
-  $('note').textContent = last && !last.won && sameScore(last.score, answerScore)
-    ? 'Same points in every section, but a different person. Keep looking.'
-    : '';
+  let note = '';
+  if (last && !last.won && !hitTheScore && last.score.total === answerScore.total) {
+    note = revealed.length === SECTIONS.length && sameScore(last.score, answerScore)
+      ? 'Same points in every section, but a different person. Keep looking.'
+      : 'Same total, but a different person. Keep looking.';
+  }
+  $('note').textContent = note;
 
   $('guess-form').hidden = over;
-  $('guess-button').textContent = `Guess ${guesses.length + 1} of ${MAX_GUESSES}`;
+  $('guess-button').textContent = `Guess ${guesses.length + 1} of ${MAX}`;
   $('end').hidden = !over;
   if (over) renderEnd(results, won);
 }
 
 function renderEnd(results, won) {
-  $('end-title').textContent = won
-    ? `Found in ${results.length} of ${MAX_GUESSES}.`
-    : 'Not found. This was the person:';
+  if (hitTheScore) {
+    $('end-title').textContent = won ? `Hit in ${results.length} of ${MAX}.` : 'Not hit.';
+    $('end-lead').textContent = `The ${answerScore.total} came from this person:`;
+  } else {
+    $('end-title').textContent = won ? `Found in ${results.length} of ${MAX}.` : 'Not found. This was the person:';
+    $('end-lead').textContent = '';
+  }
   $('end-answer').replaceChildren(...ATTRIBUTES.map((a) => el('div', {}, [
     el('dt', { textContent: a.label }),
     el('dd', { textContent: a.options[answer.profile[a.key]] }),
   ])));
-  const text = shareText({
-    label,
-    rows: results.map((r) => r.cells.map((c) => c.state)),
-    won,
-    url: practice ? '' : location.origin + location.pathname,
-  });
+  // "Find the person" shares a line of squares per guess; "hit the score" has no cells to
+  // show, so it shares one square per guess for how near the total was.
+  const text = hitTheScore
+    ? shareText({
+      label, won, url: shareUrl, max: MAX, result: won ? results.length : 'X',
+      rows: [results.map((r) => closeness(answerScore.total - r.score.total))],
+    })
+    : shareText({ label, won, url: shareUrl, max: MAX, rows: results.map((r) => r.cells.map((c) => c.state)) });
   $('share-preview').textContent = text;
   $('share-button').onclick = async () => {
     try {
@@ -181,11 +204,12 @@ function renderEnd(results, won) {
 
 $('guess-form').addEventListener('submit', (event) => {
   event.preventDefault();
-  if (guesses.length >= MAX_GUESSES) return;
+  if (guesses.length >= MAX) return;
   guesses.push(readForm());
-  if (!practice) localStorage.setItem(storageKey, JSON.stringify(guesses));
+  save(guesses);
   render();
 });
 
+$('guess-game').hidden = false;
 writeForm(START);
 render();

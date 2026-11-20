@@ -122,3 +122,45 @@ summary { cursor: pointer; font-weight: 600; }
 .swatch.close { background: var(--close); }
 .swatch.miss { background: var(--miss); }
 .swatch.lowered { background: var(--miss); color: var(--on-colour); font-size: 0.8rem; }
+
+/* ---- modes ---- */
+[hidden] { display: none !important; }
+.picker { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0 0 0.5rem; font-size: 0.9rem; }
+.picker a {
+  text-decoration: none; padding: 0.3rem 0.75rem; border: 1px solid var(--line);
+  border-radius: 999px; background: var(--card);
+}
+.picker a.current { background: var(--fg); color: var(--bg); border-color: var(--fg); font-weight: 600; }
+.picker.minor { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+.picker.minor a { padding: 0.15rem 0.6rem; }
+.sections .hidden-section dd { color: var(--muted); }
+
+td.cell.plain { background: var(--card); color: var(--fg); border: 1px solid var(--line); }
+td.cell .steps { display: block; font-size: 0.68rem; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.round-head { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 0.5rem; font-weight: 600; }
+.progress { display: inline-flex; gap: 0.3rem; }
+.dot { width: 0.8rem; height: 0.8rem; border-radius: 50%; border: 1px solid var(--line); }
+.dot.right { background: var(--hit); border-color: var(--hit); }
+.dot.wrong { background: var(--miss); border-color: var(--miss); }
+.people { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.75rem; }
+button.person {
+  display: flex; flex-direction: column; gap: 0.4rem; text-align: left; font-weight: 400;
+  background: var(--card); color: var(--fg); border: 2px solid var(--line);
+  border-radius: 0.75rem; padding: 0.75rem 0.9rem;
+}
+button.person:not(:disabled):hover { border-color: var(--fg); }
+button.person:disabled { opacity: 1; }
+button.person .letter { font-weight: 700; font-size: 1.1rem; }
+button.person ul { margin: 0; padding: 0; list-style: none; font-size: 0.9rem; }
+button.person li { margin: 0.15rem 0; }
+button.person .reveal { margin-top: auto; padding-top: 0.4rem; border-top: 1px solid var(--line); font-size: 0.78rem; color: var(--muted); width: 100%; }
+button.person .reveal strong { font-size: 1.2rem; color: var(--fg); font-variant-numeric: tabular-nums; }
+button.person.right { border-color: var(--hit); }
+button.person.wrong { border-color: var(--accent); }
+.round-foot { display: flex; align-items: center; gap: 1rem; min-height: 2.8rem; margin: 0.6rem 0; }
+.round-foot .note { margin: 0; min-height: 0; }
+#end-lead:empty { display: none; }
+/* On a phone the four people run off the screen; keep the score they are judged against in view. */
+body[data-mode="lineup"] #clue { position: sticky; top: 0; z-index: 1; padding: 0.5rem 1.25rem; }
+body[data-mode="lineup"] .total-value { font-size: 2.25rem; }

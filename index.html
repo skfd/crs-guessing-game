@@ -10,7 +10,9 @@
   <main>
     <header>
       <h1>CRS guessing game <span id="day-label"></span></h1>
-      <p class="tagline">Canada ranks would-be immigrants with a score. Here is a score. Who is behind it?</p>
+      <p id="tagline" class="tagline"></p>
+      <nav id="mode-picker" class="picker" aria-label="Mode"></nav>
+      <nav id="clue-picker" class="picker minor" aria-label="Clue"></nav>
     </header>
 
     <section id="clue" aria-label="The score">
@@ -21,6 +23,7 @@
       <dl id="clue-sections" class="sections"></dl>
     </section>
 
+    <div id="guess-game" hidden>
     <section aria-label="Your guesses">
       <div class="board-scroll">
         <table id="board">
@@ -33,35 +36,60 @@
 
     <form id="guess-form" autocomplete="off">
       <div id="fields" class="fields"></div>
+      <p id="form-note" class="small"></p>
       <button id="guess-button" type="submit">Guess</button>
     </form>
+    </div>
+
+    <section id="lineup-game" aria-label="The line-up" hidden>
+      <p class="round-head"><span id="round-label"></span> <span id="progress" class="progress"></span></p>
+      <div id="people" class="people"></div>
+      <p class="round-foot">
+        <span id="round-result" class="note" role="status"></span>
+        <button id="next-button" type="button" hidden>Next round</button>
+      </p>
+    </section>
 
     <section id="end" hidden>
       <h2 id="end-title"></h2>
+      <p id="end-lead"></p>
       <dl id="end-answer" class="answer"></dl>
       <div class="end-actions">
         <button id="share-button" type="button">Copy result</button>
-        <a id="practice-link" href="?practice">Play a random person</a>
+        <a class="practice-link" href="?practice">Play a random one</a>
       </div>
       <pre id="share-preview" hidden></pre>
-      <p class="small">A new person arrives at midnight.</p>
+      <p class="small">A new one arrives at midnight.</p>
     </section>
 
     <details id="help">
       <summary>How to play</summary>
-      <p>Describe a person in six guesses or fewer. After each guess, every attribute is coloured:</p>
-      <ul class="legend">
-        <li><span class="swatch hit"></span> exactly right</li>
-        <li><span class="swatch close"></span> close; the arrow says which way to go</li>
-        <li><span class="swatch miss"></span> wrong, and not close</li>
-        <li><span class="swatch lowered">∅</span> your choice made no difference to the score, so it was read as the lowest option that scores the same</li>
-      </ul>
-      <p>You also see what your guess would score, section by section, against the hidden person. Arrows point from your guess towards the answer: ↑ means later in the list (older, more years, a higher level). The score works the same way: each section says whether the hidden person has more ↑ or fewer ↓ points than your guess.</p>
-      <p>The four sections are the ones Canada uses: core (age, education, languages, Canadian work or a job offer), spouse, skill transferability (combinations of education, language and work), and additional points (French, a sibling, study in Canada, a provincial nomination).</p>
-      <p>If the person has a spouse, the spouse's own points are given and you do not have to guess them. Language levels are simplified to one level across all four abilities.</p>
+      <div data-only="person">
+        <p>Describe a person in six guesses or fewer. After each guess, every attribute is coloured:</p>
+        <ul class="legend">
+          <li><span class="swatch hit"></span> exactly right</li>
+          <li><span class="swatch close"></span> close; the arrow says which way to go</li>
+          <li><span class="swatch miss"></span> wrong, and not close</li>
+          <li><span class="swatch lowered">∅</span> your choice made no difference to the score, so it was read as the lowest option that scores the same</li>
+        </ul>
+        <p>You also see what your guess would score, section by section. Arrows point from your guess towards the answer: ↑ means later in the list (older, more years, a higher level). The score works the same way: each section the clue shows says whether the hidden person has more ↑ or fewer ↓ points than your guess.</p>
+      </div>
+      <div data-only="score">
+        <p>Describe anyone at all who scores exactly the number shown, in eight guesses or fewer. There is more than one right answer and nothing is coloured.</p>
+        <p>After each guess you see what it scores and how far off that is. Under every choice is what one step would have changed: ▲ for the next option down the list (older, more years, a higher level), ▼ for the one before. The steps are exact for that guess, but points depend on each other, so two steps together do not always add up.</p>
+      </div>
+      <div data-only="person score">
+        <p>The clue can be the total with its four sections, the total alone, or the total with one more section shown after each miss. Each kind of clue hides a different person.</p>
+        <p>The four sections are the ones Canada uses: core (age, education, languages, Canadian work or a job offer), spouse, skill transferability (combinations of education, language and work), and additional points (French, a sibling, study in Canada, a provincial nomination).</p>
+        <p>If there is a spouse, the spouse's own points are a given and you do not have to guess them. Language levels are simplified to one level across all four abilities.</p>
+      </div>
+      <div data-only="lineup">
+        <p>Five rounds. Each shows a score and four people; one of them has exactly that score. Pick who. After you pick, everyone's score is shown.</p>
+        <p>What a description leaves out, the person does not have: no job offer, no study in Canada, no sibling there, no nomination. Language levels are simplified to one level across all four abilities, and a spouse's own points are stated rather than explained.</p>
+      </div>
       <p class="small">Scored with the rules in force from 3 November 2026. The people are invented; nobody real is described. Not a calculator and not advice.</p>
     </details>
   </main>
-  <script type="module" src="src/game.js"></script>
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>

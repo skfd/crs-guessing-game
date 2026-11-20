@@ -1,15 +1,22 @@
 # crs-guessing-game
 
-**Status: first prototype is playable.** One mode ("find the hidden person"), a year of
-daily answers, live at <https://skfd.github.io/crs-guessing-game/>. Nobody but its author
-has played it.
+**Status: three modes are playable**, live at <https://skfd.github.io/crs-guessing-game/>.
+Nobody but its author has played any of them.
+
+| | |
+|---|---|
+| Find the person | <https://skfd.github.io/crs-guessing-game/> |
+| Hit the score | <https://skfd.github.io/crs-guessing-game/?mode=score> |
+| Line-up | <https://skfd.github.io/crs-guessing-game/?mode=lineup> |
 
 ```
 npm run serve     # http://localhost:5173  (ES modules do not load from file://)
 npm test
 ```
 
-`?day=N` plays a given day, `?practice` a random person without saving.
+`?day=N` plays a given day, `?practice` a random one without saving. `?mode=score` and
+`?mode=lineup` pick the mode; `?clue=full`, `?clue=total` and `?clue=reveal` pick the clue
+in the two guessing modes. The page has links for all of these.
 
 ## The goal
 
@@ -87,6 +94,43 @@ each is one place in the code.
   an invented guess. The list is committed, so changing the sampler does not move answers
   until the list is rebuilt on purpose.
 
+## The other modes
+
+Built on 2026-11-20, overnight and without the user, who asked for the rest of the two
+axes to be built. Every choice here is provisional.
+
+- **One page, picked by the address.** The bare address is still "find the person" with
+  the full clue, with the same save key as before, so nothing saved was lost.
+- **Each guessing variant hides its own person.** Two modes times three clues is six
+  variants a day. Finishing one shows its person, so each takes its person from a
+  different place in the answer list, 53 days apart (`PERSON_VARIANTS` in `src/modes.js`).
+- **Clue "total only"** shows the total and nothing else. **Clue "a section per miss"**
+  shows one more section after each wrong guess: additional, spouse, transferability, core
+  last. Under both, a guess still shows its own four section subtotals, but the ✓ ↑ ↓
+  against the hidden person only appears for sections the clue has shown
+  (`revealedSections`). Everything is shown when the game ends.
+- **Hit the score.** Any profile with exactly the hidden person's total wins. Nothing is
+  coloured. Each cell of a guess says what one step up and one step down would have
+  changed (`steps` in `src/modes.js`): without that, the mode is a blind search, since
+  the player has no point tables. Eight guesses; see the simulator numbers below. Guesses
+  are not lowered, as there is no hidden person to compare with. A spouse in a guess
+  brings the hidden person's spouse points (none if that person is single), and the form
+  says how many. The share text has one square per guess: green exact, yellow within 20
+  points, white further.
+- **Line-up.** Five rounds a day. Each shows a score and four people described in a few
+  lines; one has exactly that score. After a pick, everyone's score and sections are
+  shown. The result is the number right out of five.
+  - The wrong three score 12 to 70 points away from the round's score and at least 8
+    points from each other (`src/rounds.js`). Nearer and only a calculator tells them
+    apart; further and the round answers itself. Both numbers are guesses.
+  - The people come from the same 366 as the daily answers, minus anyone a guessing
+    variant hides today or in the next seven days, since a line-up shows whole people
+    with their scores. Nobody stands in two rounds of one day.
+  - Descriptions are built from the attributes by a template (`bioLines`): no names,
+    origins or occupations. What a description leaves out, the person does not have.
+    A spouse is one phrase, "with a spouse who brings 18 points".
+  - The clue axis does not apply: a line-up shows the total only.
+
 ## Design notes from the prior-art survey
 
 - The score is a free Tradle-style closeness signal: show each guess's CRS, the gap and the
@@ -136,6 +180,16 @@ each is one place in the code.
   arrows on grey cells too (the first build) it was 90% in three and all in four, which is
   why they were turned off. A person who reads the section points should beat this player,
   so five guesses or a total-only clue may be the better game. Play-test before choosing.
+- **Is hit-the-score a game?** `node tools/simulate-score.mjs` plays all 366 answers with a
+  player that knows no tables, learns only from the step hints, and ignores how attributes
+  combine: 40% hit in four guesses, 73% in six, 83% in eight, 94% in twelve. With a
+  "what this choice is worth" number in place of the step hints it was 32% in six. So
+  eight guesses with step hints is a guess at "hard but fair". It may instead read as
+  arithmetic homework, and the hint row makes a 13-column board denser still.
+- **Is line-up too hard or too easy?** A pick is one in four by luck. Nobody has played a
+  week of it. The 12-to-70-point window is the knob.
+- **Six variants a day is a lot.** They exist so each can be tried; the point of trying
+  them is to drop most.
 - **Is 13 columns too wide?** It fits a desktop; on a phone the board scrolls sideways and
   the share grid is 13 squares per row. Nomination and spouse are nearly free cells when
   the breakdown is shown (a nomination is 600 points; spouse points above zero mean a
@@ -153,7 +207,6 @@ each is one place in the code.
   release. The repo is public because Pages on a free plan needs it to be.
 - **Name.** "CRS guessing game" is a working title; it is one constant in `src/daily.js`
   plus the page title.
-- The other modes on the two axes above are untouched.
 
 ## Layout
 
@@ -164,10 +217,15 @@ src/attributes.js         the attributes of a guess and their options
 src/score.js              profile -> section points
 src/profile.js            canonical form, feedback colours
 src/daily.js              day number, today's answer, share text
-src/game.js               the DOM
+src/modes.js              modes and clues: which variant, what the clue shows, step hints
+src/rounds.js             line-up: the day's rounds and how a person is described
+src/main.js               entry: draws the pickers, loads the page for the mode
+src/page.js               variant, day, saved progress, DOM helpers
+src/game.js               the DOM for the two guessing modes
+src/lineup.js             the DOM for line-up
 data/bands.json           IRCC's pool distribution used as weights
 data/answers.json         the hidden people, built by tools/make-answers.mjs
-tools/                    make-answers, simulate, serve, ircc-oracle
+tools/                    make-answers, simulate, simulate-score, serve, ircc-oracle
 test/                     node --test
 ```
 
