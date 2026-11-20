@@ -1,0 +1,155 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Line-up art: photocopied mugshots</title>
+<style>
+  body { margin: 0; padding: 20px; width: 720px; box-sizing: border-box; background: #f6f3ec; color: #1d1b18;
+    font: 14px/1.35 system-ui, "Segoe UI", sans-serif; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 18px; color: #6b665d; }
+  h2 { font-size: 15px; margin: 22px 0 2px; }
+  h2 span { font-weight: 400; color: #6b665d; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+  .card { background: #fff; border: 1.5px solid #d9d4c8; border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .card svg { width: 100%; height: auto; display: block; }
+  .top { display: flex; align-items: baseline; gap: 8px; }
+  .letter { font-weight: 700; font-size: 17px; }
+  .name { font-weight: 650; }
+  .fun { font-style: italic; color: #4a463f; font-size: 13px; }
+  ul { margin: 0; padding: 0; list-style: none; font-size: 12.5px; color: #2c2a26; }
+  li { margin: 2px 0; }
+  .typed .name, .typed .fun, .typed ul { font-family: "Courier New", Courier, monospace; }
+  .typed .name { text-transform: uppercase; letter-spacing: .03em; }
+  .typed .fun { font-style: normal; }
+  .typed ul { font-size: 11.5px; }
+</style>
+<h1>Line-up art: photocopied mugshot</h1>
+<p class="sub">Drawn in greys, then pushed through a "bad photocopier" filter, so all 100 get the look for free.</p>
+
+<h2>5a · Halftone copy <span>— greys become newspaper dots</span></h2>
+<div class="row" id="r1"></div>
+<h2>5b · Burnt-out copy <span>— a copy of a copy: pure black and white, speckled</span></h2>
+<div class="row" id="r2"></div>
+<h2>5c · Halftone, with the card typed like a file <span>— same art as 5a</span></h2>
+<div class="row typed" id="r3"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <radialGradient id="dot"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></radialGradient>
+    <pattern id="dots" width="2.2" height="2.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="2.2" height="2.2" fill="#fff"/><circle cx="1.1" cy="1.1" r="1.5" fill="url(#dot)"/>
+    </pattern>
+    <linearGradient id="lid" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+    <!-- grain, then a hard threshold, then toner-on-paper colours -->
+    <filter id="halftone" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4"/>
+      <feColorMatrix type="matrix" values=".33 .33 .33 0 0  .33 .33 .33 0 0  .33 .33 .33 0 0  0 0 0 0 1" result="n"/>
+      <feComposite in="SourceGraphic" in2="n" operator="arithmetic" k2="1" k3=".22" k4="-.11"/>
+      <feGaussianBlur stdDeviation=".18"/>
+      <feComponentTransfer><feFuncR type="linear" slope="7" intercept="-3"/><feFuncG type="linear" slope="7" intercept="-3"/><feFuncB type="linear" slope="7" intercept="-3"/></feComponentTransfer>
+      <feColorMatrix type="matrix" values=".85 0 0 0 .1  0 .84 0 0 .1  0 0 .79 0 .1  0 0 0 1 0"/>
+    </filter>
+    <filter id="burnt" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="9"/>
+      <feColorMatrix type="matrix" values=".33 .33 .33 0 0  .33 .33 .33 0 0  .33 .33 .33 0 0  0 0 0 0 1" result="n"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation=".35" result="s"/>
+      <feComposite in="s" in2="n" operator="arithmetic" k2="1" k3=".9" k4="-.45"/>
+      <feComponentTransfer><feFuncR type="linear" slope="14" intercept="-6.2"/><feFuncG type="linear" slope="14" intercept="-6.2"/><feFuncB type="linear" slope="14" intercept="-6.2"/></feComponentTransfer>
+      <feColorMatrix type="matrix" values=".85 0 0 0 .1  0 .84 0 0 .1  0 0 .79 0 .1  0 0 0 1 0"/>
+    </filter>
+  </defs>
+</svg>
+
+<script>
+const PEOPLE = [
+  { name: 'Odile', job: 'pastry chef', no: '034', fun: 'Argues with her sourdough starter. Usually loses.',
+    lines: ['Aged 34, no accompanying spouse.', 'A two-year post-secondary credential.', 'French at CLB 9; English at CLB 5–6.', 'Two years of work in Canada.', 'No work abroad.'] },
+  { name: 'Bram', job: 'glaciologist', no: '071', fun: 'Has given every ice core a first name.',
+    lines: ['In their twenties, no accompanying spouse.', 'A doctorate.', 'English at CLB 10 or higher; little or no French.', 'No work in Canada.', 'One or two years of work abroad.', 'Studied in Canada for a credential of three years or more.'] },
+  { name: 'Wendell', job: 'long-haul trucker', no: '008', fun: 'Knits at truck stops. Takes commissions.',
+    lines: ['45 or older, with a spouse who brings 18 points.', 'Secondary school diploma.', 'English at CLB 7; little or no French.', 'No work in Canada.', 'A job offer at 1.3× the median wage.', 'Three or more years of work abroad.'] },
+];
+const LETTERS = ['A', 'B', 'C'];
+const K = '#111';
+const O = `stroke="${K}" stroke-width="1.4" stroke-linejoin="round"`;
+
+// Each person is drawn in greys only; the filter does the rest.
+const FIGURES = [
+  // Odile: toque, bob, chef's jacket, deadpan
+  `<path d="M16 104 Q16 66 44 63 L76 63 Q104 66 104 104Z" fill="#f4f4f4" ${O}/>
+   <path d="M60 64 L60 104" stroke="${K}" stroke-width="1"/>
+   <rect x="53" y="52" width="14" height="14" fill="#9a9a9a" ${O}/>
+   <path d="M41 44 Q38 26 60 26 Q82 26 79 44 L78 56 Q74 50 76 40 L44 40 Q46 50 42 56Z" fill="#161616"/>
+   <ellipse cx="60" cy="44" rx="15.5" ry="17" fill="#c4c4c4" ${O}/>
+   <path d="M44.5 40 Q46 30 60 31 Q74 30 75.5 40 Q60 34 44.5 40Z" fill="#161616"/>
+   <rect x="44" y="23" width="32" height="8" rx="1.5" fill="#fafafa" ${O}/>
+   <path d="M43 24 Q34 11 46 8 Q50 -1 60 3 Q70 -1 74 8 Q86 11 77 24Z" fill="#fafafa" ${O}/>
+   <path d="M50 42 L57 42 M63 42 L70 42" stroke="${K}" stroke-width="1.6"/>
+   <circle cx="53.5" cy="45.5" r="1.7" fill="${K}"/><circle cx="66.5" cy="45.5" r="1.7" fill="${K}"/>
+   <path d="M60 46 L58.5 51 L61 51" stroke="${K}" stroke-width="1" fill="none"/>
+   <path d="M55 55.5 L65 55.5" stroke="${K}" stroke-width="1.6" stroke-linecap="round"/>`,
+  // Bram: beanie, round glasses, parka with fur collar
+  `<path d="M14 104 Q14 64 44 62 L76 62 Q106 64 106 104Z" fill="#3a3a3a" ${O}/>
+   <path d="M36 70 Q60 84 84 70 Q86 58 60 58 Q34 58 36 70Z" fill="#ededed" ${O}/>
+   <ellipse cx="60" cy="45" rx="15.5" ry="17" fill="#c4c4c4" ${O}/>
+   <path d="M43 39 Q42 16 60 16 Q78 16 77 39Z" fill="#5a5a5a" ${O}/>
+   <path d="M50 17 L48 36 M60 16 L60 36 M70 17 L72 36" stroke="${K}" stroke-width=".8"/>
+   <rect x="41.5" y="34" width="37" height="8" rx="3" fill="#f4f4f4" ${O}/>
+   <circle cx="60" cy="12" r="6" fill="#f4f4f4" ${O}/>
+   <circle cx="53" cy="48" r="5.2" fill="#e6e6e6" stroke="${K}" stroke-width="1.5"/><circle cx="67" cy="48" r="5.2" fill="#e6e6e6" stroke="${K}" stroke-width="1.5"/>
+   <path d="M58.2 48 L61.8 48 M47.8 47 L44.5 45.5 M72.2 47 L75.5 45.5" stroke="${K}" stroke-width="1.4"/>
+   <circle cx="53" cy="48" r="1.6" fill="${K}"/><circle cx="67" cy="48" r="1.6" fill="${K}"/>
+   <path d="M55 57 Q60 60 65 57" stroke="${K}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
+  // Wendell: cap, moustache, plaid shirt
+  `<path d="M12 104 Q12 64 42 62 L78 62 Q108 64 108 104Z" fill="#8c8c8c" ${O}/>
+   <g stroke="${K}" stroke-width="2.4" opacity=".75"><path d="M28 66 L28 104 M44 62 L44 104 M76 62 L76 104 M92 66 L92 104 M14 78 L106 78 M12 92 L108 92"/></g>
+   <path d="M52 62 L60 72 L68 62" fill="#c4c4c4" ${O}/>
+   <rect x="52" y="54" width="16" height="10" fill="#a8a8a8"/>
+   <ellipse cx="60" cy="45" rx="17" ry="17.5" fill="#c4c4c4" ${O}/>
+   <path d="M43 36 Q43 17 60 17 Q77 17 77 36Z" fill="#2c2c2c" ${O}/>
+   <path d="M40 37 Q60 31 80 37 Q82 41 60 39 Q38 41 40 37Z" fill="#161616" ${O}/>
+   <rect x="52" y="21" width="16" height="9" rx="2" fill="#ededed" ${O}/>
+   <path d="M49 43 L56 44.5 M71 43 L64 44.5" stroke="${K}" stroke-width="1.8"/>
+   <circle cx="53" cy="47" r="1.7" fill="${K}"/><circle cx="67" cy="47" r="1.7" fill="${K}"/>
+   <path d="M46 56 Q53 49 60 53.5 Q67 49 74 56 Q67 60.5 60 57 Q53 60.5 46 56Z" fill="#fafafa" ${O}/>`,
+];
+
+function mug(i, filter, halftone) {
+  const p = PEOPLE[i];
+  let wall = '';
+  for (let k = 0; k < 7; k += 1) {
+    const y = 10 + k * 12;
+    wall += `<path d="M0 ${y} L120 ${y}" stroke="${K}" stroke-width="${k % 2 ? 0.5 : 1.1}"/>`;
+    if (k % 2 === 0) wall += `<text x="3" y="${y - 1.5}" font-size="6.5" font-weight="700" font-family="monospace" fill="${K}">${190 - k * 10}</text>`;
+  }
+  const board = `<g transform="translate(60 86) rotate(-2)">
+      <rect x="-27" y="-11" width="54" height="22" rx="1" fill="#161616" stroke="#fafafa" stroke-width="1"/>
+      <text x="-22" y="-3" font-size="6" font-weight="700" font-family="monospace" fill="#fafafa">CRS LINE-UP</text>
+      <text x="-22" y="7" font-size="9" font-weight="700" font-family="monospace" fill="#fafafa">No.${p.no}</text>
+      <text x="16" y="7" text-anchor="middle" font-size="19" font-weight="700" font-family="monospace" fill="#fafafa">${LETTERS[i]}</text>
+      <circle cx="-29" cy="2" r="4.5" fill="#c4c4c4" ${O}/><circle cx="29" cy="2" r="4.5" fill="#c4c4c4" ${O}/></g>`;
+  const tilt = [-1.4, 0.9, -0.5][i];
+  return `<svg viewBox="0 0 120 100"><g filter="url(#${filter})">
+      <rect width="120" height="100" fill="#0a0a0a"/>
+      <g transform="rotate(${tilt} 60 50)">
+        <rect x="-4" y="1.5" width="128" height="104" fill="#ececec"/>${wall}${FIGURES[i]}${board}
+      </g>
+      <rect width="14" height="100" fill="url(#lid)"/>
+      <rect x="${[96, 21, 71][i]}" width=".7" height="100" fill="#000" opacity=".55"/>
+      ${halftone ? '<rect width="120" height="100" fill="url(#dots)" opacity=".5"/>' : ''}
+    </g></svg>`;
+}
+
+function card(i, art) {
+  const p = PEOPLE[i];
+  return `<div class="card">${art}
+    <div class="top"><span class="letter">${LETTERS[i]}</span><span class="name">${p.name}, ${p.job}</span></div>
+    <div class="fun">${p.fun}</div>
+    <ul>${p.lines.map((l) => `<li>${l}</li>`).join('')}</ul></div>`;
+}
+const row = (id, filter, halftone) => {
+  document.getElementById(id).innerHTML = PEOPLE.map((_, i) => card(i, mug(i, filter, halftone))).join('');
+};
+row('r1', 'halftone', true);
+row('r2', 'burnt', false);
+row('r3', 'halftone', true);
+</script>
