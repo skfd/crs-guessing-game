@@ -5,7 +5,7 @@
 import { ATTRIBUTES, KEYS } from './attributes.js';
 import { LANG1_CLB, LANG2_CLB } from './tables.js';
 import { score, sameScore, tidy, SECTIONS } from './score.js';
-import { canonical, compare, nearestOpen, stillPossible } from './profile.js';
+import { canonical, compare, carryForward, stillPossible } from './profile.js';
 import { answerForDay, shareText } from './daily.js';
 import { MODE, closeness, revealedSections, steps, variantOffset } from './modes.js';
 import { $, el, answersFile, clue, day, label, load, mode, save, shareUrl } from './page.js';
@@ -81,33 +81,44 @@ function readForm() {
   return Object.fromEntries(KEYS.map((k) => [k, fields[k].inputs.findIndex((input) => input.checked)]));
 }
 function writeForm(profile) {
-  for (const k of KEYS) fields[k].inputs[profile[k]].checked = true;
+  // -1 is "not chosen": no chip of that attribute is picked.
+  for (const k of KEYS) fields[k].inputs.forEach((input, i) => { input.checked = i === profile[k]; });
   syncForm();
 }
+const unset = () => ATTRIBUTES.filter((a) => !fields[a.key].inputs.some((input) => input.checked));
 // Disables what cannot be: a second language above the first, a wage tier with no work.
 // A choice that has become impossible falls back to the highest one that is not. This is
 // not the same as ruled out: a ruled-out option can still be picked.
 function syncForm() {
   const p = readForm();
   const allow = {
-    lang2: (i) => LANG2_CLB[i] <= LANG1_CLB[p.lang1],
-    hw: (i) => i === 0 || p.cwe > 0,
+    lang2: (i) => p.lang1 < 0 || LANG2_CLB[i] <= LANG1_CLB[p.lang1],
+    hw: (i) => i === 0 || p.cwe !== 0,
   };
   for (const [key, allowed] of Object.entries(allow)) {
     const { inputs } = fields[key];
     inputs.forEach((input, i) => { input.disabled = !allowed(i); });
     let i = p[key];
-    while (inputs[i].disabled) i -= 1;
-    inputs[i].checked = true;
+    if (i >= 0) while (inputs[i].disabled) i -= 1;
+    // Nothing chosen and only one thing possible: that is the choice.
+    else if (inputs.filter((input) => !input.disabled).length === 1) i = inputs.findIndex((input) => !input.disabled);
+    inputs.forEach((input, j) => { input.checked = j === i; });
   }
   for (const a of ATTRIBUTES) {
     const field = fields[a.key];
     const i = field.inputs.findIndex((input) => input.checked);
-    field.picked.textContent = a.options[i];
+    field.picked.textContent = i < 0 ? 'choose one' : a.options[i];
+    field.node.classList.toggle('unset', i < 0);
     // An attribute that is known and set to what is known needs no chips: one line.
-    const settled = i === field.hit && !field.opened;
+    const settled = i >= 0 && i === field.hit && !field.opened;
     field.node.classList.toggle('settled', settled);
     field.reopen.hidden = !settled;
+  }
+  // A guess needs every attribute. After a guess, the ones it ruled out are left unset.
+  const missing = unset().map((a) => a.label);
+  $('guess-button').disabled = missing.length > 0;
+  if (!hitTheScore) {
+    $('form-note').textContent = missing.length ? `Still to choose: ${missing.join(', ')}.` : '';
   }
 }
 
@@ -210,12 +221,12 @@ function render() {
 
   // Mark what is already known in the form and carry the last guess forward.
   const last = results.at(-1);
-  // The next guess starts from the last one, with every choice a guess has ruled out
-  // moved to the nearest one that is still open.
+  // The next guess starts from the last one, minus every choice a guess has ruled out:
+  // those are left for the player to make again.
   markForm(results);
   if (last) {
     writeForm(hitTheScore ? last.profile : Object.fromEntries(
-      KEYS.map((k) => [k, nearestOpen(fields[k].open, last.profile[k])])));
+      KEYS.map((k) => [k, carryForward(fields[k].open, last.profile[k])])));
   }
 
   let note = '';
@@ -265,7 +276,7 @@ function renderEnd(results, won) {
 
 $('guess-form').addEventListener('submit', (event) => {
   event.preventDefault();
-  if (guesses.length >= MAX) return;
+  if (guesses.length >= MAX || unset().length) return;
   // The same guess twice teaches nothing, and under the section-per-miss clue it would
   // buy a section for free. Compared as the game reads them, so a guess that is lowered
   // to an earlier one counts as the same.

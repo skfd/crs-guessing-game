@@ -96,6 +96,7 @@ tr.breakdown .ok { color: var(--hit); font-weight: 600; }
 .field.settled .field-head { white-space: normal; margin: 0; }
 .field.settled .picked { display: inline; color: var(--hit); font-weight: 600; }
 .field.settled .picked::after { content: " ✓"; }
+.field.unset .picked { color: var(--accent); font-weight: 600; }
 .reopen {
   background: none; color: var(--muted); padding: 0; border-radius: 0;
   font-size: inherit; font-weight: 400; text-decoration: underline;

@@ -59,14 +59,14 @@ export function stillPossible(key, cells) {
   }));
 }
 
-// The open option nearest to option `i`: `i` itself if it is open, the lower one on a
-// tie. `open` is what stillPossible returns.
-export function nearestOpen(open, i) {
-  for (let d = 0; d < open.length; d += 1) {
-    if (open[i - d]) return i - d;
-    if (open[i + d]) return i + d;
-  }
-  return i;
+// What the next guess starts with for an attribute whose last choice was option `i`:
+// `i` if it is still open, the one open option if only one is left, and otherwise -1,
+// nothing, so that the player has to choose. Moving a ruled-out choice to the nearest
+// open one instead made pressing Guess a winning strategy by itself (363 of 366 found).
+// `open` is what stillPossible returns.
+export function carryForward(open, i) {
+  if (open[i]) return i;
+  return open.indexOf(true) === open.lastIndexOf(true) ? open.indexOf(true) : -1;
 }
 
 // Full feedback for a guess against the answer. Both must already be canonical.

@@ -164,17 +164,15 @@ Changed on 2026-11-20, at the user's request for something like Wordle's keyboar
   form shrinks as the player learns; after two guesses of one practice game it was 470px
   on that phone. "change" unfolds it, and picking the right option again folds it back.
   It only folds while the form is set to the right option.
-- **The next guess starts from the last one with every ruled-out choice moved** to the
-  nearest option still open, the lower one on a tie (`nearestOpen` in `src/profile.js`).
-  Before, it started as a copy of the last guess, wrong choices included. The form's own
-  rules still apply afterwards, so a second language pushed down by the first can land on
-  a ruled-out option.
-- **This makes pressing Guess a strategy.** A player who never touches the form and only
-  presses Guess finds 363 of the 366 people within six guesses (1 in one, 20 in two, 100
-  in three, 194 in four, 37 in five, 11 in six). Measured once on 2026-11-20 with a
-  throwaway script, not kept. Before this change the second press was refused as a
-  repeat. Whether that is acceptable is an open question for the user; the remedies are
-  fewer guesses, or moving only the choices the player is looking at.
+- **The next guess starts from the last one, minus what it ruled out** (`carryForward` in
+  `src/profile.js`). A choice still open is kept. A ruled-out choice is left unset, shown
+  as "choose one", and Guess is disabled until every attribute is chosen, with a line
+  naming what is missing. If only one option is left open it is picked for the player.
+  The form's own rules still apply: no Canadian work sets the wage tier to "not high-wage".
+- **Why unset and not moved.** The first build moved a ruled-out choice to the nearest
+  open option. A player who only pressed Guess then found 363 of the 366 people within
+  six guesses; with choices left unset that player finds 3 and is stopped on the rest.
+  Measured on 2026-11-20 with a throwaway script, not kept.
 
 ## Design notes from the prior-art survey
 
