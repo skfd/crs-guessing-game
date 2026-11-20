@@ -170,7 +170,16 @@ axes to be built. Every choice here is provisional.
   `test/ircc-vectors.json`, which `npm test` then checks. It has never been run: executing
   a downloaded script was blocked in the session that wrote it. Until someone runs it, the
   evidence is a reading of the script plus hand-worked cases in `test/score.test.mjs`.
-- The reference repos under Leads were not used.
+- **A second opinion, 2026-11-20.** `test/second-opinion.test.mjs` holds the numbers that
+  the test suite of <https://github.com/muhac/ee-crs-planner> asserts for the same rules,
+  re-expressed as profiles of this game: every age, education, language, Canadian work,
+  high-wage and job-offer value in both spouse columns, the transferability pairs and
+  caps, the additional points, and one whole married person. `src/score.js` agrees with
+  all of them. Only its numbers were taken; its code was not run. It is an independent
+  reading of the same pages, not IRCC's calculator. Not covered, because this game cannot
+  express them: mixed levels across language abilities, the certificate of
+  qualification, and the spouse's own factors.
+- The other two reference repos under Leads were not used.
 
 ## Open questions
 
