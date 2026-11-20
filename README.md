@@ -188,6 +188,10 @@ axes to be built. Every choice here is provisional.
   arithmetic homework, and the hint row makes a 13-column board denser still.
 - **Is line-up too hard or too easy?** A pick is one in four by luck. Nobody has played a
   week of it. The 12-to-70-point window is the knob.
+- **A hidden clue still leaks the spouse section.** A guess with a spouse borrows the
+  hidden spouse's points, so its own "Spouse N" is the hidden person's spouse section even
+  when the clue has not shown it. Hiding the number would not help: the guess's total
+  carries it too. It goes away only if the spouse stops being a given.
 - **Six variants a day is a lot.** They exist so each can be tried; the point of trying
   them is to drop most.
 - **Is 13 columns too wide?** It fits a desktop; on a phone the board scrolls sideways and
