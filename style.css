@@ -285,7 +285,9 @@ body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
   /* A cell of "hit the score" has a line of steps for each part: smaller, to fit eight across. */
   body[data-layout="split"][data-mode="score"] {
     & #board td.cell { padding: 0.25rem 0.1rem; }
-    & td.cell .steps { font-size: 0.62rem; }
+    /* The name keeps its lines and the steps wrap, so the widest guess still fits the column. */
+    & #board td.cell.joined { white-space: pre; }
+    & td.cell .steps { font-size: 0.62rem; white-space: normal; }
     & td.cell .steps .tag { font-size: 0.58rem; }
   }
 }

@@ -286,10 +286,15 @@ colour against.
 - **The saved game is the same game.** A guess is saved attribute by attribute, so a game
   begun with separate choices is still there, drawn with joined cells. Checked with an
   eight-guess game saved before the change.
-- **On a desktop it has the two columns of "find the person"** from 84rem wide. Measured
-  at 1,366 by 768: nothing scrolls before the first guess or with up to six guesses on
-  the board; all eight make the page 891px, 123px more than the screen. A cell is three
-  lines tall there, where a cell of "find the person" is one or two.
+- **On a desktop it has the two columns of "find the person"** from 84rem wide. It is not
+  one screen for the whole game. Measured at 1,366 by 768 by playing a practice game:
+  nothing scrolls before the first guess or with three guesses on the board, the fourth
+  makes the page 770px, and each one after adds about 79px, to 1,087px with all eight.
+  A guess is about 81px tall with its section line, and fitting eight would need 56px.
+  A cell is three to five lines there, where a cell of "find the person" is one or two.
+- **The board never runs wider than its column.** The step lines wrap and the name of a
+  combination keeps its lines. Checked with the widest values a guess can have ("Offer
+  1.5× + Abroad 1–2y"); with the lines kept whole that guess was 46px too wide.
 - **On a 375px phone** a guess is two rows of four cells, as in "find the person", and
   the step lines wrap inside a cell where they have to.
 - **Line-up takes the short header** from 84rem wide and stays one column. At 1,366 by
