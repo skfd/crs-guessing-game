@@ -9,7 +9,9 @@
 // IRCC publishes score bands, not attributes.
 //
 // Nobody is nominated by a province, so the band above 600 is left out: a nomination is
-// 600 points and such a score says nothing else about the person.
+// 600 points and such a score says nothing else about the person. Nobody scores under 250
+// either: the band up to 300 is 3% of the pool, and the few people far down in it had
+// nothing in most cells and stood 50 points clear of everyone else.
 //
 // The list is committed and the game reads it by day number, so changing this file does not
 // move past or future answers until the list is deliberately rebuilt.
@@ -23,6 +25,7 @@ import { rng, pickWeighted } from '../src/rng.js';
 const SEED = 20261118;
 const DAYS = 366;
 const TOP = 600; // bands that start above this are nominated people
+const BOTTOM = 250; // nobody scores less: the lowest band is drawn as 250 to 300
 
 const EDU_WEIGHT = [1, 5, 5, 8, 35, 12, 30, 4];
 const EDU_MIN_AGE = [0, 18, 19, 20, 21, 23, 23, 27];
@@ -89,7 +92,7 @@ export function samplePerson(random) {
 }
 
 export function makeAnswers(allBands, { seed = SEED, days = DAYS } = {}) {
-  const bands = allBands.filter((b) => b.lo <= TOP);
+  const bands = allBands.filter((b) => b.lo <= TOP).map((b) => ({ ...b, lo: Math.max(b.lo, BOTTOM) }));
   const random = rng(seed);
   const weights = bands.map((b) => b.count);
   const seen = new Set();
