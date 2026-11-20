@@ -208,11 +208,23 @@ Changed on 2026-11-20, at the user's request for something like Wordle's keyboar
   factor is `max(work length + high-wage bonus, job offer)`, transferability uses the
   length of Canadian work whichever path won, the second language is capped at 22 only
   with a spouse, additional points are capped at 600.
-- **Not done: a machine comparison with the calculator.** `tools/ircc-oracle.mjs` would run
-  the calculator's script on 600 random profiles and save the outputs as
-  `test/ircc-vectors.json`, which `npm test` then checks. It has never been run: executing
-  a downloaded script was blocked in the session that wrote it. Until someone runs it, the
-  evidence is a reading of the script plus hand-worked cases in `test/score.test.mjs`.
+- **A machine comparison with the calculator, 2026-11-20: it agrees.** IRCC's calculator
+  scored 600 random profiles and `src/score.js` gives the same five numbers (four
+  sections and the total) for every one. They are in `test/ircc-vectors.json`, which
+  `npm test` checks. 306 of the 600 have a spouse and 52 a nomination.
+  - The calculator's script was not downloaded or run by node. `tools/ircc-oracle.mjs
+    snippet` prints a snippet to paste into the browser console on the calculator's page
+    (which now redirects to canada.ca's "Check your score"); it makes the profiles from a
+    fixed seed, fires the form's own submit handler for each, and returns one line of
+    subtotals with a checksum. `tools/ircc-oracle.mjs build` turns that line into the file.
+  - How the line got from the page to the file that day: it was not copied. This game's
+    own line for the same profiles had the same length, the same two checksums and the
+    same column sums as the page's, so the file was built from the game's copy.
+  - It covers what the game can express, with one fixed spouse (bachelor's, one year of
+    Canadian work, CLB 7: 25 points). Not covered: mixed levels across language
+    abilities, the certificate of qualification, other spouses.
+  - Re-run it when IRCC changes the tool. The snippet reads the page's results by their
+    wording, so a reworded page gives "?" and `build` refuses it.
 - **A second opinion, 2026-11-20.** `test/second-opinion.test.mjs` holds the numbers that
   the test suite of <https://github.com/muhac/ee-crs-planner> asserts for the same rules,
   re-expressed as profiles of this game: every age, education, first-language, Canadian
