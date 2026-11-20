@@ -5,10 +5,16 @@
 import { ATTRIBUTES, KEYS } from './attributes.js';
 import { LANG1_CLB, LANG2_CLB } from './tables.js';
 import { score, sameScore, tidy, SECTIONS } from './score.js';
-import { canonical, compare, carryForward, stillPossible } from './profile.js';
+import { canonical, carryForward } from './profile.js';
+import { combos, comboName, comboWording, compareGrouped, stillPossibleGroup } from './groups.js';
 import { answerForDay, shareText } from './daily.js';
 import { MODE, closeness, revealedSections, steps, variantOffset } from './modes.js';
-import { $, el, answersFile, clue, day, label, load, mode, save, shareUrl } from './page.js';
+import { $, el, answersFile, clue, day, label, load, mode, save, shareUrl, tuples } from './page.js';
+
+// One group is one pick in the form and one cell on the board. Unless the address asks
+// for tuples, every group is a single attribute.
+const { grouping: GROUPS, rule: RULE } = tuples;
+const comboIndex = (g, profile) => combos(g).findIndex((c) => c.every((v, x) => v === profile[g.keys[x]]));
 
 const ARROW = { up: '↑', down: '↓' };
 const START = { spouse: 0, age: 2, edu: 4, lang1: 3, lang2: 0, first: 0, cwe: 0, hw: 0,
@@ -33,11 +39,16 @@ function evaluate(raw) {
     const hints = steps(profile, answer.spousePoints);
     return {
       profile, lowered: [], score: result, won: result.total === answerScore.total,
-      cells: ATTRIBUTES.map((a) => ({ key: a.key, value: profile[a.key], state: 'plain', hint: hints[a.key] })),
+      cells: GROUPS.map((g) => ({
+        id: g.id, keys: g.keys, values: g.keys.map((k) => profile[k]), state: 'plain', hint: hints[g.keys[0]],
+      })),
     };
   }
   const { profile, lowered } = canonical(raw, answer.spousePoints);
-  return { profile, lowered, ...compare(profile, answer.profile), score: score(profile, answer.spousePoints) };
+  return {
+    profile, lowered, ...compareGrouped(GROUPS, profile, answer.profile, RULE),
+    score: score(profile, answer.spousePoints),
+  };
 }
 
 // ---- form -------------------------------------------------------------------------------
@@ -45,21 +56,29 @@ function evaluate(raw) {
 // Every option of every attribute is a chip that stays on screen, so that what the
 // guesses have ruled out can be marked on it, as on Wordle's keyboard. A chip is a label
 // around a radio button.
+// A group of several attributes has a chip for every combination that can exist, a line
+// of them for each value of its first attribute.
 const fields = {};
-for (const a of ATTRIBUTES) {
-  const inputs = a.options.map((text, i) => el('input', { type: 'radio', name: a.key, value: i, ariaLabel: text }));
-  const chips = inputs.map((input, i) => el('label', { className: 'chip', title: a.options[i] }, [input, a.short[i]]));
+for (const g of GROUPS) {
+  const list = combos(g);
+  const wording = list.map((c) => comboWording(g, c));
+  const inputs = list.map((_, i) => el('input', { type: 'radio', name: g.id, value: i, ariaLabel: wording[i] }));
+  const chips = inputs.map((input, i) => el('label', { className: 'chip', title: wording[i] }, [input, comboName(g, list[i])]));
   const picked = el('span', { className: 'picked' });
   // Shown on a settled attribute, whose chips are folded away: brings them back.
   const reopen = el('button', { type: 'button', className: 'reopen', textContent: 'change', hidden: true });
-  const node = el('div', { className: a.options.length > 7 ? 'field wide' : 'field', role: 'radiogroup', ariaLabel: a.label }, [
-    el('div', { className: 'field-head' }, [`${a.label}: `, picked, ' ', reopen]),
-    el('div', { className: 'chips' }, chips),
+  const joined = g.keys.length > 1;
+  const lines = joined
+    ? [...new Set(list.map((c) => c[0]))].map((first) => el('div', { className: 'chip-line' }, chips.filter((_, i) => list[i][0] === first)))
+    : chips;
+  const node = el('div', { className: `field${list.length > 7 ? ' wide' : ''}${joined ? ' joined' : ''}`, role: 'radiogroup', ariaLabel: g.label }, [
+    el('div', { className: 'field-head' }, [`${g.label}: `, picked, ' ', reopen]),
+    el('div', { className: 'chips' }, lines),
   ]);
-  // `hit` is the option known to be right, or -1; `open` is what stillPossible says;
+  // `hit` is the option known to be right, or -1; `open` is what stillPossibleGroup says;
   // `opened` is true while the player has unfolded a settled attribute.
-  const field = { inputs, chips, picked, reopen, node, hit: -1, open: null, opened: false };
-  fields[a.key] = field;
+  const field = { inputs, chips, wording, picked, reopen, node, hit: -1, open: null, opened: false };
+  fields[g.id] = field;
   inputs.forEach((input, i) => input.addEventListener('change', () => {
     if (i === field.hit) field.opened = false; // back on the right option: fold again
     syncForm();
@@ -77,18 +96,24 @@ if (hitTheScore) {
     : 'An accompanying spouse brings no points of their own here.';
 }
 
+const pickedIndex = (g) => fields[g.id].inputs.findIndex((input) => input.checked);
+// The form as a profile; -1 for every attribute of a group with nothing picked.
 function readForm() {
-  return Object.fromEntries(KEYS.map((k) => [k, fields[k].inputs.findIndex((input) => input.checked)]));
+  return Object.fromEntries(GROUPS.flatMap((g) => {
+    const combo = combos(g)[pickedIndex(g)];
+    return g.keys.map((k, x) => [k, combo ? combo[x] : -1]);
+  }));
 }
-function writeForm(profile) {
-  // -1 is "not chosen": no chip of that attribute is picked.
-  for (const k of KEYS) fields[k].inputs.forEach((input, i) => { input.checked = i === profile[k]; });
+// What the form is set to for each group: an index into its combinations, -1 for none.
+function writeForm(picks) {
+  for (const g of GROUPS) fields[g.id].inputs.forEach((input, i) => { input.checked = i === picks[g.id]; });
   syncForm();
 }
-const unset = () => ATTRIBUTES.filter((a) => !fields[a.key].inputs.some((input) => input.checked));
+const unset = () => GROUPS.filter((g) => pickedIndex(g) < 0);
 // Disables what cannot be: a second language above the first, a wage tier with no work.
 // A choice that has become impossible falls back to the highest one that is not. This is
-// not the same as ruled out: a ruled-out option can still be picked.
+// not the same as ruled out: a ruled-out option can still be picked. Where the two are
+// joined in one group there is nothing to disable: it only has combinations that can be.
 function syncForm() {
   const p = readForm();
   const allow = {
@@ -96,6 +121,7 @@ function syncForm() {
     hw: (i) => i === 0 || p.cwe !== 0,
   };
   for (const [key, allowed] of Object.entries(allow)) {
+    if (!fields[key]) continue;
     const { inputs } = fields[key];
     inputs.forEach((input, i) => { input.disabled = !allowed(i); });
     let i = p[key];
@@ -104,10 +130,10 @@ function syncForm() {
     else if (inputs.filter((input) => !input.disabled).length === 1) i = inputs.findIndex((input) => !input.disabled);
     inputs.forEach((input, j) => { input.checked = j === i; });
   }
-  for (const a of ATTRIBUTES) {
-    const field = fields[a.key];
-    const i = field.inputs.findIndex((input) => input.checked);
-    field.picked.textContent = i < 0 ? 'choose one' : a.options[i];
+  for (const g of GROUPS) {
+    const field = fields[g.id];
+    const i = pickedIndex(g);
+    field.picked.textContent = i < 0 ? 'choose one' : field.wording[i];
     field.node.classList.toggle('unset', i < 0);
     // An attribute that is known and set to what is known needs no chips: one line.
     const settled = i >= 0 && i === field.hit && !field.opened;
@@ -138,16 +164,15 @@ hardMode.addEventListener('change', () => {
 // The attributes that hard mode will not let through as the form stands.
 function ruledOutPicks() {
   if (hitTheScore || !hardMode.checked) return [];
-  return ATTRIBUTES.filter((a) => {
-    const { inputs, open } = fields[a.key];
-    const i = inputs.findIndex((input) => input.checked);
-    return i >= 0 && open && !open[i];
+  return GROUPS.filter((g) => {
+    const i = pickedIndex(g);
+    return i >= 0 && fields[g.id].open && !fields[g.id].open[i];
   });
 }
 // Whether no guess used a choice that the guesses before it had ruled out.
 function playedHard(results) {
-  return guesses.every((raw, n) => ATTRIBUTES.every((a) => stillPossible(
-    a.key, results.slice(0, n).map((r) => r.cells.find((c) => c.key === a.key)))[raw[a.key]]));
+  return guesses.every((raw, n) => GROUPS.every((g, j) => stillPossibleGroup(
+    g, results.slice(0, n).map((r) => r.cells[j]), RULE)[comboIndex(g, raw)]));
 }
 
 // Marks each chip with what the guesses so far say about it: green for the option known
@@ -155,44 +180,50 @@ function playedHard(results) {
 // anything out against, so its chips stay plain.
 function markForm(results) {
   if (hitTheScore) return;
-  for (const a of ATTRIBUTES) {
-    const cells = results.map((r) => r.cells.find((c) => c.key === a.key));
-    const open = stillPossible(a.key, cells);
+  GROUPS.forEach((g, j) => {
+    const field = fields[g.id];
+    const cells = results.map((r) => r.cells[j]);
+    const open = stillPossibleGroup(g, cells, RULE);
     const found = cells.some((c) => c.state === 'hit');
-    // A yellow cell leaves only an option or two next to it: those are yellow too.
+    // A yellow cell leaves only an option or two next to it: those are yellow too. In a
+    // joined group it leaves the combinations that share a part with the guess.
     const near = !found && cells.some((c) => c.state === 'close');
-    fields[a.key].open = open;
-    fields[a.key].hit = found ? open.indexOf(true) : -1;
-    fields[a.key].chips.forEach((chip, i) => {
+    field.open = open;
+    field.hit = found ? open.indexOf(true) : -1;
+    field.chips.forEach((chip, i) => {
       chip.classList.toggle('hit', found && open[i]);
       chip.classList.toggle('near', near && open[i]);
       chip.classList.toggle('out', !open[i]);
       const what = !open[i] ? ' (ruled out)' : found ? ' (right)' : near ? ' (close)' : '';
-      fields[a.key].inputs[i].ariaLabel = a.options[i] + what;
-      chip.title = a.options[i] + what;
+      field.inputs[i].ariaLabel = field.wording[i] + what;
+      chip.title = field.wording[i] + what;
     });
-  }
+  });
 }
 
 // ---- board ------------------------------------------------------------------------------
 
 $('board-head').append(
-  ...ATTRIBUTES.map((a) => el('th', { scope: 'col', textContent: a.label })),
+  ...GROUPS.map((g) => el('th', { scope: 'col', textContent: g.label })),
   el('th', { scope: 'col', textContent: 'Score' }),
 );
 
 const signed = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
 
 function guessRows(result, revealed) {
-  const cells = result.cells.map((c) => {
-    const a = ATTRIBUTES.find((x) => x.key === c.key);
-    const wasLowered = result.lowered.includes(c.key);
+  const cells = result.cells.map((c, j) => {
+    const g = GROUPS[j];
+    const wasLowered = c.keys.some((k) => result.lowered.includes(k));
     const td = el('td', { className: `cell ${c.state}` });
-    td.dataset.label = a.label; // shown above the value where the header row is not
+    td.dataset.label = g.label; // shown above the value where the header row is not
     if (wasLowered) td.append(el('span', { className: 'lowered', textContent: '∅' }));
-    td.append(a.short[c.value]);
+    td.append(comboName(g, c.values));
     if (c.arrow) td.append(el('span', { className: 'arrow', textContent: ARROW[c.arrow] }));
-    td.title = `${a.label}: ${a.options[c.value]}`
+    // A yellow joined cell says how many of its parts are right, never which.
+    const partly = c.keys.length > 1 && c.state === 'close';
+    if (partly) td.append(el('span', { className: 'parts', textContent: `${c.right} of ${c.keys.length}` }));
+    td.title = (c.keys.length > 1 ? comboWording(g, c.values) : `${g.label}: ${comboWording(g, c.values)}`)
+      + (partly ? ` (${c.right} of ${c.keys.length} right)` : '')
       + (wasLowered ? ' (your choice made no difference to the score)' : '');
     if (c.hint) {
       const parts = [];
@@ -222,7 +253,7 @@ function guessRows(result, revealed) {
   });
   return [
     el('tr', { className: 'guess' }, [...cells, scoreCell]),
-    el('tr', { className: 'breakdown' }, [el('td', { colSpan: ATTRIBUTES.length + 1 }, parts)]),
+    el('tr', { className: 'breakdown' }, [el('td', { colSpan: GROUPS.length + 1 }, parts)]),
   ];
 }
 
@@ -246,7 +277,7 @@ function render() {
   body.replaceChildren(...results.flatMap((r) => guessRows(r, revealed)));
   for (let i = guesses.length; i < MAX && !over; i += 1) {
     body.append(el('tr', { className: 'blank' }, [
-      ...ATTRIBUTES.map(() => el('td', { className: 'cell empty' })), el('td'),
+      ...GROUPS.map(() => el('td', { className: 'cell empty' })), el('td'),
     ]));
   }
 
@@ -256,8 +287,10 @@ function render() {
   // those are left for the player to make again.
   markForm(results);
   if (last) {
-    writeForm(hitTheScore ? last.profile : Object.fromEntries(
-      KEYS.map((k) => [k, carryForward(fields[k].open, last.profile[k])])));
+    writeForm(Object.fromEntries(GROUPS.map((g) => {
+      const i = comboIndex(g, last.profile);
+      return [g.id, hitTheScore ? i : carryForward(fields[g.id].open, i)];
+    })));
   }
 
   let note = '';
@@ -329,5 +362,5 @@ $('guess-form').addEventListener('submit', (event) => {
 });
 
 $('guess-game').hidden = false;
-writeForm(START);
+writeForm(Object.fromEntries(GROUPS.map((g) => [g.id, comboIndex(g, START)])));
 render();

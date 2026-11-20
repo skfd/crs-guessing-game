@@ -67,6 +67,8 @@ td.cell.close { background: var(--close); }
 td.cell.miss { background: var(--miss); }
 td.cell .arrow { margin-left: 0.15rem; }
 td.cell .lowered { opacity: 0.85; margin-right: 0.15rem; font-weight: 400; }
+/* On a yellow joined cell: how many of its parts are right. */
+td.cell .parts { display: block; font-size: 0.68rem; font-weight: 400; }
 td.cell.empty { background: transparent; border: 1px dashed var(--line); height: 2.2rem; }
 td.score { text-align: right; padding: 0 0.4rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
 td.score .guess-total { font-weight: 700; font-size: 1.05rem; }
@@ -90,6 +92,9 @@ tr.breakdown .ok { color: var(--hit); font-weight: 600; }
 }
 .field-head .picked { color: var(--fg); }
 .chips { display: flex; flex-wrap: wrap; gap: 3px; }
+/* A joined group: one line of chips for each value of its first attribute. */
+.field.joined .chips { flex-direction: column; }
+.chip-line { display: flex; flex-wrap: wrap; gap: 3px; }
 /* A settled attribute is one line: its name, the right option, and a way back to the chips. */
 .field.settled { grid-column: auto; }
 .field.settled .chips { display: none; }

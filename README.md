@@ -182,6 +182,62 @@ Changed on 2026-11-20, at the user's request for something like Wordle's keyboar
   six guesses; with choices left unset that player finds 3 and is stopped on the rest.
   Measured on 2026-11-20 with a throwaway script, not kept.
 
+## Tuples: attributes picked and coloured together
+
+An experiment, built on 2026-11-20 because the user found the game "basically
+autoguessing": every attribute is narrowed by its own colour, the chips keep the score,
+and nothing is left to work out. Not the default; reached by `?tuples=` or the "Choices"
+links, in "find the person" only.
+
+- **A tuple is one pick and one cell** (`src/groups.js`). The chip names a combination
+  ("2y 1.5×"), and only combinations that can exist are offered. The cell is green when
+  the whole combination is right. It never says which part is wrong, so the section
+  points are what tells the player which part to change.
+- **Two rules for a joined cell.** `count`: yellow when some part is right, with "1 of 2"
+  in the cell, grey when none is. `all` (`-all` in the address, "no yellow" on the page):
+  green or grey and nothing else. Single attributes keep their yellow and arrow.
+- **Groupings.** `work` joins Canadian work with its wage tier; `lang` joins first and
+  second language; `pairs` joins five: education with study in Canada, the two languages,
+  work with wage tier, job offer with foreign work, sibling with nomination. That is 8
+  cells in place of 13. `themes` (five cells, up to 252 combinations) is in the simulator
+  only: too many to lay out as chips.
+- **Measured** with `node tools/simulate-tuples.mjs`, over all 366 people. The clicker
+  ignores the score and takes the middle of what each cell's colours leave open, which is
+  what the marked chips let a person do without thinking. The reasoner knows the point
+  tables: it starts from everyone who has the hidden person's four sections (median 172
+  people, at most 844), guesses one, and keeps whoever would have drawn the same colours.
+
+  | grouping, rule | cells | clicker by 6 | by 8 | reasoner by 3 | by 6 |
+  |---|---|---|---|---|---|
+  | nothing joined | 13 | 100% | 100% | 100% | 100% |
+  | work, count | 12 | 62% | 100% | 99% | 100% |
+  | work, all | 12 | 11% | 14% | 95% | 100% |
+  | lang, count | 12 | 99% | 100% | 100% | 100% |
+  | pairs, count | 8 | 48% | 98% | 94% | 100% |
+  | pairs, all | 8 | 3% | 4% | 63% | 100% |
+  | themes, count | 5 | 27% | 64% | 90% | 100% |
+  | themes, all | 5 | 0% | 1% | 51% | 98% |
+
+  So `pairs` with `count` is the one on the page first: not thinking loses half the time
+  and thinking always wins. `pairs-all` is there as the hard end. A real player is
+  between the two: no point tables, but can read the sections.
+- **The reasoner's column says something about the game as it was:** with the full clue
+  and the tables, two guesses are enough on average (2.10) with nothing joined, and
+  joining costs that player little: 2.56 for `pairs` with `count`, 3.19 for `pairs-all`,
+  3.58 for `themes` under `all`. The colours matter most to a player who cannot do the
+  arithmetic.
+- **Still automatic.** The chips are still marked, a group with one combination left is
+  still picked for the player, and a green group still folds. In one game, after two
+  guesses seven of the eight groups were settled. The next knob, if it still plays
+  itself, is to stop marking joined groups.
+- **Cost: the form is twice as tall.** 1,763px on a 375px-wide phone before anything is
+  known, against 870px; 995px after two guesses of one game. Chips for a pair are laid
+  out a line per value of its first attribute.
+- **Not done.** A game with tuples hides the same person as the game without, for the
+  same clue, so playing both on a day spoils one. It has its own saved game and share
+  label ("#3 tuples pairs"). "Hit the score" ignores `?tuples=`. `tools/simulate.mjs` is
+  unchanged and still plays the game with nothing joined.
+
 ## Design notes from the prior-art survey
 
 - The score is a free Tradle-style closeness signal: show each guess's CRS, the gap and the
@@ -296,6 +352,7 @@ src/tables.js             point tables, with source and date
 src/attributes.js         the attributes of a guess and their options
 src/score.js              profile -> section points
 src/profile.js            canonical form, feedback colours
+src/groups.js             tuples: which attributes are joined, their combinations and colours
 src/daily.js              day number, today's answer, share text
 src/modes.js              modes and clues: which variant, what the clue shows, step hints
 src/rounds.js             line-up: the day's rounds and how a person is described
@@ -305,7 +362,7 @@ src/game.js               the DOM for the two guessing modes
 src/lineup.js             the DOM for line-up
 data/bands.json           IRCC's pool distribution used as weights
 data/answers.json         the hidden people, built by tools/make-answers.mjs
-tools/                    make-answers, simulate, simulate-score, serve, ircc-oracle
+tools/                    make-answers, simulate, simulate-score, simulate-tuples, serve, ircc-oracle
 test/                     node --test
 ```
 
