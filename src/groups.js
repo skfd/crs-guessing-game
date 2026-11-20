@@ -19,14 +19,15 @@ function arrange(joined) {
 }
 
 // `name` is what a combination is called on its chip and in its cell; without one the
-// short labels of its parts are joined.
+// short labels of its parts are joined. `tags` name the parts in a word each, for a cell
+// that says something about each part ("hit the score").
 const short = (key, i) => BY_KEY[key].short[i];
 const WORK = {
-  label: 'Canadian work', keys: ['cwe', 'hw'],
+  label: 'Canadian work', keys: ['cwe', 'hw'], tags: ['years', 'wage'],
   name: ([cwe, hw]) => (cwe === 0 ? 'None' : short('cwe', cwe) + (hw ? ` ${short('hw', hw)}` : '')),
 };
 const LANGUAGES = {
-  label: 'Languages', keys: ['lang1', 'lang2'],
+  label: 'Languages', keys: ['lang1', 'lang2'], tags: ['1st', '2nd'],
   name: ([lang1, lang2]) => short('lang1', lang1) + (lang2 ? ` + ${short('lang2', lang2)}` : ''),
 };
 
@@ -36,18 +37,18 @@ export const GROUPINGS = {
   lang: arrange([LANGUAGES]),
   pairs: arrange([
     {
-      label: 'Education', keys: ['edu', 'canEdu'],
+      label: 'Education', keys: ['edu', 'canEdu'], tags: ['level', 'in CA'],
       name: ([edu, canEdu]) => short('edu', edu) + (canEdu ? ` + CA ${short('canEdu', canEdu)}` : ''),
     },
     LANGUAGES,
     WORK,
     {
-      label: 'Offer, foreign work', keys: ['offer', 'foreign'],
+      label: 'Offer, foreign work', keys: ['offer', 'foreign'], tags: ['offer', 'abroad'],
       name: ([offer, foreign]) => [offer ? `Offer ${short('offer', offer)}` : '', foreign ? `Abroad ${short('foreign', foreign)}` : '']
         .filter(Boolean).join(' + ') || 'Neither',
     },
     {
-      label: 'Sibling, nomination', keys: ['sibling', 'pnp'],
+      label: 'Sibling, nomination', keys: ['sibling', 'pnp'], tags: ['sibling', 'nomin.'],
       name: ([sibling, pnp]) => ['Neither', 'Nomination', 'Sibling', 'Both'][sibling * 2 + pnp],
     },
   ]),

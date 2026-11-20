@@ -21,10 +21,12 @@ export const day = practice
   ? practiceDay(Math.random, answersFile.answers.length, variantOffset(mode, clue), dayNumber())
   : Number(params.get('day')) || dayNumber();
 
-// Which attributes are picked and coloured together. Only "find the person" has colours
-// to join.
+// Which attributes are picked together, and in "find the person" coloured together. "Hit
+// the score" joins the same ones but has no colours, so the colour rule and the number of
+// guesses that comes with it are not its own. Line-up has no guess to join.
 const asked = parseTuples(params.get('tuples'));
-export const tuples = mode === 'person' ? asked : parseTuples('none');
+export const tuples = mode === 'person' ? asked
+  : parseTuples(mode === 'score' ? asked.id.replace(/-all$/, '') : 'none');
 const tupleExtra = asked.id === DEFAULT_TUPLES ? {} : { tuples: asked.id };
 const TUPLE_NAMES = { [DEFAULT_TUPLES]: '', none: 'one by one', 'pairs-all': 'no yellow' };
 
@@ -34,8 +36,11 @@ export const label = (practice ? 'practice' : `#${day}`) + (name ? ` ${name}` : 
 export const shareUrl = practice ? '' : location.origin + location.pathname + variantQuery(mode, clue, tupleExtra);
 
 // The original game keeps its original key, so games saved before there were modes are
-// still there. A game with tuples is another game: its guesses are coloured differently.
-const id = [variantId(mode, clue), tuples.id === 'none' ? '' : `t-${tuples.id}`].filter(Boolean).join(':');
+// still there. In "find the person" a game with tuples is another game: its guesses are
+// coloured differently. In "hit the score" it is the same game drawn another way, so it
+// keeps its key and a game saved before the choices were joined is still there.
+const id = [variantId(mode, clue), mode !== 'person' || tuples.id === 'none' ? '' : `t-${tuples.id}`]
+  .filter(Boolean).join(':');
 const storageKey = `crs-guessing-game:v1:day:${day}${id ? `:${id}` : ''}`;
 
 // Saved progress for this day and variant; practice games are never saved.
@@ -87,8 +92,11 @@ export function drawChrome() {
     $('tuple-picker').append('Rules: ', ...TUPLE_CHOICES.map((t) => link(
       t.label, variantHref(mode, clue, t.id), t.id === tuples.id)));
   }
-  $('help-tuples').hidden = tuples.id === 'none';
-  document.body.dataset.tuples = tuples.id;
+  $('help-tuples').hidden = mode !== 'person' || tuples.id === 'none';
+  $('help-joined-score').hidden = mode !== 'score' || tuples.id === 'none';
+  // With joined choices the two guessing modes fit a desktop screen: guesses on the left,
+  // choices on the right.
+  if (tuples.id !== 'none') document.body.dataset.layout = 'split';
   document.body.dataset.mode = mode;
   $('day-label').textContent = label;
   $('tagline').textContent = MODE[mode].tagline;

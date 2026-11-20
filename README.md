@@ -154,7 +154,7 @@ Changed on 2026-11-20, at the user's request for something like Wordle's keyboar
   (a second language above the first, a wage tier with no Canadian work). It cannot be
   picked.
 - **"Hit the score" has the chips but no marks.** It hides no one to rule options out
-  against.
+  against. Since 2026-11-20 its chips are joined as well, see below.
 - Chips carry the short labels the board uses; the full wording of the current choice is
   beside the attribute's name (on its own line on a phone). The wording of a chip that is
   not picked is only in its tooltip, which a phone does not have.
@@ -264,11 +264,41 @@ games, and `work` and `lang` still answer by address; no link leads to them.
   choices on the right, with the header on two lines and smaller chips. Measured at
   1,366 by 768: nothing scrolls before the first guess or with six guesses on the
   board. Between 48rem and 84rem the page is one column as before and does scroll.
-  "Hit the score", line-up and `?tuples=none` keep the old layout.
+  `?tuples=none` keeps the old layout; for the other two modes see below.
 - **Not done.** `?tuples=none` hides the same person as the joined game for the same
   clue, so playing both on a day spoils one. `pairs` and `pairs-all` share a person too.
-  "Hit the score" ignores `?tuples=`. `tools/simulate.mjs` still plays the game with
-  nothing joined.
+  `tools/simulate.mjs` still plays the game with nothing joined.
+
+## The other modes get the same form and layout
+
+Done on 2026-11-20, when the user asked for what "find the person" had gained to go to
+the other modes. Read as: the joined choices and the one-screen desktop page. Colours,
+marked chips, hard mode and the "Rules" links stay where there is a hidden person to
+colour against.
+
+- **"Hit the score" has the joined choices**: the same five pairs, the same tables of
+  chips, eight cells on the board in place of 13. It joins what the address joins, so
+  `?mode=score&tuples=none` is still the thirteen separate choices. `-all` means nothing
+  there and is ignored: eight guesses either way.
+- **A joined cell has a line of steps for each part**, with a word in front saying which
+  ("1st ▲+24 ▼−45", "2nd ▲+4"). All 13 step hints are still on the board, which is what
+  the simulator's 83% in eight guesses assumes.
+- **The saved game is the same game.** A guess is saved attribute by attribute, so a game
+  begun with separate choices is still there, drawn with joined cells. Checked with an
+  eight-guess game saved before the change.
+- **On a desktop it has the two columns of "find the person"** from 84rem wide. Measured
+  at 1,366 by 768: nothing scrolls before the first guess or with up to six guesses on
+  the board; all eight make the page 891px, 123px more than the screen. A cell is three
+  lines tall there, where a cell of "find the person" is one or two.
+- **On a 375px phone** a guess is two rows of four cells, as in "find the person", and
+  the step lines wrap inside a cell where they have to.
+- **Line-up takes the short header** from 84rem wide and stays one column. At 1,366 by
+  768 a round fits with everyone's score shown, in the five rounds of one day; the
+  result box under the last round made the page 819px. Before, a round of another
+  day with its scores shown was 856px.
+- **Fixed on the way:** in a light colour scheme the value in a cell of "hit the score"
+  was white on white, and only the steps under it could be read. It had been so since
+  the mode was built; a dark scheme hid it.
 
 ## Design notes from the prior-art survey
 

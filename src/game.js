@@ -33,14 +33,14 @@ let guesses = load().slice(0, MAX);
 function evaluate(raw) {
   if (hitTheScore) {
     // Any profile with the right total wins, so there is nothing to colour. Each cell
-    // says instead what a step either way would have been worth.
+    // says instead what a step either way would have been worth, for each of its parts.
     const profile = tidy(raw);
     const result = score(profile, answer.spousePoints);
     const hints = steps(profile, answer.spousePoints);
     return {
       profile, lowered: [], score: result, won: result.total === answerScore.total,
       cells: GROUPS.map((g) => ({
-        id: g.id, keys: g.keys, values: g.keys.map((k) => profile[k]), state: 'plain', hint: hints[g.keys[0]],
+        id: g.id, keys: g.keys, values: g.keys.map((k) => profile[k]), state: 'plain', hints: g.keys.map((k) => hints[k]),
       })),
     };
   }
@@ -239,11 +239,14 @@ function guessRows(result, revealed) {
     td.title = (c.keys.length > 1 ? comboWording(g, c.values) : `${g.label}: ${comboWording(g, c.values)}`)
       + (partly ? ` (${c.right} of ${c.keys.length} right)` : '')
       + (wasLowered ? ' (your choice made no difference to the score)' : '');
-    if (c.hint) {
+    // A joined cell has a line of steps for each part, in the order the cell names them.
+    for (const [x, hint] of (c.hints ?? []).entries()) {
       const parts = [];
-      if (c.hint.up !== null) parts.push(`▲${signed(c.hint.up)}`);
-      if (c.hint.down !== null) parts.push(`▼${signed(c.hint.down)}`);
-      td.append(el('span', { className: 'steps', textContent: parts.join(' ') || '–' }));
+      if (hint.up !== null) parts.push(`▲${signed(hint.up)}`);
+      if (hint.down !== null) parts.push(`▼${signed(hint.down)}`);
+      const line = el('span', { className: 'steps' }, [parts.join(' ') || '–']);
+      if (g.tags) line.prepend(el('span', { className: 'tag', textContent: `${g.tags[x]} ` }));
+      td.append(line);
     }
     return td;
   });

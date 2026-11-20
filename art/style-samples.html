@@ -1,0 +1,184 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Line-up art: style samples</title>
+<style>
+  body { margin: 0; padding: 20px; width: 720px; box-sizing: border-box; background: #f6f3ec; color: #1d1b18;
+    font: 14px/1.35 system-ui, "Segoe UI", sans-serif; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 18px; color: #6b665d; }
+  h2 { font-size: 15px; margin: 22px 0 2px; }
+  h2 span { font-weight: 400; color: #6b665d; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+  .card { background: #fff; border: 1.5px solid #d9d4c8; border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .card svg { width: 100%; height: auto; border-radius: 7px; display: block; }
+  .top { display: flex; align-items: baseline; gap: 8px; }
+  .letter { font-weight: 700; font-size: 17px; }
+  .name { font-weight: 650; }
+  .fun { font-style: italic; color: #4a463f; font-size: 13px; }
+  ul { margin: 0; padding: 0; list-style: none; font-size: 12.5px; color: #2c2a26; }
+  li { margin: 2px 0; }
+</style>
+<h1>Line-up art: four candidate styles</h1>
+<p class="sub">The same three people in each. Cards are the size they are on a phone.</p>
+
+<h2>1 · Paper-cut portraits <span>— flat shapes, made-up skin colours, one prop</span></h2>
+<div class="row" id="r1"></div>
+<h2>2 · Pixel sprites <span>— 12 × 14 pixels, arcade character select</span></h2>
+<div class="row" id="r2"></div>
+<h2>3 · The line-up wall <span>— bean people against a height chart, holding their letter</span></h2>
+<div class="row" id="r3"></div>
+<h2>4 · What they packed <span>— no person at all, three objects from their suitcase</span></h2>
+<div class="row" id="r4"></div>
+
+<script>
+const PEOPLE = [
+  { name: 'Odile', job: 'pastry chef', fun: 'Argues with her sourdough starter. Usually loses.',
+    lines: ['Aged 34, no accompanying spouse.', 'A two-year post-secondary credential.', 'French at CLB 9; English at CLB 5–6.', 'Two years of work in Canada.', 'No work abroad.'] },
+  { name: 'Bram', job: 'glaciologist', fun: 'Has given every ice core a first name.',
+    lines: ['In their twenties, no accompanying spouse.', 'A doctorate.', 'English at CLB 10 or higher; little or no French.', 'No work in Canada.', 'One or two years of work abroad.', 'Studied in Canada for a credential of three years or more.'] },
+  { name: 'Wendell', job: 'long-haul trucker', fun: 'Knits at truck stops. Takes commissions.',
+    lines: ['45 or older, with a spouse who brings 18 points.', 'Secondary school diploma.', 'English at CLB 7; little or no French.', 'No work in Canada.', 'A job offer at 1.3× the median wage.', 'Three or more years of work abroad.'] },
+];
+const LETTERS = ['A', 'B', 'C'];
+
+// ---------- style 1: paper-cut busts ----------
+const S1 = [
+  // Odile: toque, apron, croissant
+  `<svg viewBox="0 0 120 96"><rect width="120" height="96" fill="#f2836b"/>
+    <circle cx="96" cy="20" r="34" fill="#f59a80"/>
+    <path d="M22 96 Q22 68 46 66 L74 66 Q98 68 98 96Z" fill="#fff7ea"/>
+    <path d="M50 66 L60 78 L70 66Z" fill="#b9a6e8"/>
+    <rect x="53" y="54" width="14" height="16" fill="#a48fdc"/>
+    <ellipse cx="60" cy="46" rx="17" ry="19" fill="#b9a6e8"/>
+    <path d="M43 40 Q42 30 48 30 L72 30 Q78 30 77 40 Q60 34 43 40Z" fill="#3b2a5c"/>
+    <rect x="44" y="24" width="32" height="9" rx="2" fill="#fff7ea"/>
+    <path d="M42 26 Q34 12 46 9 Q50 0 60 4 Q70 0 74 9 Q86 12 78 26Z" fill="#fff7ea"/>
+    <circle cx="53" cy="47" r="1.8" fill="#2a1f45"/><circle cx="67" cy="47" r="1.8" fill="#2a1f45"/>
+    <path d="M54 55 Q60 60 66 55" stroke="#2a1f45" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M90 76 Q84 62 96 58 Q108 56 110 68 Q104 64 98 67 Q93 70 90 76Z" fill="#e8a23c"/>
+    <path d="M96 59 L98 67 M103 58 L103 65" stroke="#b9741c" stroke-width="1.5"/>
+  </svg>`,
+  // Bram: beanie, parka, snowflake
+  `<svg viewBox="0 0 120 96"><rect width="120" height="96" fill="#8fc7e0"/>
+    <path d="M0 96 L0 70 L24 44 L44 70 L60 56 L84 80 L98 66 L120 86 L120 96Z" fill="#b5dcee"/>
+    <path d="M20 96 Q20 66 46 64 L74 64 Q100 66 100 96Z" fill="#2f5d8a"/>
+    <path d="M40 70 Q60 82 80 70 Q80 60 60 60 Q40 60 40 70Z" fill="#f4ead6"/>
+    <ellipse cx="60" cy="47" rx="17" ry="19" fill="#f2c14e"/>
+    <path d="M42 40 Q42 18 60 18 Q78 18 78 40Z" fill="#d6453d"/>
+    <rect x="41" y="35" width="38" height="8" rx="3" fill="#f4ead6"/>
+    <circle cx="60" cy="15" r="6" fill="#f4ead6"/>
+    <circle cx="53" cy="49" r="1.8" fill="#3a2c12"/><circle cx="67" cy="49" r="1.8" fill="#3a2c12"/>
+    <circle cx="53" cy="49" r="5" fill="none" stroke="#3a2c12" stroke-width="1.4"/><circle cx="67" cy="49" r="5" fill="none" stroke="#3a2c12" stroke-width="1.4"/>
+    <path d="M58 49 L62 49" stroke="#3a2c12" stroke-width="1.4"/>
+    <path d="M55 58 Q60 61 65 58" stroke="#3a2c12" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <g stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M100 14 L100 34 M91 19 L109 29 M91 29 L109 19"/></g>
+  </svg>`,
+  // Wendell: cap, moustache, plaid, yarn
+  `<svg viewBox="0 0 120 96"><rect width="120" height="96" fill="#efc24a"/>
+    <rect y="70" width="120" height="26" fill="#e3b032"/>
+    <path d="M18 96 Q18 66 44 64 L76 64 Q102 66 102 96Z" fill="#c8443c"/>
+    <g stroke="#7d221d" stroke-width="3" opacity=".55"><path d="M36 66 L36 96 M52 64 L52 96 M68 64 L68 96 M84 66 L84 96 M20 78 L100 78 M18 90 L102 90"/></g>
+    <rect x="52" y="56" width="16" height="12" fill="#3d9c95"/>
+    <ellipse cx="60" cy="46" rx="18" ry="19" fill="#4bb5ad"/>
+    <path d="M42 36 Q42 18 60 18 Q78 18 78 36Z" fill="#27455c"/>
+    <path d="M42 36 L92 36 Q92 30 78 30 L42 30Z" fill="#1c3345"/>
+    <rect x="53" y="22" width="14" height="8" rx="2" fill="#efc24a"/>
+    <circle cx="53" cy="45" r="1.8" fill="#12302d"/><circle cx="67" cy="45" r="1.8" fill="#12302d"/>
+    <path d="M48 54 Q54 49 60 53 Q66 49 72 54 Q66 59 60 56 Q54 59 48 54Z" fill="#f4ead6"/>
+    <circle cx="98" cy="72" r="12" fill="#7a5bd0"/>
+    <path d="M88 68 Q98 62 108 70 M87 74 Q98 68 109 76 M90 80 Q99 75 107 81" stroke="#5a3fb0" stroke-width="1.6" fill="none"/>
+    <path d="M90 60 L110 84 M106 58 L92 86" stroke="#f4ead6" stroke-width="2.2" stroke-linecap="round"/>
+  </svg>`,
+];
+
+// ---------- style 2: pixel sprites ----------
+const SPRITES = [
+  { bg: '#3a2f5b', pal: { W: '#fff7ea', H: '#5a2d1a', S: '#f2836b', K: '#201530', M: '#8f2f3f', A: '#fff7ea', B: '#b9a6e8' }, rows: [
+    '...WWWWWW...', '..WWWWWWWW..', '..WWWWWWWW..', '...WWWWWW...', '...HSSSSH...', '...SKSSKS...', '...SSSSSS...',
+    '...SSMMSS...', '....SSSS....', '..AAAAAAAA..', '.SAAAAAAAAS.', '.SAAABBAAAS.', '..AAAAAAAA..', '..AAAAAAAA..'] },
+  { bg: '#1f4a63', pal: { P: '#fff7ea', R: '#d6453d', W: '#fff7ea', S: '#f2c14e', K: '#201530', M: '#8a4b12', F: '#f4ead6', J: '#4f8fc4', Z: '#1b2f4a' }, rows: [
+    '.....PP.....', '....RRRR....', '...RRRRRR...', '...RRRRRR...', '...WWWWWW...', '...SKSSKS...', '...SSSSSS...',
+    '...SSMMSS...', '..FFFFFFFF..', '.JJJJJZJJJJ.', '.JJJJJZJJJJ.', '.JJJJJZJJJJ.', '.JJJJJZJJJJ.', '..JJJJZJJJ..'] },
+  { bg: '#5b4a1c', pal: { C: '#27455c', S: '#4bb5ad', K: '#12302d', U: '#f4ead6', L: '#c8443c', D: '#7d221d' }, rows: [
+    '............', '...CCCCCC...', '..CCCCCCCC..', '..CCCCCCCCCC', '...SSSSSS...', '...SKSSKS...', '...SSSSSS...',
+    '...SUUUUS...', '....SSSS....', '..LDLDLDLD..', '.SDLDLDLDLS.', '.SLDLDLDLDS.', '..DLDLDLDL..', '..LDLDLDLD..'] },
+];
+function sprite(s) {
+  const px = 6, ox = (120 - 12 * px) / 2, oy = 96 - 14 * px;
+  let out = `<svg viewBox="0 0 120 96" shape-rendering="crispEdges"><rect width="120" height="96" fill="${s.bg}"/>`;
+  for (let y = 0; y < 96; y += 12) for (let x = (y / 12 % 2) * 12; x < 120; x += 24) out += `<rect x="${x}" y="${y}" width="12" height="12" fill="#fff" opacity=".05"/>`;
+  s.rows.forEach((row, y) => [...row].forEach((c, x) => {
+    if (c !== '.') out += `<rect x="${ox + x * px}" y="${oy + y * px}" width="${px}" height="${px}" fill="${s.pal[c]}"/>`;
+  }));
+  return `${out}</svg>`;
+}
+
+// ---------- style 3: the line-up wall ----------
+function wall(letter, body) {
+  let lines = '';
+  for (let i = 0; i < 6; i += 1) {
+    const y = 12 + i * 14;
+    lines += `<path d="M0 ${y} L120 ${y}" stroke="#2b2a27" stroke-width="${i % 2 ? 0.6 : 1.2}" opacity=".5"/>`;
+    if (i % 2 === 0) lines += `<text x="4" y="${y - 2}" font-size="6" font-family="monospace" fill="#2b2a27" opacity=".7">${190 - i * 10}</text>`;
+  }
+  return `<svg viewBox="0 0 120 96"><rect width="120" height="96" fill="#e9e3d3"/>${lines}
+    <rect y="88" width="120" height="8" fill="#b9b19c"/>${body}
+    <g transform="translate(60 70)"><rect x="-15" y="-8" width="30" height="16" rx="1.5" fill="#1d1b18"/>
+    <text y="5" text-anchor="middle" font-size="13" font-weight="700" font-family="monospace" fill="#fff">${letter}</text></g></svg>`;
+}
+const eyes = (y, c = '#1d1b18') => `<circle cx="54" cy="${y}" r="2" fill="${c}"/><circle cx="66" cy="${y}" r="2" fill="${c}"/>`;
+const S3 = [
+  // tall thin, toque
+  (l) => wall(l, `<path d="M52 88 L52 92 M68 88 L68 92" stroke="#1d1b18" stroke-width="3" stroke-linecap="round"/>
+    <rect x="42" y="24" width="36" height="66" rx="18" fill="#f2836b"/>
+    <path d="M44 22 Q36 10 47 8 Q51 0 60 4 Q69 0 73 8 Q84 10 76 22Z" fill="#fff" stroke="#1d1b18" stroke-width="1.2"/>
+    <rect x="45" y="20" width="30" height="7" rx="1.5" fill="#fff" stroke="#1d1b18" stroke-width="1.2"/>
+    ${eyes(38)}<path d="M55 45 Q60 49 65 45" stroke="#1d1b18" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <circle cx="40" cy="70" r="4" fill="#f2836b"/><circle cx="80" cy="70" r="4" fill="#f2836b"/>`),
+  // short round, beanie + glasses
+  (l) => wall(l, `<path d="M50 88 L50 92 M70 88 L70 92" stroke="#1d1b18" stroke-width="3" stroke-linecap="round"/>
+    <rect x="34" y="42" width="52" height="48" rx="24" fill="#6fb3d9"/>
+    <path d="M38 52 Q40 34 60 34 Q80 34 82 52Z" fill="#d6453d"/><circle cx="60" cy="32" r="5" fill="#fff"/>
+    <rect x="37" y="49" width="46" height="6" rx="3" fill="#fff"/>
+    ${eyes(61)}<circle cx="54" cy="61" r="5" fill="none" stroke="#1d1b18" stroke-width="1.3"/><circle cx="66" cy="61" r="5" fill="none" stroke="#1d1b18" stroke-width="1.3"/>
+    <circle cx="42" cy="72" r="4" fill="#6fb3d9"/><circle cx="78" cy="72" r="4" fill="#6fb3d9"/>`),
+  // wide, cap + moustache
+  (l) => wall(l, `<path d="M48 88 L48 92 M72 88 L72 92" stroke="#1d1b18" stroke-width="3" stroke-linecap="round"/>
+    <rect x="28" y="32" width="64" height="58" rx="22" fill="#e0a92e"/>
+    <path d="M32 44 Q34 28 60 28 Q86 28 88 44Z" fill="#27455c"/><path d="M60 40 L104 40 Q102 34 88 34 L60 34Z" fill="#1c3345"/>
+    ${eyes(51)}<path d="M48 59 Q54 54 60 58 Q66 54 72 59 Q66 63 60 61 Q54 63 48 59Z" fill="#fff"/>
+    <circle cx="40" cy="72" r="4.5" fill="#e0a92e"/><circle cx="80" cy="72" r="4.5" fill="#e0a92e"/>`),
+];
+
+// ---------- style 4: what they packed ----------
+const shelf = (bg, body) => `<svg viewBox="0 0 120 96"><rect width="120" height="96" fill="${bg}"/>
+  <rect x="8" y="22" width="104" height="66" rx="6" fill="#6b4a2f"/><rect x="12" y="26" width="96" height="58" rx="3" fill="#f4ead6"/>
+  <rect x="48" y="14" width="24" height="10" rx="4" fill="none" stroke="#6b4a2f" stroke-width="4"/>${body}</svg>`;
+const S4 = [
+  shelf('#f2836b', `
+    <g transform="rotate(-18 40 44)"><rect x="18" y="40" width="44" height="9" rx="4" fill="#d9a066"/><rect x="10" y="42.5" width="9" height="4" rx="2" fill="#a86b32"/><rect x="61" y="42.5" width="9" height="4" rx="2" fill="#a86b32"/></g>
+    <path d="M70 76 Q62 56 80 50 Q98 48 102 66 Q94 60 85 64 Q76 68 70 76Z" fill="#e8a23c"/><path d="M80 51 L84 64 M90 50 L91 61" stroke="#b9741c" stroke-width="1.6"/>
+    <g stroke="#8b8b93" stroke-width="1.5" fill="none"><path d="M26 78 L40 60"/><ellipse cx="45" cy="54" rx="5" ry="9" transform="rotate(38 45 54)"/><ellipse cx="45" cy="54" rx="2" ry="9" transform="rotate(38 45 54)"/></g>`),
+  shelf('#8fc7e0', `
+    <rect x="20" y="34" width="12" height="44" rx="6" fill="#cfeaf6" stroke="#6fb3d9" stroke-width="1.5"/><path d="M20 46 L32 46 M20 56 L32 56 M20 64 L32 64" stroke="#6fb3d9" stroke-width="1"/>
+    <path d="M46 78 L46 52 Q46 40 58 40 Q70 40 70 52 L70 60 Q78 58 78 66 Q78 72 70 70 L70 78Z" fill="#d6453d"/><rect x="44" y="74" width="28" height="7" rx="2" fill="#f4ead6" stroke="#d6453d" stroke-width="1"/>
+    <g transform="rotate(12 92 56)"><rect x="84" y="36" width="16" height="40" rx="3" fill="#fff" stroke="#b9b19c" stroke-width="1.2"/><rect x="82" y="52" width="20" height="6" fill="#2f5d8a"/></g>`),
+  shelf('#efc24a', `
+    <circle cx="34" cy="58" r="15" fill="#7a5bd0"/><path d="M22 52 Q34 44 46 54 M20 60 Q34 52 48 62 M25 68 Q35 62 44 69" stroke="#5a3fb0" stroke-width="1.6" fill="none"/>
+    <path d="M24 40 L48 74 M46 38 L26 76" stroke="#8b8b93" stroke-width="2.4" stroke-linecap="round"/>
+    <rect x="58" y="52" width="24" height="18" rx="2" fill="#c8443c"/><path d="M82 58 L92 58 L96 64 L96 70 L82 70Z" fill="#27455c"/><circle cx="66" cy="72" r="4" fill="#1d1b18"/><circle cx="88" cy="72" r="4" fill="#1d1b18"/>
+    <rect x="98" y="38" width="8" height="26" rx="3" fill="#3d9c95"/><rect x="99" y="34" width="6" height="6" rx="1.5" fill="#8b8b93"/>`),
+];
+
+function card(i, art) {
+  const p = PEOPLE[i];
+  return `<div class="card">${art}
+    <div class="top"><span class="letter">${LETTERS[i]}</span><span class="name">${p.name}, ${p.job}</span></div>
+    <div class="fun">${p.fun}</div>
+    <ul>${p.lines.map((l) => `<li>${l}</li>`).join('')}</ul></div>`;
+}
+document.getElementById('r1').innerHTML = S1.map((a, i) => card(i, a)).join('');
+document.getElementById('r2').innerHTML = SPRITES.map((s, i) => card(i, sprite(s))).join('');
+document.getElementById('r3').innerHTML = S3.map((f, i) => card(i, f(LETTERS[i]))).join('');
+document.getElementById('r4').innerHTML = S4.map((a, i) => card(i, a)).join('');
+</script>

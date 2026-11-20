@@ -180,8 +180,9 @@ summary { cursor: pointer; font-weight: 600; }
 .picker.minor a { padding: 0.15rem 0.6rem; }
 .sections .hidden-section dd { color: var(--muted); }
 
-td.cell.plain { background: var(--card); color: var(--fg); border: 1px solid var(--line); }
-td.cell .steps { display: block; font-size: 0.68rem; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+#board td.cell.plain { background: var(--card); color: var(--fg); border: 1px solid var(--line); }
+td.cell .steps { display: block; font-size: 0.68rem; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.cell .steps .tag { font-size: 0.62rem; }
 
 .round-head { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 0.5rem; font-weight: 600; }
 .progress { display: inline-flex; gap: 0.3rem; }
@@ -224,6 +225,7 @@ body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
   #board td.cell::before {
     content: attr(data-label); display: block; font-size: 0.62rem; font-weight: 400; opacity: 0.85;
   }
+  #board td.cell .steps { white-space: normal; }
   #board tr.guess td.score {
     grid-column: span 3; display: flex; align-items: baseline; justify-content: flex-end; gap: 0.5rem;
   }
@@ -231,17 +233,17 @@ body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
   #board tr.breakdown td { padding: 0.25rem 0.1rem 0; }
 }
 
-/* ---- desktop: "find the person" on one screen, guesses on the left, choices on the right ---- */
+/* ---- desktop: a guessing mode with joined choices on one screen, guesses on the left, choices on the right ---- */
 @media (min-width: 48.01rem) {
   .chip { padding: 0.12rem 0.4rem; }
 }
 @media (min-width: 84rem) {
-  body[data-mode="person"]:not([data-tuples="none"]) main {
+  body[data-layout="split"] main {
     max-width: 96rem; padding: 0.5rem 1rem 1rem;
     display: grid; grid-template-columns: minmax(0, 1fr) 46rem; grid-template-rows: auto auto 1fr;
     column-gap: 1rem; align-items: start;
   }
-  body[data-mode="person"]:not([data-tuples="none"]) {
+  body[data-layout="split"] {
     & main > * { grid-column: 1 / -1; }
     & header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1rem; margin-bottom: 0.5rem; }
     & h1 { margin: 0; font-size: 1.3rem; }
@@ -268,5 +270,22 @@ body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
     & .hard { float: right; margin: 0.6rem 0 0; }
     & #form-note { margin: 0 0 0.3rem; min-height: 1.2rem; }
     & details { margin-top: 0.5rem; padding-top: 0.4rem; }
+  }
+  /* Line-up keeps its one column and takes the short header, so a round with its scores shown fits. */
+  body[data-mode="lineup"] {
+    & main { padding: 0.5rem 1rem 1rem; }
+    & header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1rem; margin-bottom: 0.5rem; }
+    & h1 { margin: 0; font-size: 1.3rem; }
+    & .tagline { margin: 0; flex: 1 1 20rem; font-size: 0.9rem; }
+    & .picker { margin: 0; }
+    & #clue { margin-bottom: 0.5rem; }
+    & #end { margin: 0.5rem 0; padding: 0.6rem 1.25rem; }
+    & details { margin-top: 0.5rem; padding-top: 0.4rem; }
+  }
+  /* A cell of "hit the score" has a line of steps for each part: smaller, to fit eight across. */
+  body[data-layout="split"][data-mode="score"] {
+    & #board td.cell { padding: 0.25rem 0.1rem; }
+    & td.cell .steps { font-size: 0.62rem; }
+    & td.cell .steps .tag { font-size: 0.58rem; }
   }
 }
