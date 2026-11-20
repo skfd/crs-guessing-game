@@ -104,6 +104,7 @@ tr.breakdown .ok { color: var(--hit); font-weight: 600; }
 }
 .chip.hit { background: var(--hit); border-color: var(--hit); color: var(--on-colour); }
 .chip:has(input:disabled) { background: transparent; border: 2px dashed var(--line); color: var(--muted); opacity: 0.5; cursor: not-allowed; }
+.legend-chip { cursor: default; padding: 0.1rem 0.4rem; }
 .chip:has(input:checked) { border-color: var(--fg); box-shadow: 0 0 0 1px var(--fg); }
 .chip:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
 button {
@@ -187,6 +188,9 @@ body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
 @media (max-width: 48rem) {
   .board-scroll { overflow-x: visible; }
   .fields { grid-template-columns: 1fr 1fr; }
+  /* No tooltips on a phone: the full wording of the choice gets a line of its own. */
+  .field-head { white-space: normal; }
+  .field-head .picked { display: block; }
   #board, #board tbody { display: block; min-width: 0; border-spacing: 0; }
   #board thead, #board tr.blank { display: none; }
   #board tr.guess { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin-top: 0.6rem; }

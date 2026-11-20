@@ -156,7 +156,9 @@ Changed on 2026-11-20, at the user's request for something like Wordle's keyboar
 - **"Hit the score" has the chips but no marks.** It hides no one to rule options out
   against.
 - Chips carry the short labels the board uses; the full wording of the current choice is
-  beside the attribute's name, and of any chip in its tooltip.
+  beside the attribute's name (on its own line on a phone). The wording of a chip that is
+  not picked is only in its tooltip, which a phone does not have.
+- The form is taller for it: about 870px on a 375px-wide phone, more than a screen.
 
 ## Design notes from the prior-art survey
 

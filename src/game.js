@@ -47,7 +47,7 @@ function evaluate(raw) {
 // around a radio button.
 const fields = {};
 for (const a of ATTRIBUTES) {
-  const inputs = a.options.map((text, i) => el('input', { type: 'radio', name: a.key, value: i }));
+  const inputs = a.options.map((text, i) => el('input', { type: 'radio', name: a.key, value: i, ariaLabel: text }));
   const chips = inputs.map((input, i) => el('label', { className: 'chip', title: a.options[i] }, [input, a.short[i]]));
   const picked = el('span', { className: 'picked' });
   for (const input of inputs) input.addEventListener('change', syncForm);
