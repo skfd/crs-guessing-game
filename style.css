@@ -166,8 +166,9 @@ body[data-mode="lineup"] #clue { position: sticky; top: 0; z-index: 1; padding: 
 body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
 
 /* ---- phone: a guess is a block of labelled cells, not a row thirteen columns wide ---- */
-@media (max-width: 40rem) {
+@media (max-width: 48rem) {
   .board-scroll { overflow-x: visible; }
+  .fields { grid-template-columns: 1fr 1fr; }
   #board, #board tbody { display: block; min-width: 0; border-spacing: 0; }
   #board thead, #board tr.blank { display: none; }
   #board tr.guess { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin-top: 0.6rem; }

@@ -213,7 +213,9 @@ $('guess-form').addEventListener('submit', (event) => {
   const same = (a, b) => KEYS.every((k) => a[k] === b[k]);
   const read = evaluate(raw).profile;
   if (guesses.some((g) => same(evaluate(g).profile, read))) {
-    $('note').textContent = 'You have already guessed that. Change something first.';
+    $('note').textContent = guesses.some((g) => same(g, raw))
+      ? 'You have already guessed that. Change something first.'
+      : 'That change makes no difference to the score, so it reads as a guess you have already made.';
     return;
   }
   guesses.push(raw);

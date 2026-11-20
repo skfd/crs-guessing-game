@@ -104,6 +104,13 @@ axes to be built. Every choice here is provisional.
 - **Each guessing variant hides its own person.** Two modes times three clues is six
   variants a day. Finishing one shows its person, so each takes its person from a
   different place in the answer list, 53 days apart (`PERSON_VARIANTS` in `src/modes.js`).
+- **A repeated guess is refused**, in the original game too. Guesses are compared as the
+  game reads them, so a guess that is lowered to an earlier one is refused as well, with
+  a note saying the change made no difference. Under the section-per-miss clue a repeat
+  would otherwise buy a section for nothing.
+- **Practice keeps away from this week's hidden people.** A practice game of a guessing
+  variant never picks a person any variant hides today or in the next seven days, and a
+  practice line-up never shows one (`practiceDay` and `roundsForDay` in `src/rounds.js`).
 - **Clue "total only"** shows the total and nothing else. **Clue "a section per miss"**
   shows one more section after each wrong guess: additional, spouse, transferability, core
   last. Under both, a guess still shows its own four section subtotals, but the ✓ ↑ ↓
@@ -172,9 +179,10 @@ axes to be built. Every choice here is provisional.
   evidence is a reading of the script plus hand-worked cases in `test/score.test.mjs`.
 - **A second opinion, 2026-11-20.** `test/second-opinion.test.mjs` holds the numbers that
   the test suite of <https://github.com/muhac/ee-crs-planner> asserts for the same rules,
-  re-expressed as profiles of this game: every age, education, language, Canadian work,
-  high-wage and job-offer value in both spouse columns, the transferability pairs and
-  caps, the additional points, and one whole married person. `src/score.js` agrees with
+  re-expressed as profiles of this game: every age, education, first-language, Canadian
+  work, high-wage and job-offer value without a spouse; with a spouse, all of those except
+  that only eight of the ages and only the second-language cap are covered; the
+  transferability pairs and caps, the additional points, and one whole married person. `src/score.js` agrees with
   all of them. Only its numbers were taken; its code was not run. It is an independent
   reading of the same pages, not IRCC's calculator. Not covered, because this game cannot
   express them: mixed levels across language abilities, the certificate of
@@ -203,8 +211,9 @@ axes to be built. Every choice here is provisional.
   carries it too. It goes away only if the spouse stops being a given.
 - **Six variants a day is a lot.** They exist so each can be tried; the point of trying
   them is to drop most.
-- **Is 13 columns too wide?** It fits a desktop. Below 40rem each guess is laid out as a
-  block of labelled cells, four across, with the score last, so nothing scrolls sideways;
+- **Is 13 columns too wide?** It fits a desktop. Below 48rem each guess is laid out as a
+  block of labelled cells, four across, with the score last, and the form is two columns,
+  so nothing scrolls sideways;
   the cost is height, about three guesses to a phone screen. The share grid is still 13
   squares per row. Nomination and spouse are nearly free cells when
   the breakdown is shown (a nomination is 600 points; spouse points above zero mean a
