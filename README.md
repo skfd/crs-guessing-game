@@ -177,8 +177,8 @@ this mode only.
 - **Age shows**, in lines and grey hair, following the age in the description. It is the
   only thing in a picture that follows a scoring attribute.
 - **Stored as the game reads them** (`canonical`), so 13 of the 100 lost something that
-  made no difference: mostly work abroad with weak language, and French-first where
-  English-first scores the same.
+  made no difference: mostly work abroad that the transferability cap leaves nothing
+  for, and French-first where English-first scores the same.
 - **Nobody is nominated.** Eleven were until 2026-11-20; they are the same people 600
   points lower. After the low end was raised the same day, scores run from 219 to 592
   and no round in a year has to take whoever is nearest.
@@ -399,9 +399,14 @@ province -- they always have insane score. remove this from all modes".
 ## The ends of the scores
 
 On 2026-11-20 the user asked whether anything else stood out the way the nomination had.
-Nothing does: with it gone, the most one choice is worth is 100 points (a job offer at
-2× the median wage), and over every profile there is, no 50-point band of totals below
-650 pins any one option. Four smaller things were found; the user chose the first three.
+Nothing does. With it gone, the largest flat bonuses are 100 points (a job offer at 2×
+the median wage), 70 (the top wage tier) and 50 (French). The bigger levers are graded
+over six to eight options: a first language brings its holder up to 298 points,
+education 200, Canadian work 186. Over every single person the game can describe, in
+50-point bands of totals, no group of options checked (any job offer, any Canadian work,
+CLB 9 or more, and eight others) is held by more than 91% of a band between 250 and
+600, and the one at 91% is "any Canadian work", which 80% hold at 250 too. Four smaller
+things were found; the user chose the first three.
 
 - **The line-up cast was bottom-heavy.** 31 of the 100 scored under 300, where 3% of the
   pool does, and 22 were 45 or older. 26 people kept their name, job, quirk and look and
@@ -430,6 +435,11 @@ Nothing does: with it gone, the most one choice is worth is 100 points (a job of
 - **Left as it is:** day 282 has a first language of CLB 3 or less and two years of
   Canadian work at 1.5× the median wage, 368 points. The only hidden person at that
   language level, and not a likely one.
+- **What the cast lost:** nobody in it has a first language of CLB 5 or less now, and
+  one person is at CLB 6, where 17 were at CLB 6 or less. Raising language was the
+  cheapest way up.
+- **The top two are rarely seen:** Noor (585) and Philippa (592) stand in 14 and 16
+  rounds of a year's 1,830, Camille (582) in 38; everyone else in 46 to 111.
 - **Not looked at:** whether a regular learns that 13 of the cast are never the answer.
 
 ## Design notes from the prior-art survey
