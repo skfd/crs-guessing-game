@@ -72,11 +72,12 @@ test('the answer is never ruled out, and a green cell leaves only it', () => {
   }
 });
 
-test('the address names a grouping, and anything else is the game as it was', () => {
+test('the address names a grouping, and anything else is the default', () => {
   assert.equal(parseTuples('pairs').grouping, GROUPINGS.pairs);
   assert.deepEqual([parseTuples('pairs-all').id, parseTuples('pairs-all').rule], ['pairs-all', 'all']);
   assert.deepEqual([parseTuples('pairs').guesses, parseTuples('pairs-all').guesses], [undefined, 4]);
-  for (const asked of [null, '', 'none', 'nonsense', 'themes', 'pairs-']) {
-    assert.deepEqual([parseTuples(asked).id, parseTuples(asked).grouping], ['', GROUPINGS.none]);
+  assert.deepEqual([parseTuples('none').id, parseTuples('none').grouping], ['none', GROUPINGS.none]);
+  for (const asked of [null, '', 'none-all', 'nonsense', 'themes', 'pairs-']) {
+    assert.deepEqual([parseTuples(asked).id, parseTuples(asked).grouping], ['pairs', GROUPINGS.pairs]);
   }
 });

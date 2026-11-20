@@ -65,25 +65,26 @@ export const GROUPINGS = {
 //   'all'    green all right, grey otherwise
 export const RULES = ['count', 'all'];
 
-// The groupings the page offers, by what follows ?tuples= in the address. Any grouping
-// above that has chips can also be named there, with "-all" after it for the 'all' rule.
+// What the page offers, by what follows ?tuples= in the address; the first is what the
+// bare address plays. Any grouping above that has chips can also be named there, with
+// "-all" after it for the 'all' rule: "none" is the game with nothing joined, which the
+// page stopped offering on 2026-11-20 because it plays itself.
 export const TUPLE_CHOICES = [
-  { id: '', label: 'One by one' },
-  { id: 'work', label: 'Work joined' },
-  { id: 'pairs', label: 'Five pairs' },
-  { id: 'pairs-all', label: 'Five pairs, no yellow, four guesses' },
+  { id: 'pairs', label: 'Yellow hints, six guesses' },
+  { id: 'pairs-all', label: 'No yellow, four guesses' },
 ];
+export const DEFAULT_TUPLES = TUPLE_CHOICES[0].id;
 const MOST_CHIPS = 40;
 // Where a choice has its own number of guesses. Four on pairs-all is where a player who
 // forgets nothing still loses one day in ten (tools/simulate-tuples.mjs).
 const GUESSES = { 'pairs-all': 4 };
 
-// Reads ?tuples=. Anything unknown is the game as it was: every attribute by itself.
+// Reads ?tuples=. Anything unknown is the default.
 export function parseTuples(asked) {
   const [, name, all] = /^([a-z]+?)(-all)?$/.exec(asked ?? '') ?? [];
   const grouping = GROUPINGS[name];
-  if (!grouping || name === 'none' || grouping.some((g) => combos(g).length > MOST_CHIPS)) {
-    return { id: '', grouping: GROUPINGS.none, rule: 'count' };
+  if (!grouping || (name === 'none' && all) || grouping.some((g) => combos(g).length > MOST_CHIPS)) {
+    return parseTuples(DEFAULT_TUPLES);
   }
   const id = name + (all ?? '');
   return { id, grouping, rule: all ? 'all' : 'count', guesses: GUESSES[id] };

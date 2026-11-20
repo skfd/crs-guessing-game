@@ -2,7 +2,7 @@
 // progress, and two DOM helpers.
 
 import { MODE, MODES, CLUES, parseVariant, variantId, variantName, variantOffset } from './modes.js';
-import { TUPLE_CHOICES, parseTuples } from './groups.js';
+import { DEFAULT_TUPLES, TUPLE_CHOICES, parseTuples } from './groups.js';
 import { practiceDay } from './rounds.js';
 import { dayNumber } from './daily.js';
 
@@ -23,16 +23,19 @@ export const day = practice
 
 // Which attributes are picked and coloured together. Only "find the person" has colours
 // to join.
-export const tuples = parseTuples(mode === 'person' ? params.get('tuples') : '');
-const tupleExtra = tuples.id ? { tuples: tuples.id } : {};
+const asked = parseTuples(params.get('tuples'));
+export const tuples = mode === 'person' ? asked : parseTuples('none');
+const tupleExtra = asked.id === DEFAULT_TUPLES ? {} : { tuples: asked.id };
+const TUPLE_NAMES = { [DEFAULT_TUPLES]: '', none: 'one by one', 'pairs-all': 'no yellow' };
 
-const name = [variantName(mode, clue), tuples.id ? `tuples ${tuples.id}` : ''].filter(Boolean).join(', ');
+const name = [variantName(mode, clue), mode === 'person' ? TUPLE_NAMES[tuples.id] ?? `tuples ${tuples.id}` : '']
+  .filter(Boolean).join(', ');
 export const label = (practice ? 'practice' : `#${day}`) + (name ? ` ${name}` : '');
 export const shareUrl = practice ? '' : location.origin + location.pathname + variantQuery(mode, clue, tupleExtra);
 
 // The original game keeps its original key, so games saved before there were modes are
 // still there. A game with tuples is another game: its guesses are coloured differently.
-const id = [variantId(mode, clue), tuples.id ? `t-${tuples.id}` : ''].filter(Boolean).join(':');
+const id = [variantId(mode, clue), tuples.id === 'none' ? '' : `t-${tuples.id}`].filter(Boolean).join(':');
 const storageKey = `crs-guessing-game:v1:day:${day}${id ? `:${id}` : ''}`;
 
 // Saved progress for this day and variant; practice games are never saved.
@@ -59,8 +62,8 @@ function variantQuery(toMode, toClue, extra = {}) {
   return text ? `?${text}` : '';
 }
 // A link to another variant that stays on the same day, or stays in practice.
-function variantHref(toMode, toClue, toTuples = tuples.id) {
-  const extra = toTuples && toMode === 'person' ? { tuples: toTuples } : {};
+function variantHref(toMode, toClue, toTuples = asked.id) {
+  const extra = toTuples === DEFAULT_TUPLES ? {} : { tuples: toTuples };
   if (practice) extra.practice = '';
   else if (params.has('day')) extra.day = params.get('day');
   return variantQuery(toMode, toClue, extra) || location.pathname;
@@ -81,10 +84,11 @@ export function drawChrome() {
   }
   $('tuple-picker').hidden = mode !== 'person';
   if (mode === 'person') {
-    $('tuple-picker').append('Choices: ', ...TUPLE_CHOICES.map((t) => link(
+    $('tuple-picker').append('Rules: ', ...TUPLE_CHOICES.map((t) => link(
       t.label, variantHref(mode, clue, t.id), t.id === tuples.id)));
   }
-  $('help-tuples').hidden = !tuples.id;
+  $('help-tuples').hidden = tuples.id === 'none';
+  document.body.dataset.tuples = tuples.id;
   document.body.dataset.mode = mode;
   $('day-label').textContent = label;
   $('tagline').textContent = MODE[mode].tagline;
