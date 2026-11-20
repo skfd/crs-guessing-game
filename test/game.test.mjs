@@ -41,18 +41,16 @@ test('canonical keeps the score, is stable, and leaves nothing lowerable', () =>
 test('canonical drops what the score cannot see', () => {
   const base = {
     spouse: 0, age: 2, edu: 6, lang1: 5, lang2: 0, first: 0, cwe: 0, hw: 0, offer: 0,
-    foreign: 0, canEdu: 0, sibling: 0, pnp: 0,
+    foreign: 0, canEdu: 0, sibling: 0,
   };
-  // sibling and Canadian study under a nomination
-  assert.deepEqual(canonical({ ...base, pnp: 1, sibling: 1, canEdu: 2 }).lowered, ['canEdu', 'sibling']);
   // an offer that loses to the work path
   assert.deepEqual(canonical({ ...base, cwe: 3, hw: 2, offer: 3 }).lowered, ['offer']);
   // foreign work with weak language and no Canadian work
   assert.deepEqual(canonical({ ...base, lang1: 2, foreign: 2 }).lowered, ['foreign']);
   // "stronger in French" below NCLC 7
   assert.deepEqual(canonical({ ...base, lang1: 2, first: 1 }).lowered, ['first']);
-  // nothing to drop
-  assert.deepEqual(canonical({ ...base, foreign: 2, sibling: 1 }).lowered, []);
+  // nothing to drop: a sibling and Canadian study always count
+  assert.deepEqual(canonical({ ...base, foreign: 2, sibling: 1, canEdu: 2 }).lowered, []);
 });
 
 test('feedback colours and arrows', () => {
@@ -105,6 +103,11 @@ test('every answer is a valid canonical profile', () => {
     seen.add(JSON.stringify(profile));
   }
   assert.equal(seen.size, answers.length, 'duplicate answers');
+});
+
+test('nobody hidden is nominated, and no guess can be', () => {
+  assert.ok(!KEYS.includes('pnp'));
+  for (const { profile, spousePoints } of answers) assert.ok(score(profile, spousePoints).additional < 600);
 });
 
 test('answer scores follow the published bands', () => {

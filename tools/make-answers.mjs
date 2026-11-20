@@ -8,6 +8,9 @@
 // sampled until one lands in that band. Every weight below is this prototype's own guess:
 // IRCC publishes score bands, not attributes.
 //
+// Nobody is nominated by a province, so the band above 600 is left out: a nomination is
+// 600 points and such a score says nothing else about the person.
+//
 // The list is committed and the game reads it by day number, so changing this file does not
 // move past or future answers until the list is deliberately rebuilt.
 
@@ -19,6 +22,7 @@ import { rng, pickWeighted } from '../src/rng.js';
 
 const SEED = 20261118;
 const DAYS = 366;
+const TOP = 600; // bands that start above this are nominated people
 
 const EDU_WEIGHT = [1, 5, 5, 8, 35, 12, 30, 4];
 const EDU_MIN_AGE = [0, 18, 19, 20, 21, 23, 23, 27];
@@ -42,7 +46,7 @@ function ageIndex(years) {
   return years - 27;
 }
 
-export function samplePerson(random, { nominated }) {
+export function samplePerson(random) {
   // Age 19-48, bell-shaped around 30.
   const ages = Array.from({ length: 30 }, (_, i) => 19 + i);
   const years = ages[pickWeighted(random, ages.map((a) => Math.exp(-((a - 30) ** 2) / 72)))];
@@ -80,12 +84,12 @@ export function samplePerson(random, { nominated }) {
   const raw = {
     spouse, age: ageIndex(years), edu, lang1, lang2, first, cwe, hw, offer, foreign, canEdu,
     sibling: random() < 0.08 ? 1 : 0,
-    pnp: nominated ? 1 : 0,
   };
   return { profile: canonical(raw, spousePoints).profile, spousePoints };
 }
 
-export function makeAnswers(bands, { seed = SEED, days = DAYS } = {}) {
+export function makeAnswers(allBands, { seed = SEED, days = DAYS } = {}) {
+  const bands = allBands.filter((b) => b.lo <= TOP);
   const random = rng(seed);
   const weights = bands.map((b) => b.count);
   const seen = new Set();
@@ -93,7 +97,7 @@ export function makeAnswers(bands, { seed = SEED, days = DAYS } = {}) {
   while (answers.length < days) {
     const band = bands[pickWeighted(random, weights)];
     for (let tries = 0; tries < 200000; tries += 1) {
-      const person = samplePerson(random, { nominated: band.lo > 600 });
+      const person = samplePerson(random);
       const { total } = score(person.profile, person.spousePoints);
       const id = JSON.stringify(person.profile);
       if (total >= band.lo && total <= band.hi && !seen.has(id)) {

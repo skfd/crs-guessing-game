@@ -44,6 +44,8 @@ export function score(profile, spousePoints = 0) {
   const transfer = Math.min(educationPair + foreignPair, T.TRANSFER_CAP);
 
   // D. Additional. French counts at NCLC 7+; the size of the bonus depends on English.
+  // `pnp` is a provincial nomination. No attribute of the game sets it (see
+  // attributes.js); the rule stays because IRCC's calculator was checked with it.
   let french = 0;
   if (p.first === 1 && clb1 >= 7) {
     french = clb2 >= 5 ? T.FRENCH_BONUS.withEnglish : T.FRENCH_BONUS.withWeakEnglish;

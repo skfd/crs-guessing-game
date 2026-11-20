@@ -47,14 +47,10 @@ export const GROUPINGS = {
       name: ([offer, foreign]) => [offer ? `Offer ${short('offer', offer)}` : '', foreign ? `Abroad ${short('foreign', foreign)}` : '']
         .filter(Boolean).join(' + ') || 'Neither',
     },
-    {
-      label: 'Sibling, nomination', keys: ['sibling', 'pnp'], tags: ['sibling', 'nomin.'],
-      name: ([sibling, pnp]) => ['Neither', 'Nomination', 'Sibling', 'Both'][sibling * 2 + pnp],
-    },
   ]),
   // Too many combinations to lay out as chips (84 for work); here for the simulator.
   themes: arrange([
-    { label: 'Family', keys: ['spouse', 'sibling', 'pnp'] },
+    { label: 'Family', keys: ['spouse', 'sibling'] },
     { label: 'Education', keys: ['edu', 'canEdu'] },
     { label: 'Languages', keys: ['lang1', 'lang2', 'first'] },
     { label: 'Work', keys: ['cwe', 'hw', 'offer', 'foreign'] },

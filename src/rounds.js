@@ -83,8 +83,7 @@ export function roundsForDay(all, day) {
       const gap = Math.abs(p.score.total - target.score.total);
       if (gap >= NEAREST && gap <= FURTHEST && fits(p)) picked.push(p);
     }
-    // A score with too few neighbours (a nomination puts someone 400 points clear of
-    // everybody) takes whoever is nearest instead.
+    // A score with too few neighbours takes whoever is nearest instead.
     const nearest = [...others].sort((a, b) =>
       Math.abs(a.score.total - target.score.total) - Math.abs(b.score.total - target.score.total));
     for (const p of nearest) {
@@ -143,6 +142,5 @@ export function bioLines(profile, spousePoints = 0) {
   lines.push(p.foreign ? `${FOREIGN[p.foreign]} of work abroad.` : 'No work abroad.');
   if (p.canEdu) lines.push(`Studied in Canada for ${STUDY[p.canEdu]}.`);
   if (p.sibling) lines.push('Has a sibling in Canada.');
-  if (p.pnp) lines.push('Nominated by a province.');
   return lines;
 }

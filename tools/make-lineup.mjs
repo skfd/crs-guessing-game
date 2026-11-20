@@ -34,7 +34,6 @@ function parseProfile(words) {
     else if ((m = /^w(\d)$/.exec(w))) p.foreign = Number(m[1]);
     else if ((m = /^s(\d)$/.exec(w))) p.canEdu = Number(m[1]);
     else if (w === 'sib') p.sibling = 1;
-    else if (w === 'pnp') p.pnp = 1;
     else if ((m = /^sp(\d+)$/.exec(w))) { p.spouse = 1; sp = Number(m[1]); }
     else throw new Error(`profile word not understood: ${w}`);
   }
@@ -161,8 +160,8 @@ for (const item of INVENTED) {
   console.log(`  ${item}: ${who.map((x) => `${x.name} ${x.look.tone}`).join(', ')}`);
 }
 const mean = (list) => Math.round(list.reduce((a, x) => a + x.score.total, 0) / (list.length || 1));
-const plain = all.filter((x) => !x.profile.pnp);
-console.log('Mean total without a nomination, by skin tone:',
+const plain = all;
+console.log('Mean total by skin tone:',
   [0, 1, 2, 3, 4].map((t) => `${t}: ${mean(plain.filter((x) => x.look.tone === t))} (${plain.filter((x) => x.look.tone === t).length})`).join('  '));
 const dressed = (x) => INVENTED.includes(x.look.hat) || INVENTED.includes(x.look.top);
 console.log(`Mean total in invented dress ${mean(plain.filter(dressed))}, without ${mean(plain.filter((x) => !dressed(x)))}`);

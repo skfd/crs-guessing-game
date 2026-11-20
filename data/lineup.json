@@ -12,15 +12,14 @@
   "offer",
   "foreign",
   "canEdu",
-  "sibling",
-  "pnp"
+  "sibling"
  ],
  "people": [
   {
    "name": "Odile",
    "job": "pastry chef",
    "quirk": "Argues with a sourdough starter. Usually loses.",
-   "p": [0,7,3,5,1,1,2,0,0,0,0,0,0],
+   "p": [0,7,3,5,1,1,2,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "bob",
@@ -39,14 +38,14 @@
     "eyeGap": 0.27,
     "nose": "mid",
     "age": 1,
-    "tone": 1
+    "tone": 4
    }
   },
   {
    "name": "Bram",
    "job": "glaciologist",
    "quirk": "Has given every ice core a first name.",
-   "p": [0,2,7,6,0,0,0,0,0,1,2,0,0],
+   "p": [0,2,7,6,0,0,0,0,0,1,2,0],
    "sp": 0,
    "look": {
     "hair": "crop",
@@ -68,14 +67,14 @@
     "eyeGap": 0.99,
     "nose": "narrow",
     "age": 1,
-    "tone": 2
+    "tone": 0
    }
   },
   {
    "name": "Wendell",
    "job": "long-haul trucker",
    "quirk": "Knits at truck stops. Takes commissions.",
-   "p": [1,18,1,3,0,0,0,0,1,2,0,0,0],
+   "p": [1,18,1,3,0,0,0,0,1,2,0,0],
    "sp": 18,
    "look": {
     "hair": "crop",
@@ -103,7 +102,7 @@
    "name": "Ines",
    "job": "auditor",
    "quirk": "Alphabetises the spice rack, then audits it.",
-   "p": [0,11,6,5,2,0,3,2,0,0,0,0,0],
+   "p": [0,11,6,5,2,0,3,2,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "bun",
@@ -125,14 +124,14 @@
     "eyeGap": 0.09,
     "nose": "button",
     "age": 1,
-    "tone": 0
+    "tone": 3
    }
   },
   {
    "name": "Kofi",
    "job": "bike courier",
    "quirk": "Knows every pothole in town by name.",
-   "p": [0,2,1,2,0,0,1,0,0,0,0,0,0],
+   "p": [0,2,1,2,0,0,1,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "buzz",
@@ -160,7 +159,7 @@
    "name": "Petra",
    "job": "beekeeper",
    "quirk": "Apologises to each bee individually.",
-   "p": [0,14,2,1,0,0,0,0,0,0,0,1,0],
+   "p": [0,14,2,1,0,0,0,0,0,0,0,1],
    "sp": 0,
    "look": {
     "hair": "wavy",
@@ -189,7 +188,7 @@
    "name": "Anselm",
    "job": "piano tuner",
    "quirk": "Can hear a fridge humming flat from the driveway.",
-   "p": [1,18,3,4,0,0,0,0,0,2,0,0,0],
+   "p": [1,18,3,4,0,0,0,0,0,2,0,0],
    "sp": 12,
    "look": {
     "hair": "receding",
@@ -219,7 +218,7 @@
    "name": "Yuki",
    "job": "sound engineer",
    "quirk": "Records the rain and rates it out of ten.",
-   "p": [0,2,4,5,0,0,1,1,0,0,1,0,0],
+   "p": [0,2,4,5,0,0,1,1,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "fringe",
@@ -241,14 +240,14 @@
     "nose": "long",
     "lips": "full",
     "age": 1,
-    "tone": 3
+    "tone": 1
    }
   },
   {
    "name": "Rosalind",
    "job": "welder",
    "quirk": "Signs every weld. Small, but it is there.",
-   "p": [0,6,2,3,0,0,4,2,0,0,0,0,0],
+   "p": [0,6,2,3,0,0,4,2,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "afro",
@@ -269,14 +268,14 @@
     "eyeGap": -0.31,
     "nose": "button",
     "age": 1,
-    "tone": 0
+    "tone": 1
    }
   },
   {
    "name": "Tomas",
    "job": "sommelier",
    "quirk": "Describes tap water in three adjectives.",
-   "p": [0,9,3,6,2,0,0,0,0,2,0,0,0],
+   "p": [0,9,3,6,2,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "part",
@@ -297,14 +296,14 @@
     "eyeGap": 0.9,
     "nose": "button",
     "age": 1,
-    "tone": 3
+    "tone": 1
    }
   },
   {
    "name": "Mirela",
    "job": "nurse",
    "quirk": "Wins every game of charades by diagnosis.",
-   "p": [1,4,4,4,0,0,2,1,0,0,0,0,1],
+   "p": [1,4,4,4,0,0,2,1,0,0,0,0],
    "sp": 25,
    "look": {
     "hair": "ponytail",
@@ -324,14 +323,14 @@
     "eyeGap": -0.2,
     "nose": "mid",
     "age": 1,
-    "tone": 2
+    "tone": 3
    }
   },
   {
    "name": "Dov",
    "job": "magician",
    "quirk": "Has never once found the right card first try.",
-   "p": [0,17,1,5,0,0,0,0,0,2,0,0,0],
+   "p": [0,17,1,5,0,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "curly",
@@ -363,7 +362,7 @@
    "name": "Farrukh",
    "job": "actuary",
    "quirk": "Calculates the odds of rain, then forgets the umbrella.",
-   "p": [0,3,6,6,1,0,1,3,0,0,0,0,0],
+   "p": [0,3,6,6,1,0,1,3,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "part",
@@ -385,14 +384,14 @@
     "eyeGap": -0.87,
     "nose": "button",
     "age": 1,
-    "tone": 4
+    "tone": 1
    }
   },
   {
    "name": "Lindiwe",
    "job": "structural engineer",
    "quirk": "Cannot cross a bridge without tapping it.",
-   "p": [1,8,6,5,0,0,3,3,0,0,0,0,0],
+   "p": [1,8,6,5,0,0,3,3,0,0,0,0],
    "sp": 30,
    "look": {
     "hair": "braids",
@@ -413,14 +412,14 @@
     "nose": "narrow",
     "lips": "full",
     "age": 1,
-    "tone": 4
+    "tone": 1
    }
   },
   {
    "name": "Caspian",
    "job": "barista",
    "quirk": "Draws only one latte pattern: a slightly worried swan.",
-   "p": [0,2,3,4,0,0,1,0,0,0,1,0,0],
+   "p": [0,2,3,4,0,0,1,0,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "mohawk",
@@ -442,14 +441,14 @@
     "eyeGap": 0.8,
     "nose": "long",
     "age": 0,
-    "tone": 1
+    "tone": 4
    }
   },
   {
    "name": "Noor",
    "job": "epidemiologist",
    "quirk": "Keeps a spreadsheet of who brought which cold to the office.",
-   "p": [0,5,7,6,2,0,2,2,0,0,0,0,0],
+   "p": [0,5,7,6,2,0,2,2,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -471,14 +470,14 @@
     "eyeGap": 0.98,
     "nose": "narrow",
     "age": 1,
-    "tone": 1
+    "tone": 0
    }
   },
   {
    "name": "Benedikt",
    "job": "clockmaker",
    "quirk": "Is always eleven minutes late.",
-   "p": [0,18,2,2,0,0,0,0,0,0,0,0,0],
+   "p": [0,18,2,2,0,0,0,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "thin",
@@ -507,7 +506,7 @@
    "name": "Saoirse",
    "job": "marine biologist",
    "quirk": "Gets seasick. Has made peace with it.",
-   "p": [0,2,6,6,0,0,1,0,0,0,1,0,0],
+   "p": [0,2,6,6,0,0,1,0,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "wavy",
@@ -528,14 +527,14 @@
     "eyeGap": -0.33,
     "nose": "mid",
     "age": 1,
-    "tone": 0
+    "tone": 3
    }
   },
   {
    "name": "Thabo",
    "job": "electrician",
    "quirk": "Labels everything. The label maker has a label.",
-   "p": [1,12,2,3,0,0,5,0,0,0,0,0,1],
+   "p": [1,12,2,3,0,1,5,0,0,0,0,0],
    "sp": 10,
    "look": {
     "hair": "buzz",
@@ -556,14 +555,14 @@
     "eyeGap": -0.57,
     "nose": "narrow",
     "age": 1,
-    "tone": 3
+    "tone": 0
    }
   },
   {
    "name": "Marisol",
    "job": "translator",
    "quirk": "Dreams in subtitles.",
-   "p": [0,10,4,6,3,0,1,0,0,2,0,0,0],
+   "p": [0,10,4,6,3,0,1,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "wavy",
@@ -591,7 +590,7 @@
    "name": "Ignatius",
    "job": "philosophy lecturer",
    "quirk": "Still deciding what to order.",
-   "p": [0,16,7,6,1,0,0,0,0,2,0,0,0],
+   "p": [0,16,7,6,1,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "receding",
@@ -613,14 +612,14 @@
     "eyeGap": 0.35,
     "nose": "narrow",
     "age": 2,
-    "tone": 3
+    "tone": 4
    }
   },
   {
    "name": "Hana",
    "job": "pharmacist",
    "quirk": "Counts stairs in multiples of five.",
-   "p": [0,3,6,5,0,0,1,2,0,0,0,1,0],
+   "p": [0,3,6,5,0,0,1,2,0,0,0,1],
    "sp": 0,
    "look": {
     "hair": "fringe",
@@ -641,14 +640,14 @@
     "nose": "narrow",
     "lips": "full",
     "age": 1,
-    "tone": 3
+    "tone": 4
    }
   },
   {
    "name": "Leopold",
    "job": "accordion teacher",
    "quirk": "Has been asked to stop exactly once per building.",
-   "p": [1,18,3,4,0,1,0,0,0,2,0,0,0],
+   "p": [1,18,3,4,0,1,0,0,0,2,0,0],
    "sp": 8,
    "look": {
     "hair": "part",
@@ -679,7 +678,7 @@
    "name": "Amara",
    "job": "software developer",
    "quirk": "Names servers after cheeses.",
-   "p": [0,2,4,6,0,0,2,3,0,0,0,0,0],
+   "p": [0,2,4,6,0,0,2,3,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "afro",
@@ -699,14 +698,14 @@
     "eyeGap": 0.54,
     "nose": "narrow",
     "age": 1,
-    "tone": 2
+    "tone": 0
    }
   },
   {
    "name": "Gideon",
    "job": "forklift operator",
    "quirk": "Parallel parks like a legend, everywhere.",
-   "p": [0,7,1,1,0,0,3,0,0,0,0,0,0],
+   "p": [0,7,1,1,0,0,3,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "crop",
@@ -735,7 +734,7 @@
    "name": "Xiomara",
    "job": "architect",
    "quirk": "Rearranges hotel rooms on arrival.",
-   "p": [0,6,6,4,1,0,0,0,2,2,0,0,0],
+   "p": [0,6,6,4,1,0,0,0,2,2,0,0],
    "sp": 0,
    "look": {
     "hair": "bun",
@@ -763,7 +762,7 @@
    "name": "Per",
    "job": "lighthouse keeper",
    "quirk": "Finds most rooms too crowded.",
-   "p": [0,18,1,3,0,0,0,0,0,2,0,0,0],
+   "p": [0,18,1,3,0,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "crop",
@@ -793,7 +792,7 @@
    "name": "Delphine",
    "job": "cheesemonger",
    "quirk": "Can tell which field the cow stood in.",
-   "p": [0,2,2,5,0,0,1,0,0,0,0,0,0],
+   "p": [0,2,2,5,0,0,1,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "ponytail",
@@ -815,14 +814,14 @@
     "eyeGap": 1.12,
     "nose": "wide",
     "age": 1,
-    "tone": 1
+    "tone": 2
    }
   },
   {
    "name": "Ravindra",
    "job": "data analyst",
    "quirk": "Makes a chart before choosing a restaurant.",
-   "p": [0,2,6,5,1,0,1,1,0,0,1,0,0],
+   "p": [0,2,6,5,1,0,1,1,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "part",
@@ -849,7 +848,7 @@
    "name": "Bettina",
    "job": "kindergarten teacher",
    "quirk": "Can silence a room with one eyebrow.",
-   "p": [1,13,4,4,0,0,0,0,0,2,0,0,0],
+   "p": [1,13,4,4,0,0,0,0,0,2,0,0],
    "sp": 21,
    "look": {
     "hair": "wavy",
@@ -878,7 +877,7 @@
    "name": "Oluwaseun",
    "job": "cardiologist",
    "quirk": "Takes the stairs and tells you about it.",
-   "p": [0,15,6,6,0,0,0,0,0,2,0,0,1],
+   "p": [0,15,6,6,0,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "coils",
@@ -901,14 +900,14 @@
     "eyeGap": 1.11,
     "nose": "narrow",
     "age": 2,
-    "tone": 1
+    "tone": 0
    }
   },
   {
    "name": "Kasimir",
    "job": "tattoo artist",
    "quirk": "Has no tattoos. Says nobody asked nicely.",
-   "p": [0,4,1,3,0,1,2,0,0,0,0,0,0],
+   "p": [0,4,1,3,0,1,2,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "mohawk",
@@ -936,7 +935,7 @@
    "name": "Thandeka",
    "job": "pilot",
    "quirk": "Narrates the commute in a calm, even voice.",
-   "p": [0,9,4,6,0,0,0,0,3,2,0,0,0],
+   "p": [0,9,4,6,0,0,0,0,3,2,0,0],
    "sp": 0,
    "look": {
     "hair": "braids",
@@ -958,14 +957,14 @@
     "nose": "mid",
     "lips": "full",
     "age": 1,
-    "tone": 4
+    "tone": 1
    }
   },
   {
    "name": "Jules",
    "job": "line cook",
    "quirk": "Owns nine knives and one fork.",
-   "p": [0,2,2,3,0,0,2,0,0,0,0,0,0],
+   "p": [0,2,2,3,0,0,2,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "crop",
@@ -987,14 +986,14 @@
     "eyeGap": 0.51,
     "nose": "narrow",
     "age": 0,
-    "tone": 4
+    "tone": 1
    }
   },
   {
    "name": "Signe",
    "job": "furniture restorer",
    "quirk": "Sits on every chair as a matter of principle.",
-   "p": [0,18,3,2,1,0,0,0,0,0,0,1,0],
+   "p": [0,18,3,2,1,0,0,0,0,0,0,1],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -1022,7 +1021,7 @@
    "name": "Emeka",
    "job": "physiotherapist",
    "quirk": "Corrects the posture of statues.",
-   "p": [0,2,6,5,0,0,1,1,0,0,1,0,0],
+   "p": [0,2,6,5,0,0,1,1,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "locs",
@@ -1042,14 +1041,14 @@
     "eyeGap": 0.17,
     "nose": "button",
     "age": 1,
-    "tone": 2
+    "tone": 0
    }
   },
   {
    "name": "Valentina",
    "job": "opera singer",
    "quirk": "Sneezes in a perfect C sharp.",
-   "p": [0,7,6,3,2,0,0,0,0,2,0,0,0],
+   "p": [0,7,6,3,2,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -1073,14 +1072,14 @@
     "nose": "long",
     "lips": "full",
     "age": 1,
-    "tone": 2
+    "tone": 0
    }
   },
   {
    "name": "Arvid",
    "job": "snowplough driver",
    "quirk": "Has a favourite cul-de-sac. Will not say which.",
-   "p": [1,18,1,2,0,0,5,0,0,0,0,0,0],
+   "p": [1,18,1,2,0,0,5,0,0,0,0,0],
    "sp": 15,
    "look": {
     "hair": "thin",
@@ -1109,7 +1108,7 @@
    "name": "Meseret",
    "job": "accountant",
    "quirk": "Balances the restaurant bill to the cent, unprompted.",
-   "p": [1,8,5,4,0,0,2,1,0,0,0,0,0],
+   "p": [1,8,5,4,0,0,2,1,0,0,0,0],
    "sp": 33,
    "look": {
     "hair": "curly",
@@ -1137,7 +1136,7 @@
    "name": "Cormac",
    "job": "stand-up comedian",
    "quirk": "Tests new material on self-checkout machines.",
-   "p": [0,3,4,6,0,0,1,0,0,0,0,0,0],
+   "p": [0,3,4,6,0,0,1,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "curly",
@@ -1169,7 +1168,7 @@
    "name": "Liesl",
    "job": "veterinary technician",
    "quirk": "Is recognised in the street by eleven dogs.",
-   "p": [0,2,3,5,0,0,2,0,0,0,0,0,1],
+   "p": [0,2,3,5,0,0,2,0,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "pigtails",
@@ -1191,14 +1190,14 @@
     "eyeGap": -0.35,
     "nose": "long",
     "age": 1,
-    "tone": 1
+    "tone": 2
    }
   },
   {
    "name": "Tariq",
    "job": "crane operator",
    "quirk": "Afraid of ladders. Not cranes. Ladders.",
-   "p": [0,10,2,3,0,0,3,3,0,0,0,0,1],
+   "p": [0,10,2,3,0,0,3,3,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "crop",
@@ -1219,14 +1218,14 @@
     "eyeGap": 0.56,
     "nose": "mid",
     "age": 1,
-    "tone": 0
+    "tone": 3
    }
   },
   {
    "name": "Philippa",
    "job": "patent lawyer",
    "quirk": "Reads the terms and conditions. All of them.",
-   "p": [0,12,6,6,3,0,4,3,0,0,0,0,0],
+   "p": [0,12,6,6,3,0,4,3,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "bob",
@@ -1255,7 +1254,7 @@
    "name": "Zoran",
    "job": "plumber",
    "quirk": "Whistles in the exact key of the pipes.",
-   "p": [1,18,2,1,0,0,2,0,0,0,0,0,0],
+   "p": [1,18,2,1,0,0,2,0,0,0,0,0],
    "sp": 5,
    "look": {
     "hair": "bald",
@@ -1285,7 +1284,7 @@
    "name": "Akira",
    "job": "animator",
    "quirk": "Blinks on twos.",
-   "p": [0,2,4,4,0,1,1,0,0,0,0,0,0],
+   "p": [0,2,4,4,0,1,1,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "fringe",
@@ -1315,7 +1314,7 @@
    "name": "Guadalupe",
    "job": "midwife",
    "quirk": "Has an exceptionally calm car.",
-   "p": [0,14,4,5,2,0,3,1,0,0,0,0,1],
+   "p": [0,14,4,5,2,0,3,1,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "bun",
@@ -1335,14 +1334,14 @@
     "eyeGap": 0.71,
     "nose": "narrow",
     "age": 2,
-    "tone": 3
+    "tone": 2
    }
   },
   {
    "name": "Ebbe",
    "job": "librarian",
    "quirk": "Shushes the television.",
-   "p": [0,18,6,5,0,0,0,0,0,2,0,0,0],
+   "p": [0,18,6,5,0,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "part",
@@ -1366,14 +1365,14 @@
     "eyeGap": 0.66,
     "nose": "mid",
     "age": 3,
-    "tone": 2
+    "tone": 4
    }
   },
   {
    "name": "Nkechi",
    "job": "civil engineer",
    "quirk": "Rates roundabouts. Most get a six.",
-   "p": [1,5,6,5,0,0,1,2,0,1,0,0,0],
+   "p": [1,5,6,5,0,0,1,2,0,1,0,0],
    "sp": 28,
    "look": {
     "hair": "ponytail",
@@ -1393,14 +1392,14 @@
     "eyeGap": 0.93,
     "nose": "narrow",
     "age": 1,
-    "tone": 1
+    "tone": 2
    }
   },
   {
    "name": "Rupert",
    "job": "butler",
    "quirk": "Irons the newspaper. Also the receipts.",
-   "p": [0,18,1,6,0,0,0,0,1,2,0,0,0],
+   "p": [0,18,1,6,0,0,0,0,1,2,0,0],
    "sp": 0,
    "look": {
     "hair": "receding",
@@ -1429,7 +1428,7 @@
    "name": "Soledad",
    "job": "flamenco teacher",
    "quirk": "Cannot wait in a queue without tapping a rhythm.",
-   "p": [0,11,3,2,1,0,0,0,0,0,0,0,0],
+   "p": [0,11,3,2,1,0,0,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "bun",
@@ -1458,7 +1457,7 @@
    "name": "Ilya",
    "job": "chess coach",
    "quirk": "Thinks four moves ahead about lunch.",
-   "p": [0,2,4,4,1,0,0,0,0,1,0,0,0],
+   "p": [0,2,4,4,1,0,0,0,0,1,0,0],
    "sp": 0,
    "look": {
     "hair": "curly",
@@ -1478,14 +1477,14 @@
     "eyeGap": 0.48,
     "nose": "long",
     "age": 1,
-    "tone": 0
+    "tone": 2
    }
   },
   {
    "name": "Marguerite",
    "job": "florist",
    "quirk": "Talks to the tulips. Gossips about the roses.",
-   "p": [0,17,2,6,1,1,5,0,0,0,0,0,0],
+   "p": [0,17,2,6,1,1,5,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "curly",
@@ -1507,14 +1506,14 @@
     "eyeGap": -0.5,
     "nose": "narrow",
     "age": 2,
-    "tone": 2
+    "tone": 1
    }
   },
   {
    "name": "Desmond",
    "job": "bus driver",
    "quirk": "Waves at every other bus. Keeps score of who waves back.",
-   "p": [1,18,1,4,0,1,4,0,0,0,0,0,0],
+   "p": [1,18,1,4,0,1,4,0,0,0,0,0],
    "sp": 20,
    "look": {
     "hair": "coils",
@@ -1545,7 +1544,7 @@
    "name": "Anneke",
    "job": "wind-turbine technician",
    "quirk": "Not bothered by heights. Bothered by pigeons.",
-   "p": [0,2,3,5,0,0,3,2,0,0,1,0,0],
+   "p": [0,2,3,5,0,0,3,2,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "ponytail",
@@ -1567,14 +1566,14 @@
     "eyeGap": 0.14,
     "nose": "wide",
     "age": 1,
-    "tone": 0
+    "tone": 3
    }
   },
   {
    "name": "Babajide",
    "job": "pharmacologist",
    "quirk": "Reads the leaflet inside the box for fun.",
-   "p": [1,7,7,5,1,0,2,2,0,0,0,0,0],
+   "p": [1,7,7,5,1,0,2,2,0,0,0,0],
    "sp": 36,
    "look": {
     "hair": "coils",
@@ -1603,7 +1602,7 @@
    "name": "Clementine",
    "job": "puppeteer",
    "quirk": "Both hands have distinct opinions.",
-   "p": [0,4,4,4,2,0,0,0,0,1,0,0,0],
+   "p": [0,4,4,4,2,0,0,0,0,1,0,0],
    "sp": 0,
    "look": {
     "hair": "pigtails",
@@ -1624,14 +1623,14 @@
     "eyeGap": 0.03,
     "nose": "button",
     "age": 1,
-    "tone": 4
+    "tone": 1
    }
   },
   {
    "name": "Henrik",
    "job": "sauna builder",
    "quirk": "Considers eighty degrees a bit fresh.",
-   "p": [0,15,2,2,0,0,0,0,2,0,0,0,0],
+   "p": [0,15,2,2,0,0,0,0,2,0,0,0],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -1661,7 +1660,7 @@
    "name": "Priya",
    "job": "radiologist",
    "quirk": "Guesses what is inside wrapped presents. Always right.",
-   "p": [0,10,6,6,0,0,1,3,0,0,0,1,0],
+   "p": [0,10,6,6,0,0,1,3,0,0,0,1],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -1682,14 +1681,14 @@
     "nose": "long",
     "lips": "full",
     "age": 1,
-    "tone": 0
+    "tone": 3
    }
   },
   {
    "name": "Mateus",
    "job": "surf instructor",
    "quirk": "Has not worn socks since a wedding.",
-   "p": [0,2,1,3,0,0,0,0,0,0,0,0,0],
+   "p": [0,2,1,3,0,0,0,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -1719,7 +1718,7 @@
    "name": "Ottilie",
    "job": "cartographer",
    "quirk": "Refuses to use the sat-nav on principle. Often late.",
-   "p": [1,18,6,6,2,0,0,0,0,2,0,0,0],
+   "p": [1,18,6,6,2,0,0,0,0,2,0,0],
    "sp": 24,
    "look": {
     "hair": "bob",
@@ -1750,7 +1749,7 @@
    "name": "Jabari",
    "job": "firefighter",
    "quirk": "Excellent with cats. Trees optional.",
-   "p": [0,2,3,4,0,0,4,1,0,0,0,0,0],
+   "p": [0,2,3,4,0,0,4,1,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "coils",
@@ -1778,7 +1777,7 @@
    "name": "Wilhelmina",
    "job": "tax inspector",
    "quirk": "Keeps receipts for the receipts.",
-   "p": [0,18,4,3,0,0,1,0,0,2,0,0,0],
+   "p": [0,18,4,3,0,0,1,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "bun",
@@ -1808,7 +1807,7 @@
    "name": "Lucian",
    "job": "violin maker",
    "quirk": "Smells wood before buying furniture.",
-   "p": [1,13,3,2,1,0,0,0,0,0,0,0,0],
+   "p": [1,13,3,2,1,0,0,0,0,0,0,0],
    "sp": 3,
    "look": {
     "hair": "part",
@@ -1838,7 +1837,7 @@
    "name": "Aiyana",
    "job": "park ranger",
    "quirk": "On first-name terms with a moose.",
-   "p": [0,6,4,6,0,0,5,1,0,0,0,0,0],
+   "p": [0,6,4,6,0,0,5,1,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -1866,7 +1865,7 @@
    "name": "Fintan",
    "job": "sheep farmer",
    "quirk": "Counts sheep professionally and still sleeps badly.",
-   "p": [0,18,1,5,0,0,0,0,0,2,0,1,0],
+   "p": [0,18,1,5,0,0,0,0,0,2,0,1],
    "sp": 0,
    "look": {
     "hair": "curly",
@@ -1896,7 +1895,7 @@
    "name": "Zainab",
    "job": "biochemist",
    "quirk": "Has strong opinions about loading a dishwasher. Published.",
-   "p": [0,2,7,5,0,0,1,0,0,0,2,0,0],
+   "p": [0,2,7,5,0,0,1,0,0,0,2,0],
    "sp": 0,
    "look": {
     "hair": "bob",
@@ -1917,14 +1916,14 @@
     "eyeGap": 0.94,
     "nose": "button",
     "age": 1,
-    "tone": 1
+    "tone": 0
    }
   },
   {
    "name": "Oskar",
    "job": "tram driver",
    "quirk": "Rings the bell for birthdays.",
-   "p": [1,8,2,2,0,0,1,0,0,0,0,0,0],
+   "p": [1,8,2,2,0,0,1,0,0,0,0,0],
    "sp": 14,
    "look": {
     "hair": "part",
@@ -1953,7 +1952,7 @@
    "name": "Camille",
    "job": "perfumer",
    "quirk": "Can smell Tuesday.",
-   "p": [0,5,6,6,3,0,2,2,0,0,0,0,0],
+   "p": [0,5,6,6,3,0,2,2,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "fringe",
@@ -1975,14 +1974,14 @@
     "eyeGap": -0.67,
     "nose": "button",
     "age": 1,
-    "tone": 0
+    "tone": 1
    }
   },
   {
    "name": "Tevita",
    "job": "rugby coach",
    "quirk": "Gives the pep talk before assembling flat-pack furniture.",
-   "p": [1,16,4,4,0,0,0,0,1,2,0,0,0],
+   "p": [1,16,4,4,0,0,0,0,1,2,0,0],
    "sp": 17,
    "look": {
     "hair": "buzz",
@@ -2010,7 +2009,7 @@
    "name": "Gwendolyn",
    "job": "crossword setter",
    "quirk": "Seven letters: cannot stop.",
-   "p": [0,18,6,6,0,0,0,0,0,0,0,0,0],
+   "p": [0,18,6,6,0,0,0,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "curly",
@@ -2040,7 +2039,7 @@
    "name": "Ruben",
    "job": "drone pilot",
    "quirk": "Is not allowed to do the wedding again.",
-   "p": [0,2,3,5,0,0,0,0,0,0,1,0,0],
+   "p": [0,2,3,5,0,0,0,0,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "fringe",
@@ -2063,14 +2062,14 @@
     "eyeGap": -0.16,
     "nose": "wide",
     "age": 0,
-    "tone": 3
+    "tone": 0
    }
   },
   {
    "name": "Yasmin",
    "job": "dentist",
    "quirk": "Hums while working. Takes requests.",
-   "p": [0,9,6,5,1,0,1,1,0,2,0,0,1],
+   "p": [0,9,6,5,1,0,1,1,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "ponytail",
@@ -2091,14 +2090,14 @@
     "nose": "long",
     "lips": "full",
     "age": 1,
-    "tone": 2
+    "tone": 4
    }
   },
   {
    "name": "Aurelio",
    "job": "gelato maker",
    "quirk": "Believes pistachio is a personality.",
-   "p": [1,12,2,1,0,0,0,0,0,0,0,0,0],
+   "p": [1,12,2,1,0,0,0,0,0,0,0,0],
    "sp": 9,
    "look": {
     "hair": "curly",
@@ -2126,7 +2125,7 @@
    "name": "Tindra",
    "job": "game designer",
    "quirk": "Speed-runs the grocery shop.",
-   "p": [0,2,4,6,1,0,3,2,0,0,0,0,0],
+   "p": [0,2,4,6,1,0,3,2,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "mohawk",
@@ -2150,14 +2149,14 @@
     "nose": "long",
     "lips": "full",
     "age": 1,
-    "tone": 0
+    "tone": 4
    }
   },
   {
    "name": "Baraka",
    "job": "zookeeper",
    "quirk": "The capybaras have been told too much.",
-   "p": [0,3,4,4,0,0,2,0,0,0,0,0,0],
+   "p": [0,3,4,4,0,0,2,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "afro",
@@ -2178,14 +2177,14 @@
     "nose": "narrow",
     "lips": "full",
     "age": 1,
-    "tone": 0
+    "tone": 1
    }
   },
   {
    "name": "Cosima",
    "job": "harpist",
    "quirk": "Needs a bigger car. Has needed one for years.",
-   "p": [0,7,6,4,2,0,0,0,0,1,0,0,0],
+   "p": [0,7,6,4,2,0,0,0,0,1,0,0],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -2207,14 +2206,14 @@
     "eyeGap": -0.84,
     "nose": "narrow",
     "age": 1,
-    "tone": 1
+    "tone": 3
    }
   },
   {
    "name": "Mordecai",
    "job": "locksmith",
    "quirk": "Locked out twice this year. Will not discuss it.",
-   "p": [0,18,1,3,0,0,5,1,0,0,0,0,0],
+   "p": [0,18,1,3,0,0,5,1,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "receding",
@@ -2246,7 +2245,7 @@
    "name": "Ngozi",
    "job": "air-traffic controller",
    "quirk": "Directs supermarket trolleys with two fingers.",
-   "p": [1,11,4,6,0,0,3,3,0,0,0,0,0],
+   "p": [1,11,4,6,0,0,3,3,0,0,0,0],
    "sp": 38,
    "look": {
     "hair": "bun",
@@ -2275,7 +2274,7 @@
    "name": "Sven",
    "job": "commercial diver",
    "quirk": "Holds breath during adverts.",
-   "p": [0,6,2,3,0,0,1,0,0,2,0,0,0],
+   "p": [0,6,2,3,0,0,1,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "buzz",
@@ -2299,14 +2298,14 @@
     "nose": "wide",
     "lips": "full",
     "age": 1,
-    "tone": 1
+    "tone": 2
    }
   },
   {
    "name": "Paloma",
    "job": "wedding photographer",
    "quirk": "Has cried at 214 weddings, including the bad ones.",
-   "p": [0,2,4,5,2,0,1,0,0,0,0,0,0],
+   "p": [0,2,4,5,2,0,1,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "bob",
@@ -2329,14 +2328,14 @@
     "nose": "narrow",
     "lips": "full",
     "age": 1,
-    "tone": 3
+    "tone": 2
    }
   },
   {
    "name": "Hamish",
    "job": "distiller",
    "quirk": "Describes everything as having notes of toffee.",
-   "p": [0,18,4,6,0,0,0,0,3,2,0,1,0],
+   "p": [0,18,4,6,0,0,0,0,3,2,0,1],
    "sp": 0,
    "look": {
     "hair": "crop",
@@ -2357,14 +2356,14 @@
     "eyeGap": 0.09,
     "nose": "long",
     "age": 2,
-    "tone": 1
+    "tone": 0
    }
   },
   {
    "name": "Chiara",
    "job": "particle physicist",
    "quirk": "Collided with the same door three times this week.",
-   "p": [0,4,7,6,3,0,0,0,0,1,0,0,0],
+   "p": [0,4,7,6,3,0,0,0,0,1,0,0],
    "sp": 0,
    "look": {
     "hair": "curly",
@@ -2393,7 +2392,7 @@
    "name": "Dmitri",
    "job": "figure-skating coach",
    "quirk": "Sticks every landing, including off the bus.",
-   "p": [1,18,4,2,0,0,0,0,0,0,0,0,0],
+   "p": [1,18,4,2,0,0,0,0,0,0,0,0],
    "sp": 11,
    "look": {
     "hair": "part",
@@ -2422,7 +2421,7 @@
    "name": "Folasade",
    "job": "UX designer",
    "quirk": "Has redesigned the office microwave's buttons. Unasked.",
-   "p": [0,2,4,6,0,0,1,2,0,0,2,0,0],
+   "p": [0,2,4,6,0,0,1,2,0,0,2,0],
    "sp": 0,
    "look": {
     "hair": "braids",
@@ -2443,14 +2442,14 @@
     "eyeGap": 0.31,
     "nose": "mid",
     "age": 1,
-    "tone": 2
+    "tone": 0
    }
   },
   {
    "name": "Elio",
    "job": "elevator mechanic",
    "quirk": "Takes the stairs. Says nothing.",
-   "p": [1,14,2,4,0,0,4,2,0,0,0,0,1],
+   "p": [1,14,2,4,0,0,4,2,0,0,0,0],
    "sp": 22,
    "look": {
     "hair": "crop",
@@ -2478,7 +2477,7 @@
    "name": "Winifred",
    "job": "archivist",
    "quirk": "Files grudges by date.",
-   "p": [0,18,6,5,1,0,0,0,0,2,0,0,0],
+   "p": [0,18,6,5,1,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "bun",
@@ -2503,14 +2502,14 @@
     "nose": "wide",
     "lips": "full",
     "age": 3,
-    "tone": 2
+    "tone": 3
    }
   },
   {
    "name": "Koa",
    "job": "lifeguard",
    "quirk": "Has rescued the same inflatable flamingo four times.",
-   "p": [0,2,1,5,0,0,1,0,0,0,0,0,0],
+   "p": [0,2,1,5,0,0,1,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -2538,7 +2537,7 @@
    "name": "Leocadia",
    "job": "notary",
    "quirk": "Stamps things for emphasis.",
-   "p": [0,17,6,5,1,0,0,0,0,2,0,0,1],
+   "p": [0,17,6,5,1,1,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "bob",
@@ -2560,14 +2559,14 @@
     "eyeGap": -0.29,
     "nose": "narrow",
     "age": 2,
-    "tone": 4
+    "tone": 2
    }
   },
   {
    "name": "Radek",
    "job": "stonemason",
    "quirk": "Has a favourite rock and it is not for sale.",
-   "p": [1,9,1,1,0,0,2,0,0,0,0,0,0],
+   "p": [1,9,1,1,0,0,2,0,0,0,0,0],
    "sp": 6,
    "look": {
     "hair": "buzz",
@@ -2598,7 +2597,7 @@
    "name": "Imogen",
    "job": "astronomer",
    "quirk": "Is never free on clear nights.",
-   "p": [0,3,7,6,0,0,2,1,0,0,2,0,0],
+   "p": [0,3,7,6,0,0,2,1,0,0,2,0],
    "sp": 0,
    "look": {
     "hair": "fringe",
@@ -2621,14 +2620,14 @@
     "nose": "wide",
     "lips": "full",
     "age": 1,
-    "tone": 1
+    "tone": 2
    }
   },
   {
    "name": "Suleiman",
    "job": "tailor",
    "quirk": "Estimates inside leg at a glance. Keeps it private.",
-   "p": [0,18,2,2,1,0,0,0,0,0,0,1,0],
+   "p": [0,18,2,2,1,0,0,0,0,0,0,1],
    "sp": 0,
    "look": {
     "hair": "receding",
@@ -2658,7 +2657,7 @@
    "name": "Freya",
    "job": "ferry captain",
    "quirk": "Announces arrival at the supermarket.",
-   "p": [0,15,4,5,0,0,5,2,0,0,0,0,1],
+   "p": [0,15,4,5,0,0,5,2,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "ponytail",
@@ -2681,14 +2680,14 @@
     "nose": "long",
     "lips": "full",
     "age": 2,
-    "tone": 0
+    "tone": 3
    }
   },
   {
    "name": "Jun",
    "job": "robotics technician",
    "quirk": "Says thank you to the vacuum.",
-   "p": [0,2,3,4,0,0,2,1,0,0,1,0,0],
+   "p": [0,2,3,4,0,0,2,1,0,0,1,0],
    "sp": 0,
    "look": {
     "hair": "crop",
@@ -2710,14 +2709,14 @@
     "eyeGap": 0.85,
     "nose": "button",
     "age": 1,
-    "tone": 4
+    "tone": 1
    }
   },
   {
    "name": "Ottoline",
    "job": "taxidermist",
    "quirk": "The owl is not for sale and is not looking at you.",
-   "p": [0,18,3,4,0,0,0,0,0,2,0,0,0],
+   "p": [0,18,3,4,0,0,0,0,0,2,0,0],
    "sp": 0,
    "look": {
     "hair": "long",
@@ -2746,7 +2745,7 @@
    "name": "Dariusz",
    "job": "chimney sweep",
    "quirk": "Is invited to weddings for luck and stays for cake.",
-   "p": [0,10,1,2,0,0,0,0,1,0,0,0,0],
+   "p": [0,10,1,2,0,0,0,0,1,0,0,0],
    "sp": 0,
    "look": {
     "hair": "curly",
@@ -2776,7 +2775,7 @@
    "name": "Seraphina",
    "job": "auctioneer",
    "quirk": "Orders coffee in under two seconds.",
-   "p": [1,8,4,6,2,0,2,3,0,0,0,0,0],
+   "p": [1,8,4,6,2,0,2,3,0,0,0,0],
    "sp": 40,
    "look": {
     "hair": "bob",
@@ -2804,7 +2803,7 @@
    "name": "Milo",
    "job": "apprentice carpenter",
    "quirk": "Measures twice, cuts once, measures again to be sure.",
-   "p": [0,1,1,4,0,0,0,0,0,0,0,0,0],
+   "p": [0,1,1,4,0,0,0,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "fringe",
@@ -2833,7 +2832,7 @@
    "name": "Tova",
    "job": "ski-lift attendant",
    "quirk": "Has heard every chairlift joke. Laughs anyway.",
-   "p": [0,0,1,5,1,0,0,0,0,0,0,1,0],
+   "p": [0,0,1,5,1,0,0,0,0,0,0,1],
    "sp": 0,
    "look": {
     "hair": "pigtails",
@@ -2863,7 +2862,7 @@
    "name": "Evander",
    "job": "hot-air balloon pilot",
    "quirk": "Never knows where lunch will be.",
-   "p": [0,18,3,5,0,0,2,0,0,1,0,0,1],
+   "p": [0,18,3,5,0,0,2,0,0,1,0,0],
    "sp": 0,
    "look": {
     "hair": "crop",
@@ -2885,14 +2884,14 @@
     "eyeGap": -0.81,
     "nose": "long",
     "age": 3,
-    "tone": 3
+    "tone": 2
    }
   },
   {
    "name": "Xanthe",
    "job": "mushroom forager",
    "quirk": "Will not say where. Do not ask.",
-   "p": [0,6,0,1,0,0,0,0,0,0,0,0,0],
+   "p": [0,6,0,1,0,0,0,0,0,0,0,0],
    "sp": 0,
    "look": {
     "hair": "long",

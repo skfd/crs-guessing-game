@@ -28,6 +28,10 @@ const SOURCE = 'https://ircc.canada.ca/english/immigrate/skilled/crs-tool.asp';
 const SEED = 20261103;
 const COUNT = 600;
 const SECTIONS = ['core', 'spouse', 'transfer', 'additional', 'total'];
+// The game has no provincial nomination, but score.js has the rule and the calculator
+// asks, so the vectors carry one more yes-or-no after the game's own attributes.
+const VECTOR_KEYS = [...KEYS, 'pnp'];
+const VECTOR_SIZES = [...ATTRIBUTES.map((a) => a.options.length), 2];
 
 // 32-bit FNV-1a, as eight hex digits. Runs in node and, as text, in the page.
 function checksum(text) {
@@ -36,7 +40,7 @@ function checksum(text) {
   return (h >>> 0).toString(16).padStart(8, '0');
 }
 
-// The profiles, as arrays in KEYS order. Runs in node and, as text, in the page, so it
+// The profiles, as arrays in VECTOR_KEYS order. Runs in node and, as text, in the page, so it
 // may use nothing but its arguments.
 function makeProfiles(random, count, sizes, keys, lang1Clb, lang2Clb) {
   const at = Object.fromEntries(keys.map((k, i) => [k, i]));
@@ -133,17 +137,17 @@ function inPage(given) {
   return `${line}#${given.checksum(line)}`;
 }
 
-const profiles = makeProfiles(rng(SEED), COUNT, ATTRIBUTES.map((a) => a.options.length), KEYS, LANG1_CLB, LANG2_CLB);
+const profiles = makeProfiles(rng(SEED), COUNT, VECTOR_SIZES, VECTOR_KEYS, LANG1_CLB, LANG2_CLB);
 // The page's copy of tidy() must not drift from the real one.
 for (const values of profiles) {
-  const p = Object.fromEntries(KEYS.map((k, i) => [k, values[i]]));
+  const p = Object.fromEntries(VECTOR_KEYS.map((k, i) => [k, values[i]]));
   if (JSON.stringify(tidy(p)) !== JSON.stringify(p)) throw new Error('makeProfiles and tidy() disagree');
 }
 
 const [command, resultsPath, outPath = new URL('../test/ircc-vectors.json', import.meta.url)] = process.argv.slice(2);
 if (command === 'snippet') {
-  const given = `{ seed: ${SEED}, count: ${COUNT}, sizes: ${JSON.stringify(ATTRIBUTES.map((a) => a.options.length))}, `
-    + `keys: ${JSON.stringify(KEYS)}, lang1Clb: ${JSON.stringify(LANG1_CLB)}, lang2Clb: ${JSON.stringify(LANG2_CLB)}, `
+  const given = `{ seed: ${SEED}, count: ${COUNT}, sizes: ${JSON.stringify(VECTOR_SIZES)}, `
+    + `keys: ${JSON.stringify(VECTOR_KEYS)}, lang1Clb: ${JSON.stringify(LANG1_CLB)}, lang2Clb: ${JSON.stringify(LANG2_CLB)}, `
     + `expected: '${checksum(JSON.stringify(profiles))}',\n  rng: ${rng},\n  checksum: ${checksum},\n  makeProfiles: ${makeProfiles},\n  toInputs: ${toInputs} }`;
   console.log(`(${inPage})(${given})`);
 } else if (command === 'build' && resultsPath) {
@@ -155,7 +159,7 @@ if (command === 'snippet') {
     if (row.length !== SECTIONS.length || !row.every(Number.isInteger)) throw new Error(`profile ${n}: the page did not show every subtotal`);
     const expected = Object.fromEntries(SECTIONS.map((key, i) => [key, row[i]]));
     return {
-      profile: Object.fromEntries(KEYS.map((k, i) => [k, profiles[n][i]])),
+      profile: Object.fromEntries(VECTOR_KEYS.map((k, i) => [k, profiles[n][i]])),
       spousePoints: expected.spouse, expected,
     };
   });

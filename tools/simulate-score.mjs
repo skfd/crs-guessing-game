@@ -18,8 +18,8 @@ import { steps } from '../src/modes.js';
 const file = JSON.parse(fs.readFileSync(new URL('../data/answers.json', import.meta.url), 'utf8'));
 const LIMIT = 12;
 const START = { spouse: 0, age: 2, edu: 4, lang1: 3, lang2: 0, first: 0, cwe: 0, hw: 0,
-  offer: 0, foreign: 0, canEdu: 0, sibling: 0, pnp: 0 };
-const STEP = { age: -5, spouse: 0, first: 0, sibling: 15, pnp: 600 };
+  offer: 0, foreign: 0, canEdu: 0, sibling: 0 };
+const STEP = { age: -5, spouse: 0, first: 0, sibling: 15 };
 const histogram = {};
 
 for (const entry of file.answers) {

@@ -66,25 +66,23 @@ export const ATTRIBUTES = [
     short: ['0', '1–2y', '3y+'],
   },
   {
-    key: 'canEdu', label: 'Studied in Canada', kind: 'ordinal', close: 0, lower: true,
+    key: 'canEdu', label: 'Studied in Canada', kind: 'ordinal', close: 0,
     options: ['No', '1–2 year credential', '3+ year credential'],
     short: ['No', '1–2y', '3y+'],
   },
   {
-    key: 'sibling', label: 'Sibling in Canada', kind: 'choice', lower: true,
-    options: ['No', 'Yes'],
-    short: ['No', 'Yes'],
-  },
-  {
-    key: 'pnp', label: 'Nomination', kind: 'choice',
+    key: 'sibling', label: 'Sibling in Canada', kind: 'choice',
     options: ['No', 'Yes'],
     short: ['No', 'Yes'],
   },
 ];
+// A provincial nomination is not here, on purpose: it is worth 600 points, so a nominated
+// person's score says "nominated" and little else. score.js still knows the rule; nothing
+// in the game sets it.
 
 export const KEYS = ATTRIBUTES.map((a) => a.key);
 export const BY_KEY = Object.fromEntries(ATTRIBUTES.map((a) => [a.key, a]));
 
 // The order in which score-irrelevant attributes are lowered. The job offer goes first so
 // that an offer that loses to the work-experience path is dropped before anything else.
-export const LOWER_ORDER = ['offer', 'hw', 'cwe', 'foreign', 'lang2', 'first', 'canEdu', 'sibling'];
+export const LOWER_ORDER = ['offer', 'hw', 'cwe', 'foreign', 'lang2', 'first'];

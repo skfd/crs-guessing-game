@@ -4,8 +4,8 @@ import { ATTRIBUTES, BY_KEY, LOWER_ORDER } from './attributes.js';
 import { score, sameScore, tidy } from './score.js';
 
 // Lowers every attribute that makes no difference to the score to its first option that
-// scores the same: a job offer that loses to the work-experience path becomes "none", a
-// sibling under a nomination (capped at 600) becomes "no". Hidden answers are always in
+// scores the same: a job offer that loses to the work-experience path becomes "none",
+// foreign work that no language or Canadian work turns into points becomes "none". Hidden answers are always in
 // this form and guesses are put into it before they are compared, so the player is never
 // asked to guess something the score cannot see.
 //

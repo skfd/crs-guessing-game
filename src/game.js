@@ -18,15 +18,17 @@ const comboIndex = (g, profile) => combos(g).findIndex((c) => c.every((v, x) => 
 
 const ARROW = { up: '↑', down: '↓' };
 const START = { spouse: 0, age: 2, edu: 4, lang1: 3, lang2: 0, first: 0, cwe: 0, hw: 0,
-  offer: 0, foreign: 0, canEdu: 0, sibling: 0, pnp: 0 };
+  offer: 0, foreign: 0, canEdu: 0, sibling: 0 };
 const MAX = tuples.guesses ?? MODE[mode].guesses;
 const hitTheScore = mode === 'score';
 
 const answer = answerForDay(answersFile, day + variantOffset(mode, clue));
 const answerScore = score(answer.profile, answer.spousePoints);
 
-// Guesses are kept as the raw form values; feedback is recomputed from them.
-let guesses = load().slice(0, MAX);
+// Guesses are kept as the raw form values; feedback is recomputed from them. Only the
+// attributes there are now are read: a game saved while a guess could claim a provincial
+// nomination is the same guesses without one.
+let guesses = load().slice(0, MAX).map((g) => Object.fromEntries(KEYS.map((k) => [k, g[k]])));
 
 // A guess that says "spouse" borrows the hidden spouse's points: the spouse is a given,
 // not something to guess.
