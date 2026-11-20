@@ -296,6 +296,8 @@ games, and `work` and `lang` still answer by address; no link leads to them.
     | pairs, count | 67% | 97% | 100% | 100% | 3.25 |
     | pairs, all | 12% | 33% | 58% | 75% | 5.44 |
 
+    Run again on 2026-11-20 without the nomination: every number the same.
+
     So `pairs` with the total alone is hard but always winnable in six, and `pairs-all`
     with the total alone and its four guesses is lost two days in three even by the
     reasoner: probably too far.
@@ -308,7 +310,8 @@ games, and `work` and `lang` still answer by address; no link leads to them.
   which runs down and which across. The chip says only the second value ("1.5×"); the
   group's name line and the board cell say the combination ("2y 1.5×").
 - **Cost: the form is twice as tall on a phone.** 1,694px on a 375px-wide phone before
-  anything is known, against 870px with nothing joined; 1,658px without the nomination.
+  anything is known, against 870px with nothing joined. (The joined form of a practice game was 1,658px on
+  2026-11-20, after the nomination went; not known to be measured the same way.)
 - **On a desktop it is one screen**, asked for by the user on 2026-11-20. From 84rem
   (1,344px) wide, "find the person" puts the clue and the guesses on the left and the
   choices on the right, with the header on two lines and smaller chips. Measured at
@@ -369,6 +372,9 @@ province -- they always have insane score. remove this from all modes".
 - **Nobody in the line-up has one.** Eleven of the cast did. The cast was rebuilt, and
   since skin tone is dealt down the list of scores, 49 of the 100 faces changed tone.
   `art/cast.png` was taken again.
+- **The line-up's rounds moved.** Rounds are drawn by score, so only 34 of the 366 days
+  kept all five rounds. Day 3, the day of the change, kept its first three and changed
+  the last two; a pick saved before the change may point at someone else.
 - **The scorer still knows the rule.** `src/score.js` adds 600 for `pnp`, which nothing
   in the game sets. IRCC's calculator was checked with it, and 52 of the 600 vectors and
   the second-opinion tests still test it. `tools/ircc-oracle.mjs` carries the yes-or-no
