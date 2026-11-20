@@ -88,6 +88,7 @@ function guessRows(result, revealed) {
     const a = ATTRIBUTES.find((x) => x.key === c.key);
     const wasLowered = result.lowered.includes(c.key);
     const td = el('td', { className: `cell ${c.state}` });
+    td.dataset.label = a.label; // shown above the value where the header row is not
     if (wasLowered) td.append(el('span', { className: 'lowered', textContent: '∅' }));
     td.append(a.short[c.value]);
     if (c.arrow) td.append(el('span', { className: 'arrow', textContent: ARROW[c.arrow] }));
@@ -144,7 +145,7 @@ function render() {
   const body = $('board-body');
   body.replaceChildren(...results.flatMap((r) => guessRows(r, revealed)));
   for (let i = guesses.length; i < MAX && !over; i += 1) {
-    body.append(el('tr', {}, [
+    body.append(el('tr', { className: 'blank' }, [
       ...ATTRIBUTES.map(() => el('td', { className: 'cell empty' })), el('td'),
     ]));
   }

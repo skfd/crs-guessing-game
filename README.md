@@ -194,8 +194,10 @@ axes to be built. Every choice here is provisional.
   carries it too. It goes away only if the spouse stops being a given.
 - **Six variants a day is a lot.** They exist so each can be tried; the point of trying
   them is to drop most.
-- **Is 13 columns too wide?** It fits a desktop; on a phone the board scrolls sideways and
-  the share grid is 13 squares per row. Nomination and spouse are nearly free cells when
+- **Is 13 columns too wide?** It fits a desktop. Below 40rem each guess is laid out as a
+  block of labelled cells, four across, with the score last, so nothing scrolls sideways;
+  the cost is height, about three guesses to a phone screen. The share grid is still 13
+  squares per row. Nomination and spouse are nearly free cells when
   the breakdown is shown (a nomination is 600 points; spouse points above zero mean a
   spouse).
 - **Is lowering understandable?** A guess of "3+ years abroad" can come back as a green

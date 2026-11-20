@@ -164,3 +164,20 @@ button.person.wrong { border-color: var(--accent); }
 /* On a phone the four people run off the screen; keep the score they are judged against in view. */
 body[data-mode="lineup"] #clue { position: sticky; top: 0; z-index: 1; padding: 0.5rem 1.25rem; }
 body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
+
+/* ---- phone: a guess is a block of labelled cells, not a row thirteen columns wide ---- */
+@media (max-width: 40rem) {
+  .board-scroll { overflow-x: visible; }
+  #board, #board tbody { display: block; min-width: 0; border-spacing: 0; }
+  #board thead, #board tr.blank { display: none; }
+  #board tr.guess { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin-top: 0.6rem; }
+  #board tr.guess td.cell { min-width: 0; padding: 0.3rem 0.1rem 0.35rem; white-space: normal; line-height: 1.2; }
+  #board td.cell::before {
+    content: attr(data-label); display: block; font-size: 0.62rem; font-weight: 400; opacity: 0.85;
+  }
+  #board tr.guess td.score {
+    grid-column: span 3; display: flex; align-items: baseline; justify-content: flex-end; gap: 0.5rem;
+  }
+  #board tr.breakdown, #board tr.breakdown td { display: block; }
+  #board tr.breakdown td { padding: 0.25rem 0.1rem 0; }
+}
