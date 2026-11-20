@@ -220,7 +220,7 @@ button.person.wrong { border-color: var(--accent); }
 body[data-mode="lineup"] #clue { position: sticky; top: 0; z-index: 1; padding: 0.5rem 1.25rem; }
 body[data-mode="lineup"] .total-value { font-size: 2.25rem; }
 
-/* ---- phone: a guess is a block of labelled cells, not a row thirteen columns wide ---- */
+/* ---- phone: a guess is a block of labelled cells, not a row twelve columns wide ---- */
 @media (max-width: 48rem) {
   .board-scroll { overflow-x: visible; }
   .fields { grid-template-columns: 1fr 1fr; }

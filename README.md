@@ -24,7 +24,7 @@ A daily browser guessing game in the Wordle family, modelled on
 [Tradle](https://oec.world/en/tradle/): you are shown a CRS score (Canada's Express Entry
 Comprehensive Ranking System) and have to work out the person behind it: age, education,
 language level, Canadian and foreign work experience, marital status, and extras such as
-French, a sibling in Canada or a provincial nomination.
+French or a sibling in Canada.
 
 It is a game, not a calculator. Every existing CRS tool goes profile -> score; this goes
 score -> profile.
@@ -50,6 +50,9 @@ Made with the user on 2026-11-18. Change them on purpose, not by drift.
 - **Score with the 3 November 2026 rules only**, once they are verified against canada.ca
   and IRCC's own calculator. No "would this person be invited" line until a draw has
   happened under the new rules.
+- **Nobody is nominated by a province, in any mode.** The user, 2026-11-20: "they always
+  have insane score". A nomination is 600 points, so the score says "nominated" and
+  little else. See "Nominations are out" below.
 
 ## What the prototype does
 
@@ -58,10 +61,11 @@ each is one place in the code.
 
 - **Stack:** a static page, plain ES modules, no build step and no dependencies. Node is
   only used for the tests and the tools.
-- **A guess has 13 attributes** (`src/attributes.js`): spouse, age, education, first
+- **A guess has 12 attributes** (`src/attributes.js`): spouse, age, education, first
   language, second language, stronger in English or French, Canadian work, high-wage tier
-  of that work, job offer, foreign work, study in Canada, sibling, nomination. That is more
-  than the eight first imagined; the Labour Market Integration factor alone needs three.
+  of that work, job offer, foreign work, study in Canada, sibling. That is more than the
+  eight first imagined; the Labour Market Integration factor alone needs three. There
+  were 13 until the nomination went on 2026-11-20.
 - **Plateaus are one option.** Ages 20 to 29 score the same, so they are a single choice;
   likewise CLB 4-5 for a first language, 5-6 / 7-8 / 9+ for a second, and 1-2 years of
   foreign work. The player is never asked to tell apart things the tables do not.
@@ -75,7 +79,7 @@ each is one place in the code.
 - **Left out:** the trade certificate of qualification (50 transferability points). A
   hidden person never has one and a guess cannot claim one.
 - **What the score cannot see is lowered** (`canonical` in `src/profile.js`). A job offer
-  that loses to the work-experience path, a sibling under a nomination's 600-point cap,
+  that loses to the work-experience path, French-first where English-first scores the same,
   foreign work with weak language and no Canadian work: each is read as the lowest option
   that scores the same, and the cell is marked ∅. Answers are stored in this form, so every
   attribute of an answer moves the score.
@@ -90,8 +94,8 @@ each is one place in the code.
 - **Sampling** (`tools/make-answers.mjs`): a score band is drawn by IRCC's weights
   (`data/bands.json`, pool as of 25 October 2026), then people are generated as a life
   lived forward (age, an education possible by that age, work years that fit after it)
-  until one lands in the band. Every weight for age, education, language and the rest is
-  an invented guess. The list is committed, so changing the sampler does not move answers
+  until one lands in the band. The band above 600 is left out: those are nominated
+  people. Every weight for age, education, language and the rest is an invented guess. The list is committed, so changing the sampler does not move answers
   until the list is rebuilt on purpose.
 
 ## The other modes
@@ -152,9 +156,9 @@ this mode only.
   disc, twin peaks, a cowl, a bead band, a ruff, a yoke, a cloak), next to toques,
   parkas, plaid and hi-viz. Dress is dealt across names and skin tones on purpose.
 - **A picture must not be a clue to the score.** Skin tone is dealt out down the list of
-  scores, so each tone averages the same (352 to 370 without a nomination). The first
+  scores, so each tone averages the same (368 to 373). The first
   build let the cast list say the tone and the darker faces came out a hundred points
-  ahead. Invented dress averages 347 against 376 without. `make-lineup.mjs` prints both.
+  ahead. Invented dress averages 347 against 383 without. `make-lineup.mjs` prints both.
 - **Portraits are a burnt-out photocopy** (`src/portrait.js`): a face built from parts
   in soft greys, then thresholded through noise, so only toner and paper are left. No
   height chart and no placard; the user asked for the look, not a literal mugshot.
@@ -165,11 +169,12 @@ this mode only.
   from the name, so it is stable between builds.
 - **Age shows**, in lines and grey hair, following the age in the description. It is the
   only thing in a picture that follows a scoring attribute.
-- **Stored as the game reads them** (`canonical`), so 20 of the 100 lost something that
+- **Stored as the game reads them** (`canonical`), so 17 of the 100 lost something that
   made no difference: mostly work abroad with weak language, and French-first where
   English-first scores the same.
-- **Eleven are nominated**, so that a nominated person has neighbours 12 to 70 points
-  away. 29 of 1,830 rounds in a year still take whoever is nearest.
+- **Nobody is nominated.** Eleven were until 2026-11-20; they are the same people 600
+  points lower, and scores now run from 112 to 592. 21 of 1,830 rounds in a year still
+  take whoever is nearest, down from 29.
 - **On a desktop it has the frame of the guessing modes**, asked for by the user on
   2026-11-20: from 84rem wide, the score and the round on the left, the four people two
   by two where the choices are. At 1,366 by 768 a round fits the screen before the pick;
@@ -243,9 +248,10 @@ games, and `work` and `lang` still answer by address; no link leads to them.
   in the cell, grey when none is. `all` (`-all` in the address, "no yellow" on the page, four guesses):
   green or grey and nothing else. Single attributes keep their yellow and arrow.
 - **Groupings.** `work` joins Canadian work with its wage tier; `lang` joins first and
-  second language; `pairs` joins five: education with study in Canada, the two languages,
-  work with wage tier, job offer with foreign work, sibling with nomination. That is 8
-  cells in place of 13. `themes` (five cells, up to 252 combinations) is in the simulator
+  second language; `pairs` joins four: education with study in Canada, the two languages,
+  work with wage tier, job offer with foreign work. That is 8 cells in place of 12.
+  (Sibling was joined with the nomination until that went, and is now a cell of its
+  own.) `themes` (five cells, up to 252 combinations) is in the simulator
   only: too many to lay out as chips.
 - **Measured** with `node tools/simulate-tuples.mjs`, over all 366 people. The clicker
   ignores the score and takes the middle of what each cell's colours leave open, which is
@@ -255,17 +261,21 @@ games, and `work` and `lang` still answer by address; no link leads to them.
 
   | grouping, rule | cells | clicker by 6 | by 8 | reasoner by 3 | by 6 |
   |---|---|---|---|---|---|
-  | nothing joined | 13 | 100% | 100% | 100% | 100% |
-  | work, count | 12 | 62% | 100% | 99% | 100% |
-  | work, all | 12 | 11% | 14% | 95% | 100% |
-  | lang, count | 12 | 99% | 100% | 100% | 100% |
-  | pairs, count | 8 | 48% | 98% | 94% | 100% |
+  | nothing joined | 12 | 100% | 100% | 100% | 100% |
+  | work, count | 11 | 62% | 100% | 99% | 100% |
+  | work, all | 11 | 11% | 14% | 95% | 100% |
+  | lang, count | 11 | 99% | 100% | 100% | 100% |
+  | pairs, count | 8 | 58% | 100% | 94% | 100% |
   | pairs, all | 8 | 3% | 4% | 63% | 100% |
-  | themes, count | 5 | 27% | 64% | 90% | 100% |
+  | themes, count | 5 | 29% | 65% | 90% | 100% |
   | themes, all | 5 | 0% | 1% | 51% | 98% |
 
-  So `pairs` with `count` is the one on the page first: not thinking loses half the time
-  and thinking always wins. `pairs-all` is there as the hard end. A real player is
+  Run again on 2026-11-20 without the nomination. Only the clicker moved, on `pairs`
+  with `count` (48% and 98% before) and on `themes` (27% and 64%): sibling alone is an
+  easier cell than sibling with nomination.
+
+  So `pairs` with `count` is the one on the page first: not thinking loses four times in
+  ten and thinking always wins. `pairs-all` is there as the hard end. A real player is
   between the two: no point tables, but can read the sections.
 - **The reasoner's column says something about the game as it was:** with the full clue
   and the tables, two guesses are enough on average (2.10) with nothing joined, and
@@ -296,10 +306,9 @@ games, and `work` and `lang` still answer by address; no link leads to them.
 - **A pair is a table of chips.** A line for each value of its first attribute, named at
   the start of the line, and on it a chip for each value of the second; a caption says
   which runs down and which across. The chip says only the second value ("1.5×"); the
-  group's name line and the board cell say the combination ("2y 1.5×"). Sibling with
-  nomination has four combinations and stays four named chips.
+  group's name line and the board cell say the combination ("2y 1.5×").
 - **Cost: the form is twice as tall on a phone.** 1,694px on a 375px-wide phone before
-  anything is known, against 870px with nothing joined.
+  anything is known, against 870px with nothing joined; 1,658px without the nomination.
 - **On a desktop it is one screen**, asked for by the user on 2026-11-20. From 84rem
   (1,344px) wide, "find the person" puts the clue and the guesses on the left and the
   choices on the right, with the header on two lines and smaller chips. Measured at
@@ -317,12 +326,12 @@ the other modes. Read as: the joined choices and the one-screen desktop page. Co
 marked chips, hard mode and the "Rules" links stay where there is a hidden person to
 colour against.
 
-- **"Hit the score" has the joined choices**: the same five pairs, the same tables of
-  chips, eight cells on the board in place of 13. It joins what the address joins, so
-  `?mode=score&tuples=none` is still the thirteen separate choices. `-all` means nothing
+- **"Hit the score" has the joined choices**: the same four pairs, the same tables of
+  chips, eight cells on the board in place of 12. It joins what the address joins, so
+  `?mode=score&tuples=none` is still the twelve separate choices. `-all` means nothing
   there and is ignored: eight guesses either way.
 - **A joined cell has a line of steps for each part**, with a word in front saying which
-  ("1st ▲+24 ▼−45", "2nd ▲+4"). All 13 step hints are still on the board, which is what
+  ("1st ▲+24 ▼−45", "2nd ▲+4"). All 12 step hints are still on the board, which is what
   the simulator's 83% in eight guesses assumes.
 - **The saved game is the same game.** A guess is saved attribute by attribute, so a game
   begun with separate choices is still there, drawn with joined cells. Checked with an
@@ -345,6 +354,32 @@ colour against.
 - **Fixed on the way:** in a light colour scheme the value in a cell of "hit the score"
   was white on white, and only the steps under it could be read. It had been so since
   the mode was built; a dark scheme hid it.
+
+## Nominations are out
+
+Asked for by the user on 2026-11-20: "i dont think we should ever consider nominated by
+province -- they always have insane score. remove this from all modes".
+
+- **No guess can claim one.** The attribute is gone from `src/attributes.js`, so from the
+  form, the board, the step hints and the share grid of both guessing modes.
+- **Nobody hidden has one.** One of the 366 did, day 60. That person stays, without it:
+  309 points where there were 909. The other 365 are untouched, so the list was edited,
+  not rebuilt; a rebuild would have moved every day. `tools/make-answers.mjs` leaves
+  out the band above 600 the next time it is run.
+- **Nobody in the line-up has one.** Eleven of the cast did. The cast was rebuilt, and
+  since skin tone is dealt down the list of scores, 49 of the 100 faces changed tone.
+  `art/cast.png` was taken again.
+- **The scorer still knows the rule.** `src/score.js` adds 600 for `pnp`, which nothing
+  in the game sets. IRCC's calculator was checked with it, and 52 of the 600 vectors and
+  the second-opinion tests still test it. `tools/ircc-oracle.mjs` carries the yes-or-no
+  itself, so it still makes the same 600 profiles.
+- **A saved guess that claimed one is read without it** (`src/game.js`). Checked in a
+  browser with such a guess saved in three games: 326 points, not 926.
+- **Nothing can be lowered under the 600-point cap any more**, so a sibling and study in
+  Canada always count and are out of `LOWER_ORDER`.
+- **Not measured again:** the page heights and widths above, taken while the form had a
+  nomination row or chip. The form is a little shorter now. At 1,366 by 768 "find the
+  person", "hit the score" before a guess and the line-up still fit the screen.
 
 ## Design notes from the prior-art survey
 
@@ -383,7 +418,9 @@ colour against.
 - **A machine comparison with the calculator, 2026-11-20: it agrees.** IRCC's calculator
   scored 600 random profiles and `src/score.js` gives the same five numbers (four
   sections and the total) for every one. They are in `test/ircc-vectors.json`, which
-  `npm test` checks. 306 of the 600 have a spouse and 52 a nomination.
+  `npm test` checks. 306 of the 600 have a spouse and 52 a nomination. The game has had
+  no nomination since 2026-11-20; `src/score.js` keeps the rule and the vectors keep
+  testing it.
   - The calculator's script was not downloaded or run by node. `tools/ircc-oracle.mjs
     snippet` prints a snippet to paste into the browser console on the calculator's page
     (which now redirects to canada.ca's "Check your score"); it makes the profiles from a
@@ -392,7 +429,7 @@ colour against.
   - How the line got from the page to the file that day: it was not copied. This game's
     own line for the same profiles had the same length, the same two checksums and the
     same column sums as the page's, so the file was built from the game's copy.
-  - It covers what the game can express, with one fixed spouse (bachelor's, one year of
+  - It covers what the game can express and the nomination, with one fixed spouse (bachelor's, one year of
     Canadian work, CLB 7: 25 points). Not covered: mixed levels across language
     abilities, the certificate of qualification, other spouses.
   - Re-run it when IRCC changes the tool. The snippet reads the page's results by their
@@ -422,7 +459,7 @@ colour against.
   combine: 40% hit in four guesses, 73% in six, 83% in eight, 94% in twelve. With a
   "what this choice is worth" number in place of the step hints it was 32% in six. So
   eight guesses with step hints is a guess at "hard but fair". It may instead read as
-  arithmetic homework, and the hint row makes a 13-column board denser still.
+  arithmetic homework, and the hint row makes a 12-column board denser still.
 - **Is line-up too hard or too easy?** A pick is one in four by luck. Nobody has played a
   week of it. The 12-to-70-point window is the knob.
 - **A hidden clue still leaks the spouse section.** A guess with a spouse borrows the
@@ -431,13 +468,13 @@ colour against.
   carries it too. It goes away only if the spouse stops being a given.
 - **Six variants a day is a lot.** They exist so each can be tried; the point of trying
   them is to drop most.
-- **Is 13 columns too wide?** It fits a desktop. Below 48rem each guess is laid out as a
+- **Is 12 columns too wide?** (With nothing joined; the game on the page has 8.) It fits
+  a desktop. Below 48rem each guess is laid out as a
   block of labelled cells, four across, with the score last, and the form is two columns,
   so nothing scrolls sideways;
-  the cost is height, about three guesses to a phone screen. The share grid is still 13
-  squares per row. Nomination and spouse are nearly free cells when
-  the breakdown is shown (a nomination is 600 points; spouse points above zero mean a
-  spouse).
+  the cost is height, about three guesses to a phone screen. The share grid has a square
+  per cell. Spouse is a nearly free cell when the breakdown is shown (spouse points
+  above zero mean a spouse).
 - **Is lowering understandable?** A guess of "3+ years abroad" can come back as a green
   "1–2 years ∅" when both score the same. Worse is the reverse: the player picks the right
   value, it makes no difference next to the rest of that guess, and it comes back lowered
