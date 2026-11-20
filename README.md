@@ -53,6 +53,9 @@ Made with the user on 2026-11-18. Change them on purpose, not by drift.
 - **Nobody is nominated by a province, in any mode.** The user, 2026-11-20: "they always
   have insane score". A nomination is 600 points, so the score says "nominated" and
   little else. See "Nominations are out" below.
+- **No score far from the rest, at either end.** The user, 2026-11-20, asked what else
+  stood out once the nomination was gone and chose three things to fix. See "The ends
+  of the scores" below.
 
 ## What the prototype does
 
@@ -95,7 +98,7 @@ each is one place in the code.
   (`data/bands.json`, pool as of 25 October 2026), then people are generated as a life
   lived forward (age, an education possible by that age, work years that fit after it)
   until one lands in the band. The band above 600 is left out: those are nominated
-  people. Every weight for age, education, language and the rest is an invented guess. The list is committed, so changing the sampler does not move answers
+  people. The lowest band is drawn as 250 to 300. Every weight for age, education, language and the rest is an invented guess. The list is committed, so changing the sampler does not move answers
   until the list is rebuilt on purpose.
 
 ## The other modes
@@ -135,6 +138,10 @@ axes to be built. Every choice here is provisional.
   - The wrong three score 12 to 70 points away from the round's score and at least 8
     points from each other (`src/rounds.js`). Nearer and only a calculator tells them
     apart; further and the round answers itself. Both numbers are guesses.
+  - How many of the wrong three score below the answer is drawn first, evenly from
+    none to all three, so the answer is no likelier to be a middle one of the four.
+    Only someone with three people in the window on each side can be an answer: 87 of
+    the 100. See "The ends of the scores".
   - Nobody stands in two rounds of one day.
   - What scores is described by a template (`bioLines`). What a description leaves out,
     the person does not have. A spouse is one phrase, "with a spouse who brings 18
@@ -156,9 +163,9 @@ this mode only.
   disc, twin peaks, a cowl, a bead band, a ruff, a yoke, a cloak), next to toques,
   parkas, plaid and hi-viz. Dress is dealt across names and skin tones on purpose.
 - **A picture must not be a clue to the score.** Skin tone is dealt out down the list of
-  scores, so each tone averages the same (368 to 373). The first
+  scores, so each tone averages the same (417 or 418). The first
   build let the cast list say the tone and the darker faces came out a hundred points
-  ahead. Invented dress averages 347 against 383 without. `make-lineup.mjs` prints both.
+  ahead. Invented dress averages 408 against 423 without. `make-lineup.mjs` prints both.
 - **Portraits are a burnt-out photocopy** (`src/portrait.js`): a face built from parts
   in soft greys, then thresholded through noise, so only toner and paper are left. No
   height chart and no placard; the user asked for the look, not a literal mugshot.
@@ -169,12 +176,12 @@ this mode only.
   from the name, so it is stable between builds.
 - **Age shows**, in lines and grey hair, following the age in the description. It is the
   only thing in a picture that follows a scoring attribute.
-- **Stored as the game reads them** (`canonical`), so 17 of the 100 lost something that
+- **Stored as the game reads them** (`canonical`), so 13 of the 100 lost something that
   made no difference: mostly work abroad with weak language, and French-first where
   English-first scores the same.
 - **Nobody is nominated.** Eleven were until 2026-11-20; they are the same people 600
-  points lower, and scores now run from 112 to 592. 21 of 1,830 rounds in a year still
-  take whoever is nearest, down from 29.
+  points lower. After the low end was raised the same day, scores run from 219 to 592
+  and no round in a year has to take whoever is nearest.
 - **On a desktop it has the frame of the guessing modes**, asked for by the user on
   2026-11-20: from 84rem wide, the score and the round on the left, the four people two
   by two where the choices are. At 1,366 by 768 a round fits the screen before the pick;
@@ -256,23 +263,24 @@ games, and `work` and `lang` still answer by address; no link leads to them.
 - **Measured** with `node tools/simulate-tuples.mjs`, over all 366 people. The clicker
   ignores the score and takes the middle of what each cell's colours leave open, which is
   what the marked chips let a person do without thinking. The reasoner knows the point
-  tables: it starts from everyone who has the hidden person's four sections (median 172
+  tables: it starts from everyone who has the hidden person's four sections (median 173
   people, at most 844), guesses one, and keeps whoever would have drawn the same colours.
 
   | grouping, rule | cells | clicker by 6 | by 8 | reasoner by 3 | by 6 |
   |---|---|---|---|---|---|
   | nothing joined | 12 | 100% | 100% | 100% | 100% |
-  | work, count | 11 | 62% | 100% | 99% | 100% |
-  | work, all | 11 | 11% | 14% | 95% | 100% |
+  | work, count | 11 | 63% | 100% | 99% | 100% |
+  | work, all | 11 | 11% | 14% | 96% | 100% |
   | lang, count | 11 | 99% | 100% | 100% | 100% |
   | pairs, count | 8 | 58% | 100% | 94% | 100% |
   | pairs, all | 8 | 3% | 4% | 63% | 100% |
   | themes, count | 5 | 29% | 65% | 90% | 100% |
-  | themes, all | 5 | 0% | 1% | 51% | 98% |
+  | themes, all | 5 | 0% | 1% | 52% | 99% |
 
   Run again on 2026-11-20 without the nomination. Only the clicker moved, on `pairs`
   with `count` (48% and 98% before) and on `themes` (27% and 64%): sibling alone is an
-  easier cell than sibling with nomination.
+  easier cell than sibling with nomination. Run once more that day after four hidden
+  people were replaced: three cells moved by a point, and the table has the new ones.
 
   So `pairs` with `count` is the one on the page first: not thinking loses four times in
   ten and thinking always wins. `pairs-all` is there as the hard end. A real player is
@@ -296,7 +304,8 @@ games, and `work` and `lang` still answer by address; no link leads to them.
     | pairs, count | 67% | 97% | 100% | 100% | 3.25 |
     | pairs, all | 12% | 33% | 58% | 75% | 5.44 |
 
-    Run again on 2026-11-20 without the nomination: every number the same.
+    Run again on 2026-11-20 without the nomination: every number the same. Not run
+    again after four hidden people were replaced later that day.
 
     So `pairs` with the total alone is hard but always winnable in six, and `pairs-all`
     with the total alone and its four guesses is lost two days in three even by the
@@ -387,6 +396,42 @@ province -- they always have insane score. remove this from all modes".
   nomination row or chip. The form is a little shorter now. At 1,366 by 768 "find the
   person", "hit the score" before a guess and the line-up still fit the screen.
 
+## The ends of the scores
+
+On 2026-11-20 the user asked whether anything else stood out the way the nomination had.
+Nothing does: with it gone, the most one choice is worth is 100 points (a job offer at
+2× the median wage), and over every profile there is, no 50-point band of totals below
+650 pins any one option. Four smaller things were found; the user chose the first three.
+
+- **The line-up cast was bottom-heavy.** 31 of the 100 scored under 300, where 3% of the
+  pool does, and 22 were 45 or older. 26 people kept their name, job, quirk and look and
+  got more schooling, language or work; nine of the oldest are 40 to 44 now, which draws
+  the same. 10 score under 300, 13 are 45 or older, and the cast averages 417 where it
+  was 370. The top was left alone: 22 score over 500, where 9% of the pool did under
+  the old rules.
+- **The ends of the cast gave the answer away.** When the score shown was under 150, the
+  right person was the lowest of the four in 70 rounds of 100; over 560, the highest in
+  81. Across all rounds the answer was one of the middle two in 74 of 100, because the
+  wrong three came from anywhere in the window. Now the number of wrong people below
+  the answer is drawn first, and only someone the cast can surround is an answer
+  (`canBeAnswer` in `src/rounds.js`): 87 people, with scores 263 to 524. The other 13
+  only stand as wrong ones. Over a year the answer is the lowest to the highest of the
+  four in 27%, 24%, 26% and 24% of rounds; in the fifth of rounds with the lowest
+  score shown, 28%, 28%, 24%, 20%. `make-lineup.mjs` prints these and `npm test`
+  checks the first set. "Pick the oldest" and four more one-attribute rules win 22% to
+  28% of rounds.
+- **Every day's line-up moved**, as rounds are drawn by score and by a new rule. A pick
+  saved before the change may point at someone else. `art/cast.png` was taken again.
+- **Four hidden people scored 149 to 205**, days 226, 300, 330 and 365, at least 50
+  points under anyone else and with nothing in most cells; "hit the score" has a tenth
+  of the usual ways to reach such a total. Each is now someone sampled into 250 to 300
+  (270, 296, 259, 288). The list was edited, not rebuilt. Each of them is also the
+  person of the five other variants on other days, 53 days apart.
+- **Left as it is:** day 282 has a first language of CLB 3 or less and two years of
+  Canadian work at 1.5× the median wage, 368 points. The only hidden person at that
+  language level, and not a likely one.
+- **Not looked at:** whether a regular learns that 13 of the cast are never the answer.
+
 ## Design notes from the prior-art survey
 
 - The score is a free Tradle-style closeness signal: show each guess's CRS, the gap and the
@@ -456,7 +501,7 @@ province -- they always have insane score. remove this from all modes".
 
 - **Is six guesses right?** Probably generous. `node tools/simulate.mjs` plays all 366
   answers with a player that ignores the score and only narrows each attribute by its own
-  colour and arrow: 30% found in three guesses, 49% in four, 99% in five, all in six. With
+  colour and arrow: 29% found in three guesses, 49% in four, 99% in five, all in six. With
   arrows on grey cells too (the first build) it was 90% in three and all in four, which is
   why they were turned off. A person who reads the section points should beat this player,
   so five guesses or a total-only clue may be the better game. Play-test before choosing.
