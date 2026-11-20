@@ -35,11 +35,11 @@
     "slope": 0.96,
     "neck": 27,
     "sit": 3,
-    "tone": 1,
     "eyes": "round",
     "eyeGap": 0.27,
     "nose": "mid",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -64,11 +64,11 @@
     "slope": 0.99,
     "neck": 27,
     "sit": 3,
-    "tone": 2,
     "eyes": "hooded",
     "eyeGap": 0.99,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -92,11 +92,11 @@
     "slope": 1.01,
     "neck": 26,
     "sit": 5,
-    "tone": 1,
     "eyes": "almond",
     "eyeGap": -0.59,
     "nose": "wide",
-    "age": 2
+    "age": 2,
+    "tone": 2
    }
   },
   {
@@ -121,11 +121,11 @@
     "slope": 1.02,
     "neck": 25,
     "sit": 6,
-    "tone": 0,
     "eyes": "wide",
     "eyeGap": 0.09,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -149,11 +149,11 @@
     "slope": 1.04,
     "neck": 25,
     "sit": 2,
-    "tone": 3,
     "eyes": "hooded",
     "eyeGap": 1.04,
     "nose": "button",
-    "age": 0
+    "age": 0,
+    "tone": 2
    }
   },
   {
@@ -166,7 +166,7 @@
     "hair": "wavy",
     "hairTone": "light",
     "hat": "strawhat",
-    "top": "overalls",
+    "top": "yoke",
     "topTone": "light",
     "mouth": "smile",
     "extra": "freckles",
@@ -178,11 +178,11 @@
     "slope": 1.01,
     "neck": 23,
     "sit": 2,
-    "tone": 1,
     "eyes": "narrow",
     "eyeGap": 0.85,
     "nose": "button",
-    "age": 2
+    "age": 2,
+    "tone": 1
    }
   },
   {
@@ -207,12 +207,12 @@
     "slope": 1.02,
     "neck": 27,
     "sit": 7,
-    "tone": 0,
     "eyes": "wide",
     "eyeGap": 0.93,
     "nose": "narrow",
     "lips": "full",
-    "age": 3
+    "age": 3,
+    "tone": 1
    }
   },
   {
@@ -236,12 +236,12 @@
     "slope": 0.98,
     "neck": 25,
     "sit": 4,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": 0.62,
     "nose": "long",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -265,11 +265,11 @@
     "slope": 1.01,
     "neck": 25,
     "sit": 1,
-    "tone": 4,
     "eyes": "almond",
     "eyeGap": -0.31,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -293,11 +293,11 @@
     "slope": 1.06,
     "neck": 26,
     "sit": 0,
-    "tone": 3,
     "eyes": "narrow",
     "eyeGap": 0.9,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -320,11 +320,11 @@
     "slope": 1.02,
     "neck": 27,
     "sit": 3,
-    "tone": 2,
     "eyes": "narrow",
     "eyeGap": -0.2,
     "nose": "mid",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -351,12 +351,12 @@
     "slope": 1.01,
     "neck": 23,
     "sit": 0,
-    "tone": 1,
     "eyes": "wide",
     "eyeGap": -0.96,
     "nose": "long",
     "lips": "full",
-    "age": 2
+    "age": 2,
+    "tone": 1
    }
   },
   {
@@ -372,7 +372,7 @@
     "topTone": "light",
     "extra": "tie",
     "mouth": "flat",
-    "hat": "coil",
+    "hat": "peaks",
     "face": 2,
     "headW": 1,
     "headH": 0.98,
@@ -381,11 +381,11 @@
     "slope": 1.05,
     "neck": 25,
     "sit": 7,
-    "tone": 1,
     "eyes": "wide",
     "eyeGap": -0.87,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 4
    }
   },
   {
@@ -408,12 +408,12 @@
     "slope": 0.96,
     "neck": 27,
     "sit": 6,
-    "tone": 3,
     "eyes": "hooded",
     "eyeGap": 0.79,
     "nose": "narrow",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 4
    }
   },
   {
@@ -438,11 +438,11 @@
     "slope": 1.06,
     "neck": 27,
     "sit": 6,
-    "tone": 1,
     "eyes": "narrow",
     "eyeGap": 0.8,
     "nose": "long",
-    "age": 0
+    "age": 0,
+    "tone": 1
    }
   },
   {
@@ -459,7 +459,7 @@
     "brows": "raised",
     "extra": "lanyard",
     "face": 3,
-    "hat": "veil",
+    "hat": "cowl",
     "headW": 1.05,
     "headH": 1.01,
     "tilt": 2.53,
@@ -467,11 +467,11 @@
     "slope": 1.05,
     "neck": 28,
     "sit": 3,
-    "tone": 2,
     "eyes": "hooded",
     "eyeGap": 0.98,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -484,7 +484,7 @@
     "hair": "thin",
     "hairTone": "light",
     "beard": "moustache",
-    "top": "shirt",
+    "top": "ruff",
     "topTone": "mid",
     "extra": "monocle",
     "brows": "worried",
@@ -496,11 +496,11 @@
     "slope": 1.07,
     "neck": 25,
     "sit": 3,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": 0.93,
     "nose": "wide",
-    "age": 3
+    "age": 3,
+    "tone": 2
    }
   },
   {
@@ -516,6 +516,7 @@
     "extra": "freckles",
     "mouth": "grin",
     "face": 1,
+    "hat": "veil",
     "headW": 1.03,
     "headH": 1.01,
     "tilt": -3.58,
@@ -523,11 +524,11 @@
     "slope": 1.07,
     "neck": 25,
     "sit": 3,
-    "tone": 3,
     "eyes": "hooded",
     "eyeGap": -0.33,
     "nose": "mid",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -551,11 +552,11 @@
     "slope": 1.01,
     "neck": 26,
     "sit": 1,
-    "tone": 4,
     "eyes": "narrow",
     "eyeGap": -0.57,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -578,12 +579,12 @@
     "slope": 0.96,
     "neck": 25,
     "sit": 3,
-    "tone": 1,
     "eyes": "narrow",
     "eyeGap": 1.11,
     "nose": "long",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -608,11 +609,11 @@
     "slope": 1,
     "neck": 24,
     "sit": 1,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": 0.35,
     "nose": "narrow",
-    "age": 2
+    "age": 2,
+    "tone": 3
    }
   },
   {
@@ -628,7 +629,6 @@
     "extra": "lanyard",
     "mouth": "flat",
     "face": 1,
-    "hat": "veil",
     "headW": 0.88,
     "headH": 0.94,
     "tilt": -1.23,
@@ -636,12 +636,12 @@
     "slope": 1.07,
     "neck": 26,
     "sit": 6,
-    "tone": 1,
     "eyes": "almond",
     "eyeGap": -0.11,
     "nose": "narrow",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -667,12 +667,12 @@
     "slope": 0.98,
     "neck": 27,
     "sit": 3,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": -0.29,
     "nose": "button",
     "lips": "full",
-    "age": 3
+    "age": 3,
+    "tone": 3
    }
   },
   {
@@ -695,11 +695,11 @@
     "slope": 0.97,
     "neck": 25,
     "sit": 6,
-    "tone": 3,
     "eyes": "wide",
     "eyeGap": 0.54,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -710,7 +710,7 @@
    "sp": 0,
    "look": {
     "hair": "crop",
-    "hat": "cap",
+    "hat": "beadband",
     "beard": "stubble",
     "top": "hiviz",
     "topTone": "dark",
@@ -723,12 +723,12 @@
     "slope": 1.06,
     "neck": 27,
     "sit": 5,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": 0.8,
     "nose": "wide",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -752,11 +752,11 @@
     "slope": 1.06,
     "neck": 25,
     "sit": 4,
-    "tone": 2,
     "eyes": "hooded",
     "eyeGap": -0.83,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -770,7 +770,7 @@
     "hairTone": "grey",
     "hat": "beanie",
     "beard": "full",
-    "top": "parka",
+    "top": "cloak",
     "topTone": "dark",
     "brows": "stern",
     "face": 2,
@@ -781,12 +781,12 @@
     "slope": 1,
     "neck": 25,
     "sit": 1,
-    "tone": 0,
     "eyes": "round",
     "eyeGap": 0.49,
     "nose": "wide",
     "lips": "full",
-    "age": 3
+    "age": 3,
+    "tone": 1
    }
   },
   {
@@ -797,11 +797,12 @@
    "sp": 0,
    "look": {
     "hair": "ponytail",
-    "hat": "bandana",
+    "hat": "beadband",
     "top": "chef",
     "topTone": "light",
     "mouth": "smile",
     "extra": "freckles",
+    "extra2": "neckrings",
     "face": 0,
     "headW": 0.95,
     "headH": 0.96,
@@ -810,11 +811,11 @@
     "slope": 1.01,
     "neck": 23,
     "sit": 3,
-    "tone": 0,
     "eyes": "almond",
     "eyeGap": 1.12,
     "nose": "wide",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -837,11 +838,11 @@
     "slope": 0.98,
     "neck": 25,
     "sit": 1,
-    "tone": 4,
     "eyes": "hooded",
     "eyeGap": -0.68,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -865,12 +866,12 @@
     "slope": 1.05,
     "neck": 25,
     "sit": 5,
-    "tone": 0,
     "eyes": "almond",
     "eyeGap": 0.67,
     "nose": "narrow",
     "lips": "full",
-    "age": 2
+    "age": 2,
+    "tone": 0
    }
   },
   {
@@ -896,11 +897,11 @@
     "slope": 1.03,
     "neck": 26,
     "sit": 1,
-    "tone": 4,
     "eyes": "almond",
     "eyeGap": 1.11,
     "nose": "narrow",
-    "age": 2
+    "age": 2,
+    "tone": 1
    }
   },
   {
@@ -924,11 +925,11 @@
     "slope": 0.99,
     "neck": 25,
     "sit": 3,
-    "tone": 1,
     "eyes": "almond",
     "eyeGap": 0.81,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -952,12 +953,12 @@
     "slope": 1.06,
     "neck": 26,
     "sit": 2,
-    "tone": 4,
     "eyes": "round",
     "eyeGap": 0.81,
     "nose": "mid",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 4
    }
   },
   {
@@ -982,11 +983,11 @@
     "slope": 0.99,
     "neck": 23,
     "sit": 4,
-    "tone": 2,
     "eyes": "narrow",
     "eyeGap": 0.51,
     "nose": "narrow",
-    "age": 0
+    "age": 0,
+    "tone": 4
    }
   },
   {
@@ -1010,11 +1011,11 @@
     "slope": 1,
     "neck": 24,
     "sit": 1,
-    "tone": 2,
     "eyes": "almond",
     "eyeGap": -0.38,
     "nose": "button",
-    "age": 2
+    "age": 2,
+    "tone": 0
    }
   },
   {
@@ -1037,11 +1038,11 @@
     "slope": 1.06,
     "neck": 25,
     "sit": 1,
-    "tone": 3,
     "eyes": "narrow",
     "eyeGap": 0.17,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -1067,12 +1068,12 @@
     "slope": 0.99,
     "neck": 26,
     "sit": 4,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": 0.07,
     "nose": "long",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -1097,11 +1098,11 @@
     "slope": 1.04,
     "neck": 25,
     "sit": 3,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": 0.91,
     "nose": "long",
-    "age": 2
+    "age": 2,
+    "tone": 3
    }
   },
   {
@@ -1113,12 +1114,10 @@
    "look": {
     "hair": "curly",
     "glasses": "square",
-    "top": "blazer",
+    "top": "ruff",
     "topTone": "mid",
     "mouth": "smile",
     "face": 3,
-    "hat": "beadband",
-    "extra": "neckrings",
     "headW": 0.99,
     "headH": 1.01,
     "tilt": 0.74,
@@ -1126,12 +1125,12 @@
     "slope": 1.04,
     "neck": 25,
     "sit": 1,
-    "tone": 3,
     "eyes": "almond",
     "eyeGap": 0.38,
     "nose": "wide",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -1149,6 +1148,7 @@
     "mouth": "grin",
     "extra": "mic",
     "extra2": "freckles",
+    "hat": "coil",
     "face": 0,
     "headW": 1.09,
     "headH": 1.05,
@@ -1157,12 +1157,12 @@
     "slope": 1.01,
     "neck": 25,
     "sit": 6,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": -0.48,
     "nose": "mid",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -1187,11 +1187,11 @@
     "slope": 1.07,
     "neck": 28,
     "sit": 5,
-    "tone": 0,
     "eyes": "hooded",
     "eyeGap": -0.35,
     "nose": "long",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -1215,11 +1215,11 @@
     "slope": 1.02,
     "neck": 26,
     "sit": 1,
-    "tone": 2,
     "eyes": "hooded",
     "eyeGap": 0.56,
     "nose": "mid",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -1232,7 +1232,7 @@
     "hair": "bob",
     "hairTone": "light",
     "glasses": "square",
-    "top": "ruff",
+    "top": "blazer",
     "topTone": "dark",
     "mouth": "flat",
     "extra": "necklace",
@@ -1244,11 +1244,11 @@
     "slope": 1.05,
     "neck": 26,
     "sit": 0,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": 0.09,
     "nose": "long",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -1265,6 +1265,7 @@
     "mouth": "o",
     "face": 1,
     "light": "r",
+    "hat": "halo",
     "headW": 0.96,
     "headH": 0.97,
     "tilt": -0.76,
@@ -1272,12 +1273,12 @@
     "slope": 0.98,
     "neck": 27,
     "sit": 6,
-    "tone": 2,
     "eyes": "hooded",
     "eyeGap": -0.25,
     "nose": "button",
     "lips": "full",
-    "age": 2
+    "age": 2,
+    "tone": 0
    }
   },
   {
@@ -1294,6 +1295,7 @@
     "extra": "pencil",
     "mouth": "smirk",
     "face": 3,
+    "hat": "beadband",
     "headW": 0.97,
     "headH": 0.97,
     "tilt": 1.2,
@@ -1301,12 +1303,12 @@
     "slope": 1,
     "neck": 28,
     "sit": 4,
-    "tone": 1,
     "eyes": "wide",
     "eyeGap": 0.03,
     "nose": "mid",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -1329,11 +1331,11 @@
     "slope": 0.98,
     "neck": 25,
     "sit": 5,
-    "tone": 2,
     "eyes": "round",
     "eyeGap": 0.71,
     "nose": "narrow",
-    "age": 2
+    "age": 2,
+    "tone": 3
    }
   },
   {
@@ -1360,11 +1362,11 @@
     "slope": 1.03,
     "neck": 26,
     "sit": 2,
-    "tone": 0,
     "eyes": "wide",
     "eyeGap": 0.66,
     "nose": "mid",
-    "age": 3
+    "age": 3,
+    "tone": 2
    }
   },
   {
@@ -1387,11 +1389,11 @@
     "slope": 1.01,
     "neck": 23,
     "sit": 3,
-    "tone": 3,
     "eyes": "hooded",
     "eyeGap": 0.93,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -1415,12 +1417,12 @@
     "slope": 1.05,
     "neck": 25,
     "sit": 5,
-    "tone": 2,
     "eyes": "almond",
     "eyeGap": -0.63,
     "nose": "button",
     "lips": "full",
-    "age": 3
+    "age": 3,
+    "tone": 1
    }
   },
   {
@@ -1445,11 +1447,11 @@
     "slope": 0.98,
     "neck": 26,
     "sit": 5,
-    "tone": 2,
     "eyes": "almond",
     "eyeGap": -0.53,
     "nose": "mid",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -1472,11 +1474,11 @@
     "slope": 0.96,
     "neck": 26,
     "sit": 1,
-    "tone": 0,
     "eyes": "hooded",
     "eyeGap": 0.48,
     "nose": "long",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -1501,11 +1503,11 @@
     "slope": 0.99,
     "neck": 24,
     "sit": 1,
-    "tone": 1,
     "eyes": "narrow",
     "eyeGap": -0.5,
     "nose": "narrow",
-    "age": 2
+    "age": 2,
+    "tone": 2
    }
   },
   {
@@ -1531,12 +1533,12 @@
     "slope": 1.03,
     "neck": 26,
     "sit": 3,
-    "tone": 3,
     "eyes": "round",
     "eyeGap": 0.26,
     "nose": "button",
     "lips": "full",
-    "age": 2
+    "age": 2,
+    "tone": 4
    }
   },
   {
@@ -1561,11 +1563,11 @@
     "slope": 1.03,
     "neck": 26,
     "sit": 3,
-    "tone": 0,
     "eyes": "narrow",
     "eyeGap": 0.14,
     "nose": "wide",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -1582,6 +1584,7 @@
     "extra": "lanyard",
     "brows": "raised",
     "face": 3,
+    "hat": "halo",
     "headW": 1.08,
     "headH": 1.07,
     "tilt": 3.84,
@@ -1589,11 +1592,11 @@
     "slope": 0.97,
     "neck": 26,
     "sit": 2,
-    "tone": 4,
     "eyes": "hooded",
     "eyeGap": 0.93,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -1617,11 +1620,11 @@
     "slope": 0.99,
     "neck": 26,
     "sit": 7,
-    "tone": 3,
     "eyes": "wide",
     "eyeGap": 0.03,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 4
    }
   },
   {
@@ -1638,6 +1641,7 @@
     "topTone": "mid",
     "mouth": "smile",
     "face": 2,
+    "hat": "coil",
     "headW": 1.1,
     "headH": 1.05,
     "tilt": 0.6,
@@ -1645,12 +1649,12 @@
     "slope": 0.97,
     "neck": 25,
     "sit": 4,
-    "tone": 0,
     "eyes": "wide",
     "eyeGap": 0.52,
     "nose": "long",
     "lips": "full",
-    "age": 2
+    "age": 2,
+    "tone": 1
    }
   },
   {
@@ -1673,12 +1677,12 @@
     "slope": 0.99,
     "neck": 24,
     "sit": 3,
-    "tone": 4,
     "eyes": "hooded",
     "eyeGap": 0.21,
     "nose": "long",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -1704,11 +1708,11 @@
     "slope": 0.99,
     "neck": 27,
     "sit": 2,
-    "tone": 2,
     "eyes": "almond",
     "eyeGap": -0.49,
     "nose": "long",
-    "age": 0
+    "age": 0,
+    "tone": 0
    }
   },
   {
@@ -1734,12 +1738,12 @@
     "slope": 1.05,
     "neck": 26,
     "sit": 3,
-    "tone": 0,
     "eyes": "round",
     "eyeGap": 1.03,
     "nose": "mid",
     "lips": "full",
-    "age": 2
+    "age": 2,
+    "tone": 2
    }
   },
   {
@@ -1763,11 +1767,11 @@
     "slope": 1.03,
     "neck": 25,
     "sit": 2,
-    "tone": 4,
     "eyes": "hooded",
     "eyeGap": 0.62,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -1793,11 +1797,11 @@
     "slope": 1,
     "neck": 25,
     "sit": 6,
-    "tone": 1,
     "eyes": "round",
     "eyeGap": -0.21,
     "nose": "button",
-    "age": 3
+    "age": 3,
+    "tone": 2
    }
   },
   {
@@ -1823,11 +1827,11 @@
     "slope": 0.97,
     "neck": 25,
     "sit": 1,
-    "tone": 2,
     "eyes": "narrow",
     "eyeGap": -0.81,
     "nose": "button",
-    "age": 2
+    "age": 2,
+    "tone": 3
    }
   },
   {
@@ -1837,7 +1841,7 @@
    "p": [0,6,4,6,0,0,5,1,0,0,0,0,0],
    "sp": 0,
    "look": {
-    "hair": "braids",
+    "hair": "long",
     "hat": "strawhat",
     "top": "shirt",
     "topTone": "mid",
@@ -1851,11 +1855,11 @@
     "slope": 0.96,
     "neck": 26,
     "sit": 4,
-    "tone": 2,
     "eyes": "hooded",
     "eyeGap": -0.89,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -1881,11 +1885,11 @@
     "slope": 0.98,
     "neck": 25,
     "sit": 1,
-    "tone": 1,
     "eyes": "wide",
     "eyeGap": 0.29,
     "nose": "mid",
-    "age": 2
+    "age": 2,
+    "tone": 2
    }
   },
   {
@@ -1901,8 +1905,6 @@
     "topTone": "light",
     "extra": "lanyard",
     "brows": "raised",
-    "hat": "beadband",
-    "extra2": "neckrings",
     "face": 3,
     "headW": 0.93,
     "headH": 0.97,
@@ -1911,11 +1913,11 @@
     "slope": 0.99,
     "neck": 26,
     "sit": 3,
-    "tone": 3,
     "eyes": "hooded",
     "eyeGap": 0.94,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -1940,11 +1942,11 @@
     "slope": 0.97,
     "neck": 26,
     "sit": 3,
-    "tone": 3,
     "eyes": "hooded",
     "eyeGap": 0.86,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -1969,11 +1971,11 @@
     "slope": 1.02,
     "neck": 26,
     "sit": 5,
-    "tone": 2,
     "eyes": "wide",
     "eyeGap": -0.67,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -1997,11 +1999,11 @@
     "slope": 0.99,
     "neck": 23,
     "sit": 4,
-    "tone": 2,
     "eyes": "wide",
     "eyeGap": -0.7,
     "nose": "wide",
-    "age": 2
+    "age": 2,
+    "tone": 3
    }
   },
   {
@@ -2027,11 +2029,11 @@
     "slope": 1.01,
     "neck": 27,
     "sit": 0,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": 0.15,
     "nose": "narrow",
-    "age": 3
+    "age": 3,
+    "tone": 1
    }
   },
   {
@@ -2057,11 +2059,11 @@
     "slope": 1.04,
     "neck": 25,
     "sit": 6,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": -0.16,
     "nose": "wide",
-    "age": 0
+    "age": 0,
+    "tone": 3
    }
   },
   {
@@ -2084,12 +2086,12 @@
     "slope": 1.03,
     "neck": 24,
     "sit": 3,
-    "tone": 1,
     "eyes": "narrow",
     "eyeGap": 1.09,
     "nose": "long",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -2113,11 +2115,11 @@
     "slope": 1.01,
     "neck": 24,
     "sit": 7,
-    "tone": 1,
     "eyes": "round",
     "eyeGap": -0.78,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 4
    }
   },
   {
@@ -2129,7 +2131,7 @@
    "look": {
     "hair": "mohawk",
     "hairTone": "light",
-    "hat": "headphones",
+    "hat": "veil",
     "top": "hoodie",
     "topTone": "dark",
     "mouth": "smirk",
@@ -2143,12 +2145,12 @@
     "slope": 1,
     "neck": 25,
     "sit": 4,
-    "tone": 2,
     "eyes": "hooded",
     "eyeGap": -0.94,
     "nose": "long",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -2164,7 +2166,6 @@
     "extra": "whistle",
     "mouth": "grin",
     "face": 1,
-    "hat": "beadband",
     "headW": 1,
     "headH": 1.01,
     "tilt": -0.79,
@@ -2172,12 +2173,12 @@
     "slope": 0.98,
     "neck": 27,
     "sit": 3,
-    "tone": 4,
     "eyes": "round",
     "eyeGap": 1.07,
     "nose": "narrow",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   },
   {
@@ -2202,11 +2203,11 @@
     "slope": 1,
     "neck": 26,
     "sit": 7,
-    "tone": 3,
     "eyes": "wide",
     "eyeGap": -0.84,
     "nose": "narrow",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -2225,6 +2226,7 @@
     "brows": "stern",
     "face": 2,
     "light": "r",
+    "hat": "peaks",
     "headW": 1.02,
     "headH": 1.02,
     "tilt": 0.28,
@@ -2232,12 +2234,12 @@
     "slope": 0.98,
     "neck": 25,
     "sit": 3,
-    "tone": 3,
     "eyes": "narrow",
     "eyeGap": 1,
     "nose": "long",
     "lips": "full",
-    "age": 2
+    "age": 2,
+    "tone": 4
    }
   },
   {
@@ -2261,12 +2263,12 @@
     "slope": 1.01,
     "neck": 24,
     "sit": 7,
-    "tone": 3,
     "eyes": "almond",
     "eyeGap": 0.15,
     "nose": "wide",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -2284,6 +2286,7 @@
     "extra": "scar",
     "mouth": "flat",
     "face": 2,
+    "hat": "beadband",
     "headW": 0.95,
     "headH": 0.96,
     "tilt": -1.4,
@@ -2291,12 +2294,12 @@
     "slope": 1.04,
     "neck": 26,
     "sit": 5,
-    "tone": 1,
     "eyes": "almond",
     "eyeGap": 0.63,
     "nose": "wide",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -2321,12 +2324,12 @@
     "slope": 1.04,
     "neck": 28,
     "sit": 6,
-    "tone": 2,
     "eyes": "round",
     "eyeGap": -0.35,
     "nose": "narrow",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -2350,11 +2353,11 @@
     "slope": 1.01,
     "neck": 24,
     "sit": 4,
-    "tone": 2,
     "eyes": "round",
     "eyeGap": 0.09,
     "nose": "long",
-    "age": 2
+    "age": 2,
+    "tone": 1
    }
   },
   {
@@ -2371,7 +2374,6 @@
     "extra": "bandaid",
     "brows": "worried",
     "face": 3,
-    "hat": "halo",
     "headW": 0.96,
     "headH": 0.97,
     "tilt": 1.01,
@@ -2379,12 +2381,12 @@
     "slope": 0.97,
     "neck": 23,
     "sit": 1,
-    "tone": 1,
     "eyes": "round",
     "eyeGap": -0.82,
     "nose": "long",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -2409,11 +2411,11 @@
     "slope": 1.06,
     "neck": 25,
     "sit": 6,
-    "tone": 0,
     "eyes": "round",
     "eyeGap": -0.41,
     "nose": "long",
-    "age": 2
+    "age": 2,
+    "tone": 2
    }
   },
   {
@@ -2437,11 +2439,11 @@
     "slope": 1.02,
     "neck": 24,
     "sit": 4,
-    "tone": 4,
     "eyes": "wide",
     "eyeGap": 0.31,
     "nose": "mid",
-    "age": 1
+    "age": 1,
+    "tone": 2
    }
   },
   {
@@ -2465,11 +2467,11 @@
     "slope": 1,
     "neck": 25,
     "sit": 7,
-    "tone": 1,
     "eyes": "almond",
     "eyeGap": -0.03,
     "nose": "wide",
-    "age": 2
+    "age": 2,
+    "tone": 1
    }
   },
   {
@@ -2496,12 +2498,12 @@
     "slope": 1.04,
     "neck": 26,
     "sit": 6,
-    "tone": 1,
     "eyes": "narrow",
     "eyeGap": -0.09,
     "nose": "wide",
     "lips": "full",
-    "age": 3
+    "age": 3,
+    "tone": 2
    }
   },
   {
@@ -2525,11 +2527,11 @@
     "slope": 0.98,
     "neck": 25,
     "sit": 6,
-    "tone": 2,
     "eyes": "hooded",
     "eyeGap": -0.01,
     "nose": "mid",
-    "age": 0
+    "age": 0,
+    "tone": 1
    }
   },
   {
@@ -2554,11 +2556,11 @@
     "slope": 1.01,
     "neck": 26,
     "sit": 6,
-    "tone": 1,
     "eyes": "almond",
     "eyeGap": -0.29,
     "nose": "narrow",
-    "age": 2
+    "age": 2,
+    "tone": 4
    }
   },
   {
@@ -2576,6 +2578,7 @@
     "mouth": "flat",
     "face": 2,
     "light": "r",
+    "hat": "cowl",
     "headW": 0.96,
     "headH": 0.97,
     "tilt": 3.84,
@@ -2583,12 +2586,12 @@
     "slope": 1.04,
     "neck": 24,
     "sit": 1,
-    "tone": 1,
     "eyes": "wide",
     "eyeGap": -0.8,
     "nose": "button",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -2613,12 +2616,12 @@
     "slope": 1,
     "neck": 26,
     "sit": 7,
-    "tone": 3,
     "eyes": "narrow",
     "eyeGap": 0.17,
     "nose": "wide",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -2637,7 +2640,6 @@
     "extra": "pencil",
     "mouth": "smile",
     "face": 1,
-    "hat": "coil",
     "headW": 1.14,
     "headH": 0.94,
     "tilt": -2.25,
@@ -2645,11 +2647,11 @@
     "slope": 0.97,
     "neck": 28,
     "sit": 3,
-    "tone": 2,
     "eyes": "narrow",
     "eyeGap": -0.09,
     "nose": "narrow",
-    "age": 3
+    "age": 3,
+    "tone": 1
    }
   },
   {
@@ -2674,12 +2676,12 @@
     "slope": 0.99,
     "neck": 24,
     "sit": 1,
-    "tone": 0,
     "eyes": "narrow",
     "eyeGap": 0.51,
     "nose": "long",
     "lips": "full",
-    "age": 2
+    "age": 2,
+    "tone": 0
    }
   },
   {
@@ -2696,6 +2698,7 @@
     "extra": "lanyard",
     "mouth": "smile",
     "face": 1,
+    "hat": "coil",
     "headW": 1.1,
     "headH": 1.05,
     "tilt": -1.54,
@@ -2703,11 +2706,11 @@
     "slope": 1.04,
     "neck": 24,
     "sit": 6,
-    "tone": 2,
     "eyes": "wide",
     "eyeGap": 0.85,
     "nose": "button",
-    "age": 1
+    "age": 1,
+    "tone": 4
    }
   },
   {
@@ -2732,11 +2735,11 @@
     "slope": 0.99,
     "neck": 29,
     "sit": 2,
-    "tone": 0,
     "eyes": "narrow",
     "eyeGap": 0.62,
     "nose": "narrow",
-    "age": 2
+    "age": 2,
+    "tone": 0
    }
   },
   {
@@ -2754,6 +2757,7 @@
     "mouth": "grin",
     "face": 1,
     "light": "r",
+    "extra": "neckrings",
     "headW": 1.08,
     "headH": 1.05,
     "tilt": -2.01,
@@ -2761,11 +2765,11 @@
     "slope": 1,
     "neck": 26,
     "sit": 7,
-    "tone": 1,
     "eyes": "wide",
     "eyeGap": 0.75,
     "nose": "wide",
-    "age": 1
+    "age": 1,
+    "tone": 1
    }
   },
   {
@@ -2781,7 +2785,6 @@
     "extra": "necklace",
     "mouth": "o",
     "face": 3,
-    "hat": "peaks",
     "headW": 1.08,
     "headH": 1.03,
     "tilt": 3.84,
@@ -2789,12 +2792,12 @@
     "slope": 1.06,
     "neck": 25,
     "sit": 6,
-    "tone": 3,
     "eyes": "round",
     "eyeGap": -0.33,
     "nose": "mid",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 3
    }
   },
   {
@@ -2819,11 +2822,11 @@
     "neck": 27,
     "sit": 9,
     "size": 0.92,
-    "tone": 1,
     "eyes": "almond",
     "eyeGap": 0.77,
     "nose": "narrow",
-    "age": 0
+    "age": 0,
+    "tone": 3
    }
   },
   {
@@ -2848,12 +2851,12 @@
     "neck": 24,
     "sit": 11,
     "size": 0.92,
-    "tone": 1,
     "eyes": "hooded",
     "eyeGap": -0.68,
     "nose": "wide",
     "lips": "full",
-    "age": 0
+    "age": 0,
+    "tone": 0
    }
   },
   {
@@ -2878,11 +2881,11 @@
     "slope": 0.97,
     "neck": 25,
     "sit": 7,
-    "tone": 3,
     "eyes": "narrow",
     "eyeGap": -0.81,
     "nose": "long",
-    "age": 3
+    "age": 3,
+    "tone": 3
    }
   },
   {
@@ -2905,12 +2908,12 @@
     "slope": 1.05,
     "neck": 26,
     "sit": 2,
-    "tone": 1,
     "eyes": "almond",
     "eyeGap": 0.61,
     "nose": "long",
     "lips": "full",
-    "age": 1
+    "age": 1,
+    "tone": 0
    }
   }
  ]

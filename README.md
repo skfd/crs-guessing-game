@@ -150,7 +150,11 @@ this mode only.
 - **The picture may suggest a culture, but an invented one.** About a quarter wear
   something that belongs to no real place (a coiled wrap, a veil with a crest, a halo
   disc, twin peaks, a cowl, a bead band, a ruff, a yoke, a cloak), next to toques,
-  parkas, plaid and hi-viz. Dress is given out without regard to score, language or job.
+  parkas, plaid and hi-viz. Dress is dealt across names and skin tones on purpose.
+- **A picture must not be a clue to the score.** Skin tone is dealt out down the list of
+  scores, so each tone averages the same (352 to 370 without a nomination). The first
+  build let the cast list say the tone and the darker faces came out a hundred points
+  ahead. Invented dress averages 347 against 376 without. `make-lineup.mjs` prints both.
 - **Portraits are a burnt-out photocopy** (`src/portrait.js`): a face built from parts
   in soft greys, then thresholded through noise, so only toner and paper are left. No
   height chart and no placard; the user asked for the look, not a literal mugshot.

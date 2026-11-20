@@ -124,6 +124,7 @@ test('the cast is stored as the game reads it, and everyone can be drawn', () =>
     const svg = portrait(entry.look, 1);
     assert.match(svg, /^<svg /);
     assert.doesNotMatch(svg, /undefined|NaN/);
+    assert.doesNotMatch(svg, /<[^>]*</, `${entry.name}: a tag is cut short`);
   }
 });
 

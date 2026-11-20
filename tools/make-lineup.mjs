@@ -101,8 +101,6 @@ function fillIn(look, name, age) {
     neck: Math.round(15 + build * 9 + u('neck') * 3),
     sit: Math.round(u('sit') * 7) + (young ? 7 : 0),
     ...(young ? { size: 0.92 } : {}),
-    // t0, t1 and t2 in the cast list are light, middle and dark; unsaid is anything but the darkest.
-    tone: t === undefined ? pick('tone', [0, 0, 1, 1, 2, 3]) : pick('tone', [[0, 1], [1, 2], [3, 4]][t]),
     eyes: pick('eyes', ['almond', 'round', 'narrow', 'hooded', 'wide']),
     eyeGap: between('gap', -1, 1.2),
     nose: pick('nose', ['mid', 'narrow', 'wide', 'long', 'button']),
@@ -124,6 +122,15 @@ for (const [name, job, quirk, profileWords, lookWords] of CAST) {
   const age = Number(profileWords.split(' ')[0]);
   people.push({ name, job, quirk, p: KEYS.map((k) => c.profile[k]), sp, look: fillIn(parseLook(lookWords), name, age) });
 }
+
+// Skin tone is dealt out down the list of scores, so that every tone is found at every
+// height and a face says nothing about a score. (An earlier build let the cast list say
+// it, and the darker faces came out a hundred points ahead.)
+const TONES = [0, 1, 2, 3, 1, 0, 2, 4, 1, 3];
+[...people]
+  .sort((a, b) => score(Object.fromEntries(KEYS.map((k, i) => [k, a.p[i]])), a.sp).total
+    - score(Object.fromEntries(KEYS.map((k, i) => [k, b.p[i]])), b.sp).total || a.name.localeCompare(b.name))
+  .forEach((person, i) => { person.look.tone = TONES[(i + Math.floor(i / 10) * 3) % 10]; });
 
 const file = {
   note: 'The line-up cast, built by tools/make-lineup.mjs from tools/lineup-cast.mjs. p is the option index of each attribute in the order of keys; sp is the spouse section points.',
@@ -147,13 +154,24 @@ for (const a of ATTRIBUTES) {
   const missing = a.options.map((_, i) => i).filter((i) => !used.has(i));
   if (missing.length) console.log(`  nobody has ${a.label}: ${missing.map((i) => a.short[i]).join(', ')}`);
 }
+const INVENTED = ['coil', 'halo', 'veil', 'peaks', 'cowl', 'beadband', 'ruff', 'yoke', 'cloak'];
+console.log('Invented dress, with the skin tone beside each name:');
+for (const item of INVENTED) {
+  const who = file.people.filter((x) => x.look.hat === item || x.look.top === item);
+  console.log(`  ${item}: ${who.map((x) => `${x.name} ${x.look.tone}`).join(', ')}`);
+}
+const mean = (list) => Math.round(list.reduce((a, x) => a + x.score.total, 0) / (list.length || 1));
+const plain = all.filter((x) => !x.profile.pnp);
+console.log('Mean total without a nomination, by skin tone:',
+  [0, 1, 2, 3, 4].map((t) => `${t}: ${mean(plain.filter((x) => x.look.tone === t))} (${plain.filter((x) => x.look.tone === t).length})`).join('  '));
+const dressed = (x) => INVENTED.includes(x.look.hat) || INVENTED.includes(x.look.top);
+console.log(`Mean total in invented dress ${mean(plain.filter(dressed))}, without ${mean(plain.filter((x) => !dressed(x)))}`);
 let unfair = 0;
 const DAYS = 366;
 for (let day = 1; day <= DAYS; day += 1) {
   for (const round of roundsForDay(all, day)) if (!roundIsFair(round)) unfair += 1;
 }
 console.log(`Rounds that fell back on the nearest scores: ${unfair} of ${DAYS * ROUNDS}`);
-void score;
 
 if (!process.argv.includes('--check')) {
   const json = `${JSON.stringify(file, null, 1)
