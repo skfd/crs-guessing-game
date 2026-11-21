@@ -253,6 +253,33 @@ const MOUTHS = {
   frown: `<path d="M53 79 Q60 75.5 67 79" stroke="${K}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
   o: `<ellipse cx="60" cy="78" rx="3" ry="3.4" fill="${K}"/>`,
 };
+// The line of each mouth that is a line: start, control point, end.
+const LIP_LINES = {
+  flat: [53, 77.5, 60, 76.5, 67, 77.5],
+  smile: [52, 76, 60, 81.5, 68, 76],
+  smirk: [53, 78, 61, 79, 68, 74.5],
+  frown: [53, 79, 60, 75.5, 67, 79],
+};
+
+// A mouth on dark skin, where a black line would not show and a white one looks cut out.
+// The light is drawn instead, one of three ways:
+//   glint    the light on the lower lip
+//   rim      the edge of the lower lip, thinly
+//   stipple  both lips in a grey the copier cannot make up its mind about
+// A grin is its teeth and an "o" is a hole, so those two are left as they are.
+const DARK_LIPS = ['glint', 'rim', 'glint', 'rim', 'stipple'];
+function darkMouth(kind, full, how) {
+  const at = LIP_LINES[kind];
+  if (!at) return MOUTHS[kind].replaceAll(`stroke="${K}"`, `stroke="${W}"`);
+  const [x0, y0, cx, cy, x1, y1] = at;
+  const part = `<path d="M${x0} ${y0} Q${cx} ${cy} ${x1} ${y1}" stroke="${K}" stroke-width="1.300" fill="none" stroke-linecap="round"/>`;
+  // A lip is the space between the mouth's line and the same line pulled up or down.
+  const lip = (pull, inset = 0) => `M${x0 + inset} ${y0} Q${cx} ${cy} ${x1 - inset} ${y1} Q${cx} ${cy + pull} ${x0 + inset} ${y0}Z`;
+  const deep = full ? 9 : 6.5;
+  if (how === 'stipple') return `<path d="${lip(deep)}" fill="#a4a4a4"/><path d="${lip(full ? -5 : -3.5)}" fill="#a4a4a4"/>${part}`;
+  if (how === 'rim') return `${part}<path d="M${x0 + 2} ${y0 + 1.2} Q${cx} ${cy + deep} ${x1 - 2} ${y1 + 1.2}" stroke="${W}" stroke-width=".800" fill="none" stroke-linecap="round"/>`;
+  return `<path d="${lip(deep, 1.5)}" fill="${W}"/>${part}`;
+}
 
 function extra(kind) {
   switch (kind) {
@@ -325,7 +352,7 @@ export function portrait(look = {}, seed = 1) {
   const [nw, nh] = NOSES[look.nose] ?? NOSES.mid;
   const nose = `<g transform="translate(60 71) scale(${nw} ${nh}) translate(-60 -71)"><path d="M55 70.500 Q57 68.800 58.500 70.800 Q60 72 61.500 70.800 Q63 68.800 65 70.500 Q62.500 73.200 60 72.600 Q57.500 73.200 55 70.500Z" fill="${K}"/>${dark ? `<path d="M58.500 56 L58 67" stroke="${W}" stroke-width="2" stroke-linecap="round" filter="url(#pt-softer)"/>` : ''}</g>`;
   const fullLips = look.lips === 'full' && ['flat', 'smile', 'smirk', undefined].includes(look.mouth)
-    ? `<path d="M54 78.500 Q60 84.500 66 78.500 Q60 80.500 54 78.500Z" fill="${dark ? W : '#5a5a5a'}"/>` : '';
+    ? `<path d="M54 78.500 Q60 84.500 66 78.500 Q60 80.500 54 78.500Z" fill="#5a5a5a"/>` : '';
   const age = look.age ?? 1;
   const wear = (d, w = 0.8) => `<path d="${d}" stroke="${mark}" stroke-width="${w}" fill="none" stroke-linecap="round"/>`;
   const lines = (age >= 2 ? both(wear('M54 69.500 Q50.500 74 52 79.500') + wear('M47 60 Q50.500 62.300 54.500 60.200', 0.7)) : '')
@@ -350,7 +377,7 @@ export function portrait(look = {}, seed = 1) {
     <path d="${head}" fill="none" stroke="${K}" stroke-width="1.100"/>
     ${both(`<g transform="translate(${-gap} 0)"><path d="${brow}" stroke="${K}" stroke-width="${look.brows === 'thick' ? 3 : 2}" fill="none" stroke-linecap="round"/></g>`)}
     ${eyes}${nose}${lines}
-    ${dark ? (MOUTHS[look.mouth] ?? MOUTHS.flat).replaceAll(`stroke="${K}"`, `stroke="${W}"`) : MOUTHS[look.mouth] ?? MOUTHS.flat}${fullLips}`;
+    ${dark ? darkMouth(MOUTHS[look.mouth] ? look.mouth : 'flat', look.lips === 'full', DARK_LIPS[(seed * 7 + 3) % DARK_LIPS.length]) : (MOUTHS[look.mouth] ?? MOUTHS.flat) + fullLips}`;
 
   const neckW = look.neck ?? 22;
   const neck = `<clipPath id="${id}n"><rect x="${60 - neckW / 2}" y="78" width="${neckW}" height="30"/></clipPath>

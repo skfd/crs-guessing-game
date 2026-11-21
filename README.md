@@ -176,6 +176,11 @@ this mode only.
   shadows), eyes, nose, lips, hair style and texture, beard, glasses, hat, clothes, one
   or two extras. The cast list says hair, hat, clothes and extras; the rest is drawn
   from the name, so it is stable between builds.
+- **A mouth on dark skin is its light, not a white line.** The user on 2026-11-20: thin
+  white lines for lips do not look good. Of four tries they picked three, dealt between
+  the people: a glint on the lower lip, the thin rim of it, and now and then both lips
+  in a stippled grey. Grins and "o" mouths are as they were. `art/lip-samples.png` has
+  the 19 mouths that changed, before and after.
 - **Age shows**, in lines and grey hair, following the age in the description. It is the
   only thing in a picture that follows a scoring attribute.
 - **Stored as the game reads them** (`canonical`), so 13 of the 100 lost something that
@@ -573,7 +578,7 @@ data/bands.json           IRCC's pool distribution used as weights
 data/answers.json         the hidden people, built by tools/make-answers.mjs
 data/ircc/                IRCC statistics as downloaded; nothing reads them
 data/lineup.json          the line-up cast, built by tools/make-lineup.mjs from tools/lineup-cast.mjs
-art/                      style samples and a sheet of the whole cast
+art/                      style samples, a sheet of the whole cast, and the mouths on dark skin before and after
 tools/                    make-answers, simulate, simulate-score, simulate-tuples, serve, ircc-oracle
 test/                     node --test
 ```
